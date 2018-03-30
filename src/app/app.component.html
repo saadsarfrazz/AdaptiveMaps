@@ -1,4 +1,7 @@
 <app-uploadfile></app-uploadfile>
+<div class="row">
+  <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"></app-visualization-template>
+</div>
 <app-map></app-map>
 
 

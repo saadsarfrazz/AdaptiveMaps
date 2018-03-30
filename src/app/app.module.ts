@@ -5,21 +5,26 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
+import { VisualizationTemplateComponent } from './visualization-template/visualization-template.component';
 
 import {MapService} from './services/map.service';
+import {VisualizationProviderService} from './services/visualization-provider.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MapComponent,
-    UploadfileComponent
+    UploadfileComponent,
+    VisualizationTemplateComponent
   ],
   imports: [
     BrowserModule
   ],
   providers: [
-    MapService
+    MapService,
+    VisualizationProviderService
   ],
   bootstrap: [AppComponent]
 })
