@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
 
+import {MapService} from './services/map.service';
+
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { UploadfileComponent } from './uploadfile/uploadfile.component';
   imports: [
     BrowserModule
   ],
-  providers: [],
+  providers: [
+    MapService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
