@@ -9,6 +9,7 @@ import { VisualizationTemplateComponent } from './visualization-template/visuali
 
 import {MapService} from './services/map.service';
 import {VisualizationProviderService} from './services/visualization-provider.service';
+import {DataproviderService} from './services/dataprovider.service';
 
 
 
@@ -24,7 +25,8 @@ import {VisualizationProviderService} from './services/visualization-provider.se
   ],
   providers: [
     MapService,
-    VisualizationProviderService
+    VisualizationProviderService,
+    DataproviderService
   ],
   bootstrap: [AppComponent]
 })
