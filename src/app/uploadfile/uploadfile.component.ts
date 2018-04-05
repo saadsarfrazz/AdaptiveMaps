@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
+import {MapService} from '../services/map.service';
+
 @Component({
   selector: 'app-uploadfile',
   templateUrl: './uploadfile.component.html',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UploadfileComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _mapService : MapService) { }
 
   ngOnInit() {
   }
@@ -19,11 +21,13 @@ export class UploadfileComponent implements OnInit {
           let file: File = fileList[0];
          
           var reader = new FileReader();
-          reader.onload = function(e) {
-          var text = reader.result;
-            console.log(text);
+          reader.onload = (e) =>{
+            var text = reader.result;
+            // console.log(text);
+            this._mapService.mapData = text;
           }
           reader.readAsText(file);
+          
           
           // let formData:FormData = new FormData();
           // formData.append('uploadFile', file, file.name);

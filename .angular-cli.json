@@ -24,7 +24,8 @@
         "styles.css"
       ],
       "scripts": [
-         "../node_modules/leaflet/dist/leaflet.js"
+         "../node_modules/leaflet/dist/leaflet.js",
+         "../node_modules/leaflet-omnivore/leaflet-omnivore.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

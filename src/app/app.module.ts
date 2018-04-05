@@ -11,6 +11,7 @@ import {MapService} from './services/map.service';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {DataproviderService} from './services/dataprovider.service';
 import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.component';
+import { GraduatedCircularMapComponent } from './graduated-circular-map/graduated-circular-map.component';
 
 
 
@@ -20,7 +21,8 @@ import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.componen
     MapComponent,
     UploadfileComponent,
     VisualizationTemplateComponent,
-    ChoroplethMapComponent
+    ChoroplethMapComponent,
+    GraduatedCircularMapComponent
   ],
   imports: [
     BrowserModule

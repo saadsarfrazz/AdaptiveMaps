@@ -14,12 +14,10 @@ export class MapComponent implements OnInit {
   // listOfAttributes : string[];
   //display map-component only when user click one of the valid mapping options
   private displayChoroplethMap : boolean = false;
+  private displayGCMap : boolean = false;
   // featuresTOMap : any;
   //user selects this on front page after uploading data
   public _selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM;
-
-  // constructor(private _mapService : MapService,
-  //             private _dataProviderService : DataproviderService) { }
 
   ngOnInit() {
   }
@@ -38,13 +36,16 @@ export class MapComponent implements OnInit {
     //Draw choropleth map
     switch(selectedValue){
       case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR:
-         this.displayChoroplethMap = true;
+        this.displayChoroplethMap = true;
+        this.displayGCMap = false;
         //do something here
         // this.drawChoroplethMap();
         return;
       case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_SEQUENTIAL_COLOR:
         return;
       case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP:
+        this.displayGCMap = true;
+        this.displayChoroplethMap = false;
         // this.drawGraduatedCircularMap();
         return;
       default :
@@ -52,16 +53,5 @@ export class MapComponent implements OnInit {
     }
 
   }
-
-
-  // drawGraduatedCircularMap(){
-  //   this._mapService.plotBaicMap();
-  // }
-  
-
-  // public updateMapDisplay(selectedValue : string){
-  //   console.log('map update invoked' + selectedValue);
-  //   this._mapService.updateMap(selectedValue);
-  // }
 
 }

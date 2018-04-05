@@ -1,12 +1,13 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Input } from '@angular/core';
 
 import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
 
 declare var L: any;
+declare var omnivore : any;
 var mapOverlay : any;
 var map;
 
-const defaultCoords: number[] = [40, -80]
+const defaultCoords: number[] = [52.381685,4.890248]
 const defaultZoom: number = 8
 
 /**
@@ -18,6 +19,13 @@ export class MapService {
 
   selectedObject : string = "density";
 
+  public mapData : string = "";
+
+  // @Input()
+  // set mapData(data : string){
+  //   this._mapData = data;
+  //   this.loadGraduatedCircularMap();
+  // }
 
   constructor() { }
 
@@ -147,6 +155,45 @@ export class MapService {
       
       
 
+   }
+
+   public loadGraduatedCircularMap(){
+ 
+     console.log("csv data is" + this.mapData );
+     map = L.map('map').setView(defaultCoords, defaultZoom);
+     map.maxZoom = 100;
+
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      }).addTo(map);
+
+      var myStyle = {
+       radius: 8,
+        fillColor: "#ff7800",
+        color: "#000",
+        weight: 1,
+        opacity: 1,
+        fillOpacity: 0.8
+    };
+
+      var customLayer = L.geoJson(null, {
+          pointToLayer: function (feature, latlng) {
+          return L.circleMarker(latlng, myStyle);
+        }
+      });
+
+      var gpxLayer = omnivore.csv.parse( this.mapData,{
+          // latfield: 'latitude',
+          // lonfield: 'longitude',
+          // delimiter: ','
+      },customLayer );
+
+      //zoom to layer
+      map.fitBounds(gpxLayer.getBounds());
+
+      // // var csvLayer = omnivore.csv.parse(this.mapData);
+      map.addLayer(gpxLayer);
+  
    }
 
 
