@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {ISupportedVisualizationModel} from '../shared/vis-model';
+
+import {SUPPORTED_VISUALIZATIONS_ENUM} from '../shared/supported-maps-enum';
+
 @Component({
   selector: 'app-visualization-template',
   templateUrl: './visualization-template.component.html',
@@ -16,6 +19,11 @@ export class VisualizationTemplateComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  getVisualizationName( vis : SUPPORTED_VISUALIZATIONS_ENUM) : string{
+    //can display different name here
+    return SUPPORTED_VISUALIZATIONS_ENUM[vis];
   }
 
 }

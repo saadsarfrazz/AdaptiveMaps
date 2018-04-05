@@ -10,7 +10,6 @@ export class DataproviderService {
    */
   public getAllAttributesNames() : string [] {
     var firstJSON = EXAMPLE_JSON_POLY.features[0]["properties"];
-    console.log(firstJSON);
     var attributesList = Object.keys(firstJSON);
     return attributesList;
   }

@@ -9,6 +9,10 @@ var map;
 const defaultCoords: number[] = [40, -80]
 const defaultZoom: number = 8
 
+/**
+ * Helper class to create map and overlay different kind
+ * of data.
+ */
 @Injectable()
 export class MapService {
 
@@ -17,7 +21,7 @@ export class MapService {
 
   constructor() { }
 
-  public plotMap(){
+  public plotBaicMap(){
 
 
     // var myStyle = {

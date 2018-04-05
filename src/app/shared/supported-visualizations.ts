@@ -1,32 +1,33 @@
 import { ISupportedVisualizationModel } from './vis-model';
+import {SUPPORTED_VISUALIZATIONS_ENUM} from './supported-maps-enum';
 //Hardcoded models here
 export const SUPPORTED_VISUALIZATIONS: ISupportedVisualizationModel[] = [
 {
-  "name" : "Choropleth map",
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR,
+  "pathToLogo" : "../../assets/images/img1.png",
+  "description" : "Ratio Scale"
+},{
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_SEQUENTIAL_COLOR,
+  "pathToLogo" : "../../assets/images/img1.png",
+  "description" : "Nominal Scale"
+},{
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nice day, cool temps"
 },{
-  "name" : "Choropleth map 2",
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nice day, cool temps"
 },{
-  "name" : "Choropleth map 3",
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nice day, cool temps"
 },{
-  "name" : "Choropleth map 4",
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nice day, cool temps"
 },{
-  "name" : "Choropleth map 5",
-  "pathToLogo" : "../../assets/images/img1.png",
-  "description" : "Nice day, cool temps"
-},{
-  "name" : "Choropleth map 6",
-  "pathToLogo" : "../../assets/images/img1.png",
-  "description" : "Nice day, cool temps"
-},{
-  "name" : "Choropleth map 7",
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nice day, cool temps"
 }

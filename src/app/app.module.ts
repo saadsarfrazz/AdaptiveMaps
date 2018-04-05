@@ -10,6 +10,7 @@ import { VisualizationTemplateComponent } from './visualization-template/visuali
 import {MapService} from './services/map.service';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {DataproviderService} from './services/dataprovider.service';
+import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.component';
 
 
 
@@ -18,7 +19,8 @@ import {DataproviderService} from './services/dataprovider.service';
     AppComponent,
     MapComponent,
     UploadfileComponent,
-    VisualizationTemplateComponent
+    VisualizationTemplateComponent,
+    ChoroplethMapComponent
   ],
   imports: [
     BrowserModule

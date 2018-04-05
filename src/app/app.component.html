@@ -1,9 +1,11 @@
+<div class="container">
 <app-uploadfile></app-uploadfile>
 <div class="row">
-  <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"></app-visualization-template>
+  <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
+       (click)="visualizationSelected(vis)"></app-visualization-template>
 </div>
-<app-map></app-map>
-
+<app-map [selectedVisualization]="selectedVisualization" ></app-map>
+</div>
 
 <!--The content below is only a placeholder and can be replaced.
 <div style="text-align:center">

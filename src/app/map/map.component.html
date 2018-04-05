@@ -1,5 +1,8 @@
-Map should be displayed below
-<select >
-    <option  *ngFor="let val of listOfAttributes" (click)="updateMapDisplay(val)" value="val">{{val}}</option>
-</select>
-<div id="map"></div>
+<div *ngIf="displayChoroplethMap">
+<!--     Mapping Controls
+    <select >
+        <option  *ngFor="let val of listOfAttributes" (click)="updateMapDisplay(val)" value="val">{{val}}</option>
+    </select>
+    <div id="map"></div>-->
+    <app-choropleth-map></app-choropleth-map>
+</div>
