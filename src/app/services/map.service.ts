@@ -2,6 +2,8 @@ import { Injectable,Input } from '@angular/core';
 
 import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
 
+import {DataproviderService} from '../services/dataprovider.service';
+
 declare var L: any;
 declare var omnivore : any;
 var mapOverlay : any;
@@ -19,7 +21,7 @@ export class MapService {
 
   selectedObject : string = "density";
 
-  public mapData : string = "";
+  
 
   // @Input()
   // set mapData(data : string){
@@ -27,7 +29,7 @@ export class MapService {
   //   this.loadGraduatedCircularMap();
   // }
 
-  constructor() { }
+  constructor(private _dataProviderService: DataproviderService) { }
 
   public plotBaicMap(){
 
@@ -159,7 +161,7 @@ export class MapService {
 
    public loadGraduatedCircularMap(){
  
-     console.log("csv data is" + this.mapData );
+    //  console.log("csv data is" + this._dataProviderService );
      map = L.map('map').setView(defaultCoords, defaultZoom);
      map.maxZoom = 100;
 
@@ -182,7 +184,7 @@ export class MapService {
         }
       });
 
-      var gpxLayer = omnivore.csv.parse( this.mapData,{
+      var gpxLayer = omnivore.csv.parse( this._dataProviderService.mapData,{
           // latfield: 'latitude',
           // lonfield: 'longitude',
           // delimiter: ','

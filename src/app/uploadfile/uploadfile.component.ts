@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {MapService} from '../services/map.service';
+import {DataproviderService} from '../services/dataprovider.service';
 
 @Component({
   selector: 'app-uploadfile',
@@ -9,7 +9,7 @@ import {MapService} from '../services/map.service';
 })
 export class UploadfileComponent implements OnInit {
 
-  constructor(private _mapService : MapService) { }
+  constructor(private _dataProviderService : DataproviderService) { }
 
   ngOnInit() {
   }
@@ -24,7 +24,7 @@ export class UploadfileComponent implements OnInit {
           reader.onload = (e) =>{
             var text = reader.result;
             // console.log(text);
-            this._mapService.mapData = text;
+            this._dataProviderService.mapData = text;
           }
           reader.readAsText(file);
           

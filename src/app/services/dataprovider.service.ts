@@ -4,6 +4,8 @@ import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
 @Injectable()
 export class DataproviderService {
 
+  public mapData : string = "";
+
   constructor() { }
   /**
    * Returns a list of all names of columns found in uploaded file
