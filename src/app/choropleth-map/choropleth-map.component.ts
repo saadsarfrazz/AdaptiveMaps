@@ -10,7 +10,6 @@ import {DataproviderService} from '../services/dataprovider.service';
 })
 export class ChoroplethMapComponent implements OnInit {
 
-  listOfAttributes : string[];
   
   constructor(private _mapService : MapService,
               private _dataProviderService : DataproviderService) { }
@@ -18,10 +17,11 @@ export class ChoroplethMapComponent implements OnInit {
   ngOnInit() {
     console.log("Choropleth init");
     this._mapService.plotBaicMap();
-    this.listOfAttributes = this._dataProviderService.getAllAttributesNames();
   }
 
-  // public initMap(){
-    
-  // }
+  //do whatever here
+  attributeSelected(value){
+
+  }
+  
 }

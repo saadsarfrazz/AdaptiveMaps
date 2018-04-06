@@ -1,4 +1,2 @@
-<select >
-    <option  *ngFor="let val of listOfAttributes" (click)="updateMapDisplay(val)" value="val">{{val}}</option>
-</select>
+<app-attributes-list (valueSelected)="attributeSelected($event)"></app-attributes-list>
 <div id="map"></div>

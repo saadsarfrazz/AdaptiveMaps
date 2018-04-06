@@ -10,7 +10,6 @@ import {DataproviderService} from '../services/dataprovider.service';
 })
 export class GraduatedCircularMapComponent implements OnInit {
 
-  listOfAttributes : string[];
 
   constructor(private _mapService : MapService,
               private _dataProviderService : DataproviderService) { }
@@ -18,7 +17,10 @@ export class GraduatedCircularMapComponent implements OnInit {
   ngOnInit() {
     console.log("Choropleth init");
     this._mapService.loadGraduatedCircularMap();
-    // this.listOfAttributes = this._dataProviderService.getAllAttributesNames();
+  }
+
+  sizeOptionSelected(value){
+    console.log("Selected value in GCMap is" + value);
   }
 
 }

@@ -1,10 +1,17 @@
-import { Injectable } from '@angular/core';
+import { Injectable,Input } from '@angular/core';
 import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
 
 @Injectable()
 export class DataproviderService {
 
-  public mapData : string = "";
+  public _mapData : string = "";
+
+  public graduatedCircularMapData : string;
+
+  @Input()
+  set mapData(mapData : string){
+    this._mapData = mapData;
+  }
 
   constructor() { }
   /**
