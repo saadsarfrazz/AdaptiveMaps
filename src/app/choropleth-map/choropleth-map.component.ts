@@ -5,9 +5,9 @@ import {MapService} from '../services/map.service';
 import {DataproviderService} from '../services/dataprovider.service';
 
 import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
-import {NOMINAL_COLORS_LIST} from '../shared/nominal-colors';
 
 declare var L: any;
+declare var randomColor : any;
 
 @Component({
   selector: 'app-choropleth-map',
@@ -19,7 +19,19 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   mapOverlay : any = null;
   selectedAttribute : string = "";
 
-  private nominalColorsList : string[] = NOMINAL_COLORS_LIST.slice(0);
+  //details : http://randomcolor.llllll.li/
+  private nominalColorsList : string[] = randomColor({
+        count: 100,
+        luminosity: 'dark',
+  });
+
+  private ratioColorsList : string[] = randomColor({
+        count: 100,
+        // luminosity: 'dark',
+        hue: 'red',
+        // format: 'hsl'
+  });
+
   private nominalColorIndex : number = 0;
   
   constructor(private _dataProviderService : DataproviderService) {                 
@@ -84,7 +96,9 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
       this.nominalColorIndex++;
       return color;
     }else{
-      return "";
+      var color = this.ratioColorsList[this.nominalColorIndex];
+      this.nominalColorIndex++;
+      return color;
     }
   }
 
