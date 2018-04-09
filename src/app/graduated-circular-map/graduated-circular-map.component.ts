@@ -20,7 +20,11 @@ export class GraduatedCircularMapComponent implements OnInit {
   }
 
   sizeOptionSelected(value){
-    console.log("Selected value in GCMap is" + value);
+    console.log("Size variable in GCMap is" + value);
+  }
+
+  colorOptionSelected(value){
+    console.log("Color variable in GCMap is" + value);
   }
 
 }
