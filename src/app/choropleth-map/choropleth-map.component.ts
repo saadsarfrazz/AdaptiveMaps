@@ -49,10 +49,10 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   //do whatever here
   attributeSelected(value){
     console.log("ChoroplethMap value selected is : "+ value);
-    this.updateMap(value);
+    this.drawDataOnMap(value);
   }
   
-  public updateMap(attributeName : string){
+  public drawDataOnMap(attributeName : string){
     //init index for map colors
     this.nominalColorIndex = 0;
 

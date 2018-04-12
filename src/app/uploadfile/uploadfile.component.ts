@@ -44,7 +44,7 @@ export class UploadfileComponent implements OnInit {
     //TODO : can be improced so that we don't have hardcoded values 
     if(data == "US Population Density"){
       console.log("data selected");
-      this._dataProviderService.geoJSONData = JSON.stringify(EXAMPLE_JSON_POLY);
+      this._dataProviderService.geoJSONData = EXAMPLE_JSON_POLY;
     }
   }
 
