@@ -3,6 +3,7 @@ import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {MapService} from '../services/map.service';
 import {DataproviderService} from '../services/dataprovider.service';
+import{BasicCalculationsService} from '../services/basic-calculations.service';
 
 declare var L: any;
 declare var randomColor : any;
@@ -35,8 +36,13 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   });
 
   private nominalColorIndex : number = 0;
+
+  //stores the boundary values for different classes of ratioData
+  //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
+  private boundaryArray : number[];
   
-  constructor(private _dataProviderService : DataproviderService) {                
+  constructor(private _dataProviderService : DataproviderService,
+              private _basicCalculationsService : BasicCalculationsService) {                
     super();
     this.geoJSONData =  _dataProviderService.geoJSONData;
   }
@@ -55,8 +61,16 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   public drawDataOnMap(attributeName : string){
     //init index for map colors
     this.nominalColorIndex = 0;
-
     this.selectedAttribute = attributeName;
+    //get type of values for this attribute 
+    var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
+    if(type =="number"){//init array
+      this.boundaryArray = this._basicCalculationsService.
+                                calculateBoundaryArray(this.geoJSONData,
+                                                      attributeName,
+                                                      5);        
+    }
+
       
     console.log("map service update map" + attributeName );
     //  console.log("mapOverlay"+ mapOverlay);
@@ -98,9 +112,18 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
       var color = this.nominalColorsList[this.nominalColorIndex];
       this.nominalColorIndex++;
       return color;
-    }else{
-      var color = this.ratioColorsList[this.nominalColorIndex];
-      this.nominalColorIndex++;
+    }else{  
+      //assign same color for each class
+      for(var i=0; i < this.boundaryArray.length ; i++){
+        console.log("Value is "+ d);
+        console.log("Class boundary is "+ this.boundaryArray[i]);
+        if(d <= this.boundaryArray[i]){ //check if value is within current class
+          var color = this.ratioColorsList[i];
+          console.log("color returned " + color);
+          return color;
+        }
+      }      
+      console.log("Outside for ");
       return color;
     }
   }

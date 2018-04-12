@@ -10,6 +10,8 @@ import { VisualizationTemplateComponent } from './visualization-template/visuali
 import {MapService} from './services/map.service';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {DataproviderService} from './services/dataprovider.service';
+import {BasicCalculationsService} from './services/basic-calculations.service';
+
 import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.component';
 import { GraduatedCircularMapComponent } from './graduated-circular-map/graduated-circular-map.component';
 import { AttributesListComponent } from './attributes-list/attributes-list.component';
@@ -34,7 +36,8 @@ import { BasicMapComponent } from './basicmap/basicmap.component';
   providers: [
     MapService,
     VisualizationProviderService,
-    DataproviderService
+    DataproviderService,
+    BasicCalculationsService
   ],
   bootstrap: [AppComponent]
 })
