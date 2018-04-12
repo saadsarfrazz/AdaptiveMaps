@@ -4,8 +4,6 @@ import {BasicMapComponent} from '../basicmap/basicmap.component';
 import {MapService} from '../services/map.service';
 import {DataproviderService} from '../services/dataprovider.service';
 
-import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
-
 declare var L: any;
 declare var randomColor : any;
 
@@ -18,6 +16,10 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
   mapOverlay : any = null;
   selectedAttribute : string = "";
+
+  geoJSONData : any;
+  
+
 
   //details : http://randomcolor.llllll.li/
   private nominalColorsList : string[] = randomColor({
@@ -34,8 +36,9 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
   private nominalColorIndex : number = 0;
   
-  constructor(private _dataProviderService : DataproviderService) {                 
-                super();
+  constructor(private _dataProviderService : DataproviderService) {                
+    super();
+    this.geoJSONData =  _dataProviderService.geoJSONData;
   }
 
   ngOnInit() {
@@ -63,7 +66,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
     // this.selectedObject = attributeName;
     // var customstyle = this.customStyle;
-    this.mapOverlay = L.geoJson(EXAMPLE_JSON_POLY, {
+    this.mapOverlay = L.geoJson(this.geoJSONData, {
                   style : this.customStyle
                         });
         

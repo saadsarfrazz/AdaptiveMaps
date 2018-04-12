@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import {DataproviderService} from '../services/dataprovider.service';
+import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
 
 @Component({
   selector: 'app-uploadfile',
@@ -8,6 +9,12 @@ import {DataproviderService} from '../services/dataprovider.service';
   styleUrls: ['./uploadfile.component.css']
 })
 export class UploadfileComponent implements OnInit {
+
+  viewUploadFile : boolean = true;
+  viewExampleData : boolean = false;
+
+  listOfExampleDataNames : string[]= ["US Population Density","Some other Map here",
+                                       "Some other Map here"];
 
   constructor(private _dataProviderService : DataproviderService) { }
 
@@ -24,26 +31,21 @@ export class UploadfileComponent implements OnInit {
           reader.onload = (e) =>{
             var text = reader.result;
             // console.log(text);
-            this._dataProviderService.mapData = text;
+            // this._dataProviderService.mapData = text;
+            //text will required to be converted to json
+            this._dataProviderService.geoJSONData = JSON.parse(text);
           }
           reader.readAsText(file);
           
-          
-          // let formData:FormData = new FormData();
-          // formData.append('uploadFile', file, file.name);
-          // let headers = new Headers();
-          // /** No need to include Content-Type in Angular 4 */
-          // headers.append('Content-Type', 'multipart/form-data');
-          // headers.append('Accept', 'application/json');
-          // let options = new RequestOptions({ headers: headers });
-          // this.http.post(`${this.apiEndPoint}`, formData, options)
-          //     .map(res => res.json())
-          //     .catch(error => Observable.throw(error))
-          //     .subscribe(
-          //         data => console.log('success'),
-          //         error => console.log(error)
-          //     )
       }
+  }
+
+  loadExampleData(data: string){
+    //TODO : can be improced so that we don't have hardcoded values 
+    if(data == "US Population Density"){
+      console.log("data selected");
+      this._dataProviderService.geoJSONData = JSON.stringify(EXAMPLE_JSON_POLY);
+    }
   }
 
 }

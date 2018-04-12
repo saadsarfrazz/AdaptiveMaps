@@ -1,1 +1,24 @@
-<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".geojson,.csv">
+<div class="row">
+    <div class="col-2">
+        <nav class="nav flex-column">
+            <a class="nav-link active"  href="#" (click)="viewUploadFile=true;viewExampleData=false" >Upload</a>
+            <a class="nav-link"  href="#" (click)="viewExampleData=true;viewUploadFile=false">Example Data</a>
+        </nav>    
+    </div>
+    <div class="col-10">
+        <div *ngIf="viewUploadFile">
+            <input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".geojson,.csv">
+        </div>
+        <div *ngIf="viewExampleData" class="row">
+               <div *ngFor="let data of listOfExampleDataNames" class="col-2" (click)="loadExampleData(data)">
+                   <div>{{data}}</div>
+                   <div>Map Type</div>
+               </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
