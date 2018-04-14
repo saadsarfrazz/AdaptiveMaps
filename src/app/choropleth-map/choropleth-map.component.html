@@ -6,11 +6,13 @@
     <div class="col-2">
         <app-attributes-list (valueSelected)="attributeSelected($event)"></app-attributes-list>
         <div>
-            <div *ngFor="let boundary of boundaryArray; let i = index">
-                <!--Display color -->
-                <i [style.background]="ratioColorsList[i]">" "</i> <br>
-                <!-- Display Values -->
-                {{ boundaryArray[i] }}-{{ boundaryArray[i+1] }}
+            <div *ngFor="let boundary of boundaryArray; let i = index" class="legend">                
+                <span *ngIf="boundaryArray[i+1]">
+                    <!--Display color -->
+                    <i [style.background]="ratioColorsList[i]"></i>
+                    <!-- Display Values -->
+                    {{ boundaryArray[i] }} - {{boundaryArray[i+1] }}
+                </span> <br>
             </div>
         </div>
     <div>

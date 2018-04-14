@@ -28,7 +28,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
         luminosity: 'dark',
   });
 
-  private ratioColorsList : string[] = randomColor({
+  ratioColorsList : string[] = randomColor({
         count: 100,
         // luminosity: 'dark',
         hue: 'red',
@@ -38,7 +38,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   private nominalColorIndex : number = 0;
 
   //stores the boundary values for different classes of ratioData
-  //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
+  //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
   private boundaryArray : number[];
   
   constructor(private _dataProviderService : DataproviderService,
@@ -78,6 +78,8 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     if(this.mapOverlay != null)
       this.map.removeLayer(this.mapOverlay);
 
+    console.log(this.customStyle);
+
     // this.selectedObject = attributeName;
     // var customstyle = this.customStyle;
     this.mapOverlay = L.geoJson(this.geoJSONData, {
@@ -88,7 +90,6 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     this.map.fitBounds(this.mapOverlay.getBounds());
 
     this.map.addLayer(this.mapOverlay);
-      
    }
 
    private customStyle = (feature : any) : any => {
@@ -114,7 +115,8 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
       return color;
     }else{  
       //assign same color for each class
-      for(var i=0; i < this.boundaryArray.length ; i++){
+      //starting from 1 because 0 index contain min value
+      for(var i=1; i < this.boundaryArray.length ; i++){
         console.log("Value is "+ d);
         console.log("Class boundary is "+ this.boundaryArray[i]);
         if(d <= this.boundaryArray[i]){ //check if value is within current class
