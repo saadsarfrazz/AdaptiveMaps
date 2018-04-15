@@ -21,7 +21,7 @@ export class BasicCalculationsService {
     result.push(min);
     var value = min+avg;
     for(var i=0; i<numberOfClasses-1;i++){
-      result.push(value.toPrecision(1));//ignore decimals
+      result.push(value.toFixed(0));//ignore decimals
       value+= avg;
     }
     result.push(max);//ignore decimals

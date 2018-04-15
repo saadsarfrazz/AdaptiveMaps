@@ -1,0 +1,21 @@
+.clickable{
+    cursor: pointer;
+}
+
+.upload-file{
+    background-color: lightgray;
+}
+
+
+.upload-file__example-data-logo{
+    background-color: chartreuse;
+    margin: 5pt;
+}
+
+.upload-file__example-data-logo_description{
+    font-size: 13px;
+    font-weight: 400;
+    color: #999;
+    margin: 0px;
+    display: block;
+}
