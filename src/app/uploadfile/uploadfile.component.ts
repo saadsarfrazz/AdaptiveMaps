@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 
 import {DataproviderService} from '../services/dataprovider.service';
 import {EXAMPLE_JSON_POLY} from '../shared/example-geojson-polygon';
@@ -12,6 +12,10 @@ export class UploadfileComponent implements OnInit {
 
   viewUploadFile : boolean = true;
   viewExampleData : boolean = false;
+
+  //used to trigger data-selection event in app.component
+  @Output()
+  dataSelected = new EventEmitter<boolean>();
 
   listOfExampleDataNames : string[]= ["US Population Density","Some other Map here",
                                        "Some other Map here"];
@@ -34,6 +38,7 @@ export class UploadfileComponent implements OnInit {
             // this._dataProviderService.mapData = text;
             //text will required to be converted to json
             this._dataProviderService.geoJSONData = JSON.parse(text);
+            this.triggerDataSelected();
           }
           reader.readAsText(file);
           
@@ -45,7 +50,16 @@ export class UploadfileComponent implements OnInit {
     if(data == "US Population Density"){
       console.log("data selected");
       this._dataProviderService.geoJSONData = EXAMPLE_JSON_POLY;
+      this.triggerDataSelected();
     }
+  }
+
+  /**
+   * Helper method to trigger data-selection event when user uploads 
+   * a new file to select example data
+   */
+  triggerDataSelected(){
+    this.dataSelected.emit(true);
   }
 
 }

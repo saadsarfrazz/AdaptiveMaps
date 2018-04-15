@@ -1,6 +1,8 @@
 <div class="container">
-  <app-uploadfile></app-uploadfile>
-  <div class="row">
+  <!--Display fileupload/existing data selection -->
+  <app-uploadfile (dataSelected)="displayMapTypes=true" ></app-uploadfile>
+  <!--Display list of supported map visualizations -->
+  <div class="row" *ngIf="displayMapTypes">
     <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
         (click)="visualizationSelected(vis)"></app-visualization-template>
   </div>

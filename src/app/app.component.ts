@@ -12,6 +12,8 @@ export class AppComponent implements OnInit{
 
   visualizationList : ISupportedVisualizationModel[];
 
+  displayMapTypes : boolean = false;
+
   //this value is sent to map component to trigger drawing of a particular map
   //this value is updated when user clicks on one of the supported visualization
   selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM; //empty by default
