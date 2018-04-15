@@ -1,11 +1,2 @@
-<div *ngIf="displayChoroplethMap">
-<!--     Mapping Controls
-    <select >
-        <option  *ngFor="let val of listOfAttributes" (click)="updateMapDisplay(val)" value="val">{{val}}</option>
-    </select>
-    <div id="map"></div>-->
-    <app-choropleth-map></app-choropleth-map>
-</div>
-<div *ngIf="displayGCMap">
-    <app-graduated-circular-map></app-graduated-circular-map>
-</div>
+<app-choropleth-map  *ngIf="displayChoroplethMap"></app-choropleth-map>
+<app-graduated-circular-map *ngIf="displayGCMap"></app-graduated-circular-map>

@@ -26,31 +26,32 @@ export class UploadfileComponent implements OnInit {
   }
 
   fileChange(event) {
-      console.log("File loaded");
-      let fileList: FileList = event.target.files;
-      if(fileList.length > 0) {
-          let file: File = fileList[0];
-         
-          var reader = new FileReader();
-          reader.onload = (e) =>{
-            var text = reader.result;
-            // console.log(text);
-            // this._dataProviderService.mapData = text;
-            //text will required to be converted to json
-            this._dataProviderService.geoJSONData = JSON.parse(text);
-            this.triggerDataSelected();
-          }
-          reader.readAsText(file);
-          
-      }
+    console.log("File loaded");
+    let fileList: FileList = event.target.files;
+    if(fileList.length > 0) {
+        let file: File = fileList[0];
+        
+        var reader = new FileReader();
+        reader.onload = (e) =>{
+          var text = reader.result;
+          // console.log(text);
+          // this._dataProviderService.mapData = text;
+          //text will required to be converted to json
+          this._dataProviderService.geoJSONData = JSON.parse(text);
+          this.triggerDataSelected(true);
+        }
+        reader.readAsText(file);
+        
+    }
   }
 
   loadExampleData(data: string){
+    this.triggerDataSelected(false);
     //TODO : can be improced so that we don't have hardcoded values 
     if(data == "US Population Density"){
       console.log("data selected");
       this._dataProviderService.geoJSONData = EXAMPLE_JSON_POLY;
-      this.triggerDataSelected();
+      this.triggerDataSelected(true);
     }
   }
 
@@ -58,8 +59,8 @@ export class UploadfileComponent implements OnInit {
    * Helper method to trigger data-selection event when user uploads 
    * a new file to select example data
    */
-  triggerDataSelected(){
-    this.dataSelected.emit(true);
+  triggerDataSelected(value : boolean){
+    this.dataSelected.emit(value);
   }
 
 }

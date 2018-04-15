@@ -1,12 +1,12 @@
 <div class="container">
   <!--Display fileupload/existing data selection -->
-  <app-uploadfile (dataSelected)="displayMapTypes=true" ></app-uploadfile>
+  <app-uploadfile (dataSelected)="dataSelectionListener($event)" ></app-uploadfile>
   <!--Display list of supported map visualizations -->
-  <div class="row" *ngIf="displayMapTypes">
+  <div class="row" *ngIf="displayVisualizationsList">
     <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
         (click)="visualizationSelected(vis)"></app-visualization-template>
   </div>
-  <app-map [selectedVisualization]="selectedVisualization" ></app-map>
+  <app-map *ngIf="displayMap" [selectedVisualization]="selectedVisualization" ></app-map>
   <div>
     Some Footer Here
   </div>

@@ -1,4 +1,4 @@
-import { Component , OnInit } from '@angular/core';
+import { Component , OnInit, ViewChild } from '@angular/core';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {ISupportedVisualizationModel} from './shared/vis-model';
 
@@ -12,7 +12,8 @@ export class AppComponent implements OnInit{
 
   visualizationList : ISupportedVisualizationModel[];
 
-  displayMapTypes : boolean = false;
+  displayMap : boolean = false;
+  displayVisualizationsList : boolean = false;
 
   //this value is sent to map component to trigger drawing of a particular map
   //this value is updated when user clicks on one of the supported visualization
@@ -26,9 +27,20 @@ export class AppComponent implements OnInit{
   }
 
   visualizationSelected(vis : ISupportedVisualizationModel){
+    this.displayMap = true;
     console.log("selected : "+vis.name);
     //update map view
     this.selectedVisualization = vis.name;
+  }
+
+  /**
+   * updates view when new data is selected for visualization
+   */
+  dataSelectionListener(value:boolean){
+    //reset map component
+    this.displayMap = false;
+    this.displayVisualizationsList = true;
+    
   }
 }
  
