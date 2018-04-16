@@ -30,16 +30,24 @@ export class UploadfileComponent implements OnInit {
     let fileList: FileList = event.target.files;
     if(fileList.length > 0) {
         let file: File = fileList[0];
-        
+        let extension = this.getFileExtension(file.name);
+        console.log("Extension is " + extension);
         var reader = new FileReader();
-        reader.onload = (e) =>{
-          var text = reader.result;
-          // console.log(text);
-          // this._dataProviderService.mapData = text;
-          //text will required to be converted to json
-          this._dataProviderService.geoJSONData = JSON.parse(text);
-          this.triggerDataSelected(true);
+        if(extension == 'geojson'){ //geojson data
+          reader.onload = (e) =>{
+            var text = reader.result;
+            this._dataProviderService.setGeoJSON( JSON.parse(text) );
+            this.triggerDataSelected(true);
+         }
+        }else if(extension == 'csv'){ //csv data
+          reader.onload = (e) =>{
+            var text = reader.result;
+            // console.log(text);
+            this._dataProviderService.setCSV( text );      
+            this.triggerDataSelected(true);
+         }
         }
+        
         reader.readAsText(file);
         
     }
@@ -50,7 +58,7 @@ export class UploadfileComponent implements OnInit {
     //TODO : can be improced so that we don't have hardcoded values 
     if(data == "US Population Density"){
       console.log("data selected");
-      this._dataProviderService.geoJSONData = EXAMPLE_JSON_POLY;
+      this._dataProviderService.setGeoJSON( EXAMPLE_JSON_POLY );
       this.triggerDataSelected(true);
     }
   }
@@ -61,6 +69,10 @@ export class UploadfileComponent implements OnInit {
    */
   triggerDataSelected(value : boolean){
     this.dataSelected.emit(value);
+  }
+
+  private getFileExtension(fileName : string) : string{
+    return fileName.substring( fileName.lastIndexOf('.')+1,fileName.length) || fileName;
   }
 
 }

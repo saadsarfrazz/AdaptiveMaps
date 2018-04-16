@@ -184,7 +184,7 @@ export class MapService {
         }
       });
 
-      var gpxLayer = omnivore.csv.parse( this._dataProviderService._mapData,{
+      var gpxLayer = omnivore.csv.parse( this._dataProviderService.getCSV(),{
           // latfield: 'latitude',
           // lonfield: 'longitude',
           // delimiter: ','

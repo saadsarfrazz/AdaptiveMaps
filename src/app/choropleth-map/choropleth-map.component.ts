@@ -44,7 +44,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService) {                
     super();
-    this.geoJSONData =  _dataProviderService.geoJSONData;
+    this.geoJSONData =  _dataProviderService.getGeoJSON();
   }
 
   ngOnInit() {
@@ -55,10 +55,16 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   //do whatever here
   attributeSelected(value){
     console.log("ChoroplethMap value selected is : "+ value);
-    this.drawDataOnMap(value);
+    //identify kind of overlay data to expect 
+    var dataType = this._dataProviderService.uploadedData_Type;
+    if(dataType== 'geojson'){
+      this.drawGeoJSONDataOnMap(value);
+    }
+    //TODO : support csv here
+    
   }
   
-  public drawDataOnMap(attributeName : string){
+  public drawGeoJSONDataOnMap(attributeName : string){
     //init index for map colors
     this.nominalColorIndex = 0;
     this.selectedAttribute = attributeName;

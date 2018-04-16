@@ -15,7 +15,7 @@ export class GraduatedCircularMapComponent implements OnInit {
               private _dataProviderService : DataproviderService) { }
 
   ngOnInit() {
-    console.log("Choropleth init");
+    console.log("Graduated Circular init");
     this._mapService.loadGraduatedCircularMap();
   }
 
