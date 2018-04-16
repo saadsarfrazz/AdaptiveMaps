@@ -26,7 +26,8 @@
       "scripts": [
          "../node_modules/leaflet/dist/leaflet.js",
          "../node_modules/leaflet-omnivore/leaflet-omnivore.js",
-         "../node_modules/randomcolor/randomColor.js"
+         "../node_modules/randomcolor/randomColor.js",
+         "../node_modules/papaparse/papaparse.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {
