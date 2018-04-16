@@ -7,7 +7,6 @@ import { MapComponent } from './map/map.component';
 import { UploadfileComponent } from './uploadfile/uploadfile.component';
 import { VisualizationTemplateComponent } from './visualization-template/visualization-template.component';
 
-import {MapService} from './services/map.service';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {DataproviderService} from './services/dataprovider.service';
 import {BasicCalculationsService} from './services/basic-calculations.service';
@@ -34,7 +33,6 @@ import { BasicMapComponent } from './basicmap/basicmap.component';
     BrowserModule
   ],
   providers: [
-    MapService,
     VisualizationProviderService,
     DataproviderService,
     BasicCalculationsService

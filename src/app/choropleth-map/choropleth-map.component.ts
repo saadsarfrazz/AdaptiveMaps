@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BasicMapComponent} from '../basicmap/basicmap.component';
 
-import {MapService} from '../services/map.service';
 import {DataproviderService} from '../services/dataprovider.service';
 import{BasicCalculationsService} from '../services/basic-calculations.service';
 
