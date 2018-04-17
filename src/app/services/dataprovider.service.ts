@@ -11,6 +11,9 @@ export class DataproviderService {
   public uploadedData_Type : string;
 
   private csvData : any;
+  //used for processing on data because csv file can't be parsed 
+  //to calulate basic statistics likes min/max value of some attribute
+  private csvDataJSON : any;
 
   private geoJSONData : any;
 
@@ -47,12 +50,15 @@ export class DataproviderService {
     //set attribute names from csv file here
     //converting csv to json using library Papa
     var columnNames= [];
+    var parsedData;
     Papa.parse(this.csvData, {
       complete: function(results) {
         columnNames = results.data[0];
+        parsedData = results;
         // console.log("Finished:", results.data);
       }
     });
+    this.csvDataJSON = parsedData;
     console.log("File Parse with column Names" + columnNames);
     this.columnNames = columnNames;
   }
@@ -63,6 +69,10 @@ export class DataproviderService {
 
   public getCSV(): any{
     return this.csvData;
+  }
+
+  public getCSVJSON(): any {
+    return this.csvDataJSON;
   }
 
 }
