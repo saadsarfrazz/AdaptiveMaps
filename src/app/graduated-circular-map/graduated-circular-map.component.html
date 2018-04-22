@@ -6,7 +6,7 @@
         Size Variable<app-attributes-list (valueSelected)="sizeOptionSelected($event)"></app-attributes-list>
         Color Variable<app-attributes-list (valueSelected)="colorOptionSelected($event)"></app-attributes-list>        <div>
         <div class="legend">
-            <h4 id=’legendTitle’>{{selectedAttribute}}</h4>
+            <h4 id=’legendTitle’>{{selectedSizeAttribute}}</h4>
             <div class="symbolsContainer">                
                 <div *ngFor="let boundary of boundaryArray; let i = index" class="legendCircle" 
                     [style.width.px]="circleSizesArray[i] * 2" [style.height.px]="circleSizesArray[i] * 2" 
@@ -15,6 +15,21 @@
                         <!-- Display Values -->
                         {{ boundaryArray[i] }}
                     </span>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h4 id=’legendTitle’>{{selectedColorAttribute}}</h4>
+            <div>
+                <div *ngFor="let boundary of colorBoundaryArray; let i = index">  
+                                  
+                    <span *ngIf="boundary">
+                        <!--Display color -->
+                        <i [style.background]="ratioColorsList[i]"></i>
+                        <!-- Display Values -->
+                        <span *ngIf="i==0">     0 - {{colorBoundaryArray[i] }} </span>
+                        <span *ngIf="i>0">     {{ +colorBoundaryArray[i-1] + 1  }} - {{colorBoundaryArray[i] }} </span>
+                    </span> <br>
                 </div>
             </div>
         </div>
