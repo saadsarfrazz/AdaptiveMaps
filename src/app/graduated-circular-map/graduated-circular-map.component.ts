@@ -94,7 +94,9 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    }
 
   private drawCircle = ( feature : any , latlng : any) : any => {
-    return L.circleMarker(latlng, this.circleStyle(feature));
+    var circle = L.circleMarker(latlng, this.circleStyle(feature));
+    circle.bindPopup(feature.properties[this.selectedAttribute]);
+    return circle;
   }
 
   private circleStyle(feature : any) : any{
