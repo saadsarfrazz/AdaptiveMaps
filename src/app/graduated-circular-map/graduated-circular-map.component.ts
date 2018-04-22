@@ -3,10 +3,10 @@ import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
 import{BasicCalculationsService} from '../services/basic-calculations.service';
+import{ColorProviderService} from '../services/color-provider.service';
 
 
 declare var L: any;
-declare var randomColor : any;
 
 //lib to overlay csv file
 declare var omnivore : any;
@@ -36,21 +36,24 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    selectedSizeAttribute : string = "";
    selectedColorAttribute : string = "";
 
-   ratioColorsList : string[] = randomColor({
-        count: 5,
-        // luminosity: 'dark',
-        hue: 'green',
-        // format: 'hsl'
-  });
+   ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(9);
+  //  randomColor({
+  //       count: 5,
+  //       // luminosity: 'dark',
+  //       hue: 'green',
+  //       // format: 'hsl'
+  // });
 
   constructor(private _dataProviderService : DataproviderService,
-              private _basicCalculationsService : BasicCalculationsService) { 
+              private _basicCalculationsService : BasicCalculationsService,
+              private _colorProviderService : ColorProviderService) { 
                 super();
               }
 
   ngOnInit() {
     console.log("Graduated Circular init");
     this.plotBaicMap();
+    console.log("Color array is");
   }
 
   sizeOptionSelected(value){
@@ -61,6 +64,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   }
 
   colorOptionSelected(attributeValue){
+
     this.selectedColorAttribute = attributeValue;
     console.log("Color variable in GCMap is" + attributeValue);
     //updata colors for each circle

@@ -26,8 +26,12 @@
       "scripts": [
          "../node_modules/leaflet/dist/leaflet.js",
          "../node_modules/leaflet-omnivore/leaflet-omnivore.js",
-         "../node_modules/randomcolor/randomColor.js",
-         "../node_modules/papaparse/papaparse.js"
+         "../node_modules/papaparse/papaparse.js",
+         "../node_modules/d3/dist/d3.min.js",
+
+         "../node_modules/d3-color/build/d3-color.min.js", 
+         "../node_modules/d3-interpolate/build/d3-interpolate.min.js",
+         "../node_modules/d3-scale-chromatic/dist/d3-scale-chromatic.min.js"
       ],
       "environmentSource": "environments/environment.ts",
       "environments": {

@@ -94,7 +94,7 @@ export class BasicCalculationsService {
       value+= avg;
     }
     result.push(max);//ignore decimals
-    console.log("Result array is " + result);
+    // console.log("Result array is " + result);
     return result;
   }
 

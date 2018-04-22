@@ -3,9 +3,10 @@ import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
 import{BasicCalculationsService} from '../services/basic-calculations.service';
+import{ColorProviderService} from '../services/color-provider.service';
 
 declare var L: any;
-declare var randomColor : any;
+// declare var randomColor : any;
 
 @Component({
   selector: 'app-choropleth-map',
@@ -22,17 +23,19 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
 
   //details : http://randomcolor.llllll.li/
-  private nominalColorsList : string[] = randomColor({
-        count: 100,
-        luminosity: 'dark',
-  });
+  private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(100) ;
+  // = randomColor({
+  //       count: 100,
+  //       luminosity: 'dark',
+  // });
 
-  ratioColorsList : string[] = randomColor({
-        count: 100,
-        // luminosity: 'dark',
-        hue: 'red',
-        // format: 'hsl'
-  });
+  ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(5);
+  // randomColor({
+  //       count: 100,
+  //       // luminosity: 'dark',
+  //       hue: 'red',
+  //       // format: 'hsl'
+  // });
 
   private nominalColorIndex : number = 0;
 
@@ -41,7 +44,8 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   private boundaryArray : number[];
   
   constructor(private _dataProviderService : DataproviderService,
-              private _basicCalculationsService : BasicCalculationsService) {                
+              private _basicCalculationsService : BasicCalculationsService,
+              private _colorProviderService : ColorProviderService) {                
     super();
     this.geoJSONData =  _dataProviderService.getGeoJSON();
   }
@@ -83,7 +87,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     if(this.mapOverlay != null)
       this.map.removeLayer(this.mapOverlay);
 
-    console.log(this.customStyle);
+    // console.log(this.customStyle);
 
     // this.selectedObject = attributeName;
     // var customstyle = this.customStyle;
@@ -115,10 +119,18 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     //  d represent string value , could be used here if req'
     // console.log(typeof d);
     if( typeof d == "string"){
+      //TODO : get unique values here
+      // //reinit color list based on list size
+      // var size = this.nominalColorsList.length;
+      // this.nominalColorsList =  this._colorProviderService.getNominalDataColors(size) ;
       var color = this.nominalColorsList[this.nominalColorIndex];
       this.nominalColorIndex++;
       return color;
     }else{  
+      //update colorList size by initializing it based on boundary array size
+      var size = this.boundaryArray.length;
+      this.ratioColorsList  = this._colorProviderService.getRatioDataColors(size);
+
       //assign same color for each class
       //starting from 1 because 0 index contain min value
       for(var i=1; i < this.boundaryArray.length ; i++){
