@@ -1,38 +1,42 @@
 import { Injectable } from '@angular/core';
 import {SUPPORTED_VISUALIZATIONS} from '../shared/supported-visualizations';
+import { ISupportedVisualizationModel } from '../shared/vis-model';
+
+import {ValidVisualizations} from '../interfaces/valid-visualizations-interface';
 
 @Injectable()
 export class VisualizationProviderService {
 
-  // private visualizationList : VisualizationTemplateComponent[] = new Array();
+  //contains final information regarding display of supported
+  //visualizations. Will be intialized based on static SUPPORTED_VISUALIZATIONS
+  //and then applicable visualizations will be updated based on information from 
+  //dataprovider.service, once data is uploaded.
+  private supportedVisualizations: ISupportedVisualizationModel[] = SUPPORTED_VISUALIZATIONS.slice(0);
 
   constructor() { }
 
-  getSupportedVisualizations(){
-    //copy of supported visualizations
-    return SUPPORTED_VISUALIZATIONS.slice(0);
+  /**
+   * This method updates the static visulaization information by 
+   * marking the visualization.enabled as true based on names 
+   * that are found in the argument list
+   */
+  public updateVisualizationInformation(validVisualizations : ValidVisualizations){
+    //get a copy of static visualizations
+    // this.supportedVisualizations = SUPPORTED_VISUALIZATIONS.slice(0);
+    for(let validViz of validVisualizations.detectedVisualizations){
+      console.log("Detected visualization is : " + validViz);
+      for(let visualization of this.supportedVisualizations ){
+        if(visualization.name == validViz){
+          visualization.enabled = true;
+        }
+      }
+    }
+
   }
 
-
-  // /**
-  //  * Generates all visualizations.
-  //  * 
-  //  */
-  // public generateVisualizations() : VisualizationTemplateComponent[]{
-  //   let visualization = new VisualizationTemplateComponent();
-  //   visualization.name = "First Visualization";
-  //   visualization.pathToLogo = "Some path here";
-
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   this.visualizationList.push(visualization);
-  //   return this.visualizationList;
-
-  // }
+  getSupportedVisualizations(){
+    //copy of supported visualizations
+    return this.supportedVisualizations;
+  }
 
 }

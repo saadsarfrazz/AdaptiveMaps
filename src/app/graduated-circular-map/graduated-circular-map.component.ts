@@ -36,7 +36,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    selectedSizeAttribute : string = "";
    selectedColorAttribute : string = "";
 
-   ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(9);
+   ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(5);
   //  randomColor({
   //       count: 5,
   //       // luminosity: 'dark',
