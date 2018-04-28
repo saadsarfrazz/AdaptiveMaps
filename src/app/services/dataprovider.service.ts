@@ -54,6 +54,8 @@ export class DataproviderService {
     this.prepareValidVisualizations();
 
     // Update the visualization provider service data
+    console.log("Valid visualizations");
+    console.log(this.validVisualizations);
     this._visualizationProviderService.updateVisualizationInformation(this.validVisualizations);
   }
 
@@ -106,8 +108,10 @@ export class DataproviderService {
       console.log(freq_JSON);
       //2.a if data type is polygon and has nominal/ratio data
       //Push: CHOROPLETH_MAP
-      if(type=="polygon" && (freq_JSON.nominal>0 || freq_JSON.ratio>0) ){
-        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR);
+      if(type=="Polygon" && (freq_JSON.nominal>0 || freq_JSON.ratio>0) ){
+        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP);
+      }else if(type=="Point" && (freq_JSON.nominal>0 || freq_JSON.ratio>0)){
+        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2);
       }            
     }
   }

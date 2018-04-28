@@ -26,6 +26,8 @@ export class VisualizationProviderService {
     for(let validViz of validVisualizations.detectedVisualizations){
       console.log("Detected visualization is : " + validViz);
       for(let visualization of this.supportedVisualizations ){
+        //set default value to false
+        visualization.enabled = false;
         if(visualization.name == validViz){
           visualization.enabled = true;
         }

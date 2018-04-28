@@ -35,15 +35,13 @@ export class MapComponent implements OnInit {
 
     //Draw choropleth map
     switch(selectedValue){
-      case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_MULTICOLOR:
+      case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP:
         this.displayChoroplethMap = true;
         this.displayGCMap = false;
         //do something here
         // this.drawChoroplethMap();
         return;
-      case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP_SEQUENTIAL_COLOR:
-        return;
-      case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP:
+      case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2:
         this.displayGCMap = true;
         this.displayChoroplethMap = false;
         // this.drawGraduatedCircularMap();
