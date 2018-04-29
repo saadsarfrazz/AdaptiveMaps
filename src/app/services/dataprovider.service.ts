@@ -110,9 +110,30 @@ export class DataproviderService {
       //Push: CHOROPLETH_MAP
       if(type=="Polygon" && (freq_JSON.nominal>0 || freq_JSON.ratio>0) ){
         this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP);
-      }else if(type=="Point" && (freq_JSON.nominal>0 || freq_JSON.ratio>0)){
-        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2);
-      }            
+      }else if(type=="Point"){
+        //GCM-1
+        if(freq_JSON.ratio > 0 ){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_1);
+        }
+        
+        //GCM-2
+        if(freq_JSON.nominal>0 || freq_JSON.ratio>0){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2);
+        }
+
+        //DOT-map
+        if(freq_JSON.nominal>0 && freq_JSON.interval>0){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP);
+        }
+
+        //Pie Chart map
+        if(freq_JSON.ratio > 1){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP);
+        }
+
+        //TODO: heat maps here
+
+      }             
     }
   }
 
