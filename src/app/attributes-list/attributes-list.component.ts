@@ -17,7 +17,7 @@ export class AttributesListComponent implements OnInit {
   constructor(private _dataProviderService : DataproviderService) { }
 
   ngOnInit() {
-    this.listOfAttributes = this._dataProviderService.getAllAttributesNames();
+    this.listOfAttributes = this._dataProviderService.getAllAttributesNames(null);
   }
 
   private optionSelected(value : string){

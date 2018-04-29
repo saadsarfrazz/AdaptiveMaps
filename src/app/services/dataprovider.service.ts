@@ -3,6 +3,7 @@ import { Injectable,Input } from '@angular/core';
 import {VisualizationProviderService} from './visualization-provider.service';
 
 import {ValidVisualizations} from '../interfaces/valid-visualizations-interface';
+import {ColumnNames} from '../interfaces/column-names-interface';
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
 
 //loading Papa library required for csv parsing
@@ -22,7 +23,17 @@ export class DataproviderService {
 
   private geoJSONData : any;
 
+  //default column names
   private columnNames : string [];
+
+  private columnNamesWithScales : ColumnNames[] = [];
+
+  public setColumnNamesWithDataScale(columnNamesWithScales : ColumnNames[]){
+    this.columnNamesWithScales = columnNamesWithScales;
+  }
+
+  //column names for CHOROPLETH_MAP
+  private columnNamesChoroplethmap : ColumnNames[];
 
   //a json object containing meta information about
   //valid visualizations that can be created
@@ -33,10 +44,19 @@ export class DataproviderService {
    * Returns a list of all names of columns found in uploaded file
    * irrespective of its type
    */
-  public getAllAttributesNames() : string [] {
+  public getDefaultAttributesNames() : string [] {
       return this.columnNames;
   }
-
+  
+  /**
+   * returns default column names if nothing is selected
+   */
+  public getAllAttributesNames(visualizationName : SUPPORTED_VISUALIZATIONS_ENUM) : string [] {
+    if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP){
+      //return valid list here
+    }
+      return this.columnNames;
+  }
   
   /**
    * Helper method to set the data that is then used by all 
@@ -57,6 +77,8 @@ export class DataproviderService {
     console.log("Valid visualizations");
     console.log(this.validVisualizations);
     this._visualizationProviderService.updateVisualizationInformation(this.validVisualizations);
+
+    //prepare columnNames for different visualizations
   }
 
   public setCSV(data : any){

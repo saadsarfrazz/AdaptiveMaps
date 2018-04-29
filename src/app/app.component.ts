@@ -14,6 +14,7 @@ export class AppComponent implements OnInit{
 
   displayMap : boolean = false;
   displayVisualizationsList : boolean = false;
+  displayColumnSelection : boolean = false;
 
   //this value is sent to map component to trigger drawing of a particular map
   //this value is updated when user clicks on one of the supported visualization
@@ -39,8 +40,14 @@ export class AppComponent implements OnInit{
   dataSelectionListener(value:boolean){
     //reset map component
     this.displayMap = false;
-    this.displayVisualizationsList = true;
+    this.displayVisualizationsList = false;
+    this.displayColumnSelection = true;
     
+  }
+
+  columnTypesSelected(value:boolean){
+    this.displayVisualizationsList = true;
+    this.displayColumnSelection = false;
   }
 }
  

@@ -2,6 +2,8 @@
   <!--Display fileupload/existing data selection -->
   <app-uploadfile (dataSelected)="dataSelectionListener($event)" ></app-uploadfile>
   <!--Display list of supported map visualizations -->
+  <app-sel-column-types  (columnTypesSelected)="columnTypesSelected($event)"
+                         *ngIf="displayColumnSelection" ></app-sel-column-types>
   <div class="row" *ngIf="displayVisualizationsList">
     <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
         (click)="visualizationSelected(vis)"></app-visualization-template>

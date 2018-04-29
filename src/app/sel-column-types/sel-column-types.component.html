@@ -1,0 +1,47 @@
+<div class="row">
+  <div class="col-2">
+    <h5>Interval Scale</h5>
+  </div>
+  <div class="col-10">
+    Interval data are measured and have constant, equal distances between values, but the zero point is arbitrary. The zero isn’t meaningful, it doesn’t mean a true absence of something. An example of interval level data is intelligence, as measured on some IQ test. We know that the scoring difference between a 100 and a 110 is equal to the scoring distance between 120 and 130, but there is no true zero on this test and an IQ of 140 is not twice as high as an IQ of 70. 
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    <h5>Ratio Scale</h5>
+  </div>
+  <div class="col-10">
+    Ratio level data are those which have equal intervals between values, and the zero is meaningful. Some laboratory tests are good examples of ratio level data. A person who weighs 100 kilos is twice as heavy as a person who weighs 50 kilos, and a measure of zero kilos is meaningful. Other examples include pulse rate and respiratory rate." 
+  </div>
+</div>
+<div class="row">
+  <div class="col-2">
+    Source
+  </div>
+  <div class="col-10">
+    <a target="_blank" href="https://www.researchgate.net/post/Difference_between_interval_and_ratio_variable_How_to_explain">Source</a>
+  </div>
+</div>
+
+<br>
+<br>
+
+<table class="table table-hover">
+  <thead>
+    <th>ColumName</th>
+    <th>Interval Scale</th>
+    <th>Ratio Scale</th>
+  </thead>
+  <tbody>
+    <tr *ngFor="let col of columnTypes; let i=index;">
+      <td>{{col.column_name}}</td>
+      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="interval"></td>
+      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="ratio"></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
+      <td><button (click)="updateValues()" class="btn-primary">Submit</button></td>
+    </tr>    
+  </tbody>
+</table>

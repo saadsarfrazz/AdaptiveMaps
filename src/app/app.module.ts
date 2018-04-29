@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
@@ -16,6 +17,7 @@ import { ChoroplethMapComponent } from './choropleth-map/choropleth-map.componen
 import { GraduatedCircularMapComponent } from './graduated-circular-map/graduated-circular-map.component';
 import { AttributesListComponent } from './attributes-list/attributes-list.component';
 import { BasicMapComponent } from './basicmap/basicmap.component';
+import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.component';
 
 
 
@@ -28,10 +30,12 @@ import { BasicMapComponent } from './basicmap/basicmap.component';
     ChoroplethMapComponent,
     GraduatedCircularMapComponent,
     AttributesListComponent,
-    BasicMapComponent
+    BasicMapComponent,
+    SelectColumnTypesComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    FormsModule
   ],
   providers: [
     VisualizationProviderService,
