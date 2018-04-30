@@ -1,3 +1,9 @@
-<select >
-    <option  *ngFor="let attr of listOfAttributes" (click)="optionSelected(attr.column_name)" value="attr.column_name">{{attr.column_name}}-{{attr.isValid}}</option>
+<select class="selectpicker">
+    <option  *ngFor="let attr of listOfAttributes" 
+            (click)="optionSelected(attr.column_name)" value="attr.column_name"
+            [disabled]="!attr.isValid">
+            
+            {{attr.column_name}} ({{attr.type}})
+            
+    </option>
 </select>
