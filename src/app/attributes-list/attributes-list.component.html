@@ -1,3 +1,3 @@
 <select >
-    <option  *ngFor="let val of listOfAttributes" (click)="optionSelected(val)" value="val">{{val}}</option>
+    <option  *ngFor="let attr of listOfAttributes" (click)="optionSelected(attr.column_name)" value="attr.column_name">{{attr.column_name}}-{{attr.isValid}}</option>
 </select>

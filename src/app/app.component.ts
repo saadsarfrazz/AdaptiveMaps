@@ -37,11 +37,20 @@ export class AppComponent implements OnInit{
   /**
    * updates view when new data is selected for visualization
    */
-  dataSelectionListener(value:boolean){
-    //reset map component
-    this.displayMap = false;
-    this.displayVisualizationsList = false;
-    this.displayColumnSelection = true;
+  dataUploadedListener(value:boolean){
+    console.log("app.component.datauploadedListener:  " + value);
+    if(value == true){
+      
+      //reset all visualization components
+      this.displayColumnSelection = false;
+      this.displayMap = false;
+      this.displayVisualizationsList = false;
+      
+      this.displayColumnSelection = true;
+    }else{ //TODO: this does not seem to work well
+      this.displayColumnSelection = false;
+    }
+    
     
   }
 

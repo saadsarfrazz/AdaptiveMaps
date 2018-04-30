@@ -26,6 +26,9 @@ export class UploadfileComponent implements OnInit {
   }
 
   fileChange(event) {
+    //this trigger is used to reset all displayed components
+    this.triggerDataSelected(false);
+
     console.log("File loaded");
     let fileList: FileList = event.target.files;
     if(fileList.length > 0) {

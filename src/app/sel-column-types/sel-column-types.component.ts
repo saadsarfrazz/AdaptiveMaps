@@ -24,15 +24,9 @@ export class SelectColumnTypesComponent implements OnInit {
 
   ngOnInit() {
     //initialize columnTypes based on initial column names from data-provider-service
-    console.log("sel-col-type initialized");
-    var columnNames = this._dataProviderService.getDefaultAttributesNames();
-    for (let col of columnNames){
-      this.columnTypes.push(
-        {
-          column_name : col
-        }
-      );      
-    }
+    console.log("Init Select Columns with columns");    
+    this.columnTypes = this._dataProviderService.getAttributeNames();
+    console.log(this.columnTypes);
   }
 
   /**

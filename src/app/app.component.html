@@ -1,9 +1,10 @@
 <div class="container">
   <!--Display fileupload/existing data selection -->
-  <app-uploadfile (dataSelected)="dataSelectionListener($event)" ></app-uploadfile>
-  <!--Display list of supported map visualizations -->
-  <app-sel-column-types  (columnTypesSelected)="columnTypesSelected($event)"
+  <app-uploadfile (dataSelected)="dataUploadedListener($event)" ></app-uploadfile>
+  <!--Display columns to categorize them w.r.t. data scales -->
+  <app-sel-column-types (columnTypesSelected)="columnTypesSelected($event)"
                          *ngIf="displayColumnSelection" ></app-sel-column-types>
+  <!--Display list of supported map visualizations -->
   <div class="row" *ngIf="displayVisualizationsList">
     <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
         (click)="visualizationSelected(vis)"></app-visualization-template>

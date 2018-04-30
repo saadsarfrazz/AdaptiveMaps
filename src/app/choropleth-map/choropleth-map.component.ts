@@ -5,6 +5,8 @@ import {DataproviderService} from '../services/dataprovider.service';
 import{BasicCalculationsService} from '../services/basic-calculations.service';
 import{ColorProviderService} from '../services/color-provider.service';
 
+import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
+
 declare var L: any;
 // declare var randomColor : any;
 
@@ -20,6 +22,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
   geoJSONData : any;
   
+  mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP;
 
 
   //details : http://randomcolor.llllll.li/

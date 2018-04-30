@@ -24,12 +24,23 @@ export class DataproviderService {
   private geoJSONData : any;
 
   //default column names
-  private columnNames : string [];
+  // private columnNames : string [];
 
   private columnNamesWithScales : ColumnNames[] = [];
 
+  /**
+   * Updates column information based on user selection
+   */
   public setColumnNamesWithDataScale(columnNamesWithScales : ColumnNames[]){
     this.columnNamesWithScales = columnNamesWithScales;
+    
+    //prepare which visualizations can be created
+    this.prepareValidVisualizations();
+
+    // Update the visualization provider service data
+    console.log("Valid visualizations");
+    console.log(this.validVisualizations);
+    this._visualizationProviderService.updateVisualizationInformation(this.validVisualizations);
   }
 
   //column names for CHOROPLETH_MAP
@@ -44,18 +55,35 @@ export class DataproviderService {
    * Returns a list of all names of columns found in uploaded file
    * irrespective of its type
    */
-  public getDefaultAttributesNames() : string [] {
-      return this.columnNames;
+  public getAttributeNames() : ColumnNames [] {
+      return this.columnNamesWithScales;
   }
   
   /**
    * returns default column names if nothing is selected
    */
-  public getAllAttributesNames(visualizationName : SUPPORTED_VISUALIZATIONS_ENUM) : string [] {
+  public getAllAttributesNames(visualizationName : SUPPORTED_VISUALIZATIONS_ENUM) : ColumnNames [] {
+   //return a copy ColumnNames with valid properties enabled
+    var clone_columnNamesWithScales = this.columnNamesWithScales.slice(0);
     if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP){
-      //return valid list here
+      this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
+
+    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2){
+      this.activateAttributes(clone_columnNamesWithScales,["ratio","ratio"])
     }
-      return this.columnNames;
+      return clone_columnNamesWithScales;
+  }
+
+  private activateAttributes(columnNames: ColumnNames[], validColumnTypes : string[] ){
+    for(let col of columnNames){
+      for(let validType of validColumnTypes ){
+        if(col.type == validType){
+          col.isValid = true;
+          break;
+        }
+      }
+    }
+    
   }
   
   /**
@@ -69,18 +97,29 @@ export class DataproviderService {
 
     //set attribute/column names
     var firstJSON = this.geoJSONData["features"][0]["properties"];
-    this.columnNames = Object.keys(firstJSON);
-    //prepare which visualizations can be created
-    this.prepareValidVisualizations();
+    var columnNames = Object.keys(firstJSON);  
 
-    // Update the visualization provider service data
-    console.log("Valid visualizations");
-    console.log(this.validVisualizations);
-    this._visualizationProviderService.updateVisualizationInformation(this.validVisualizations);
-
-    //prepare columnNames for different visualizations
+    //prepare information about columns
+    //including their names and initial datatype detected
+    for (let col of columnNames){
+      this.columnNamesWithScales.push(
+        {
+          column_name : col,
+          type : this.getColumnType(col)
+        }
+      );      
+    }
   }
 
+  private getColumnType(colName) : string {
+    // get the value
+    var value = this.geoJSONData.features[0]["properties"][colName];
+    var valueType = this.getValueType(value);
+
+    return valueType;
+  }
+
+  //Deprecated
   public setCSV(data : any){
     this.uploadedData_Type = "csv";
     this.csvData = data;
@@ -98,7 +137,7 @@ export class DataproviderService {
     });
     this.csvDataJSON = parsedData;
     console.log("File Parse with column Names" + columnNames);
-    this.columnNames = columnNames;
+    // this.columnNames = columnNames;
   }
 
   public getGeoJSON(): any{
@@ -177,14 +216,13 @@ export class DataproviderService {
       ratio : 0
     };
     if(this.uploadedData_Type == "geojson"){
-      for(let columnName of this.columnNames ){
-        //get the value
-        var value = this.geoJSONData.features[0]["properties"][columnName];
-        var valueType = this.getValueType(value);
-        if(valueType!=null){
-          scales_json[valueType]++;
+      for(let column of this.columnNamesWithScales ){
+        
+        
+        if(column.type){
+          scales_json[column.type]++;
         }else{
-          alert("TODO: null type found for column : " + columnName);
+          alert("TODO: null type found for column : " + column.column_name);
           //TODO: look for value iteratively for other objects
           //until attribute value is found
         }

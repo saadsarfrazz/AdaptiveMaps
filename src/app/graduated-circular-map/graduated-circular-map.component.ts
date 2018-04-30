@@ -5,6 +5,7 @@ import {DataproviderService} from '../services/dataprovider.service';
 import{BasicCalculationsService} from '../services/basic-calculations.service';
 import{ColorProviderService} from '../services/color-provider.service';
 
+import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
 
 declare var L: any;
 
@@ -37,12 +38,8 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    selectedColorAttribute : string = "";
 
    ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(5);
-  //  randomColor({
-  //       count: 5,
-  //       // luminosity: 'dark',
-  //       hue: 'green',
-  //       // format: 'hsl'
-  // });
+
+   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2;
 
   constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService,
