@@ -21,7 +21,6 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   mapOverlay : any = null;
   selectedAttribute : string = "";
 
-  geoJSONData : any;
   
   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP;
 

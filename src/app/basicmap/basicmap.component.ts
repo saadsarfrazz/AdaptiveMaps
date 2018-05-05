@@ -15,6 +15,8 @@ export class BasicMapComponent implements OnInit {
 
   map : any;
 
+  geoJSONData : any;
+
   constructor() { }
 
   ngOnInit() {

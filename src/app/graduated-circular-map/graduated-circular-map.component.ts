@@ -6,6 +6,7 @@ import{BasicCalculationsService} from '../services/basic-calculations.service';
 import{ColorProviderService} from '../services/color-provider.service';
 
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
+import {ColumnNames} from '../interfaces/column-names-interface';
 
 declare var L: any;
 
@@ -53,25 +54,26 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
     console.log("Color array is");
   }
 
-  sizeOptionSelected(value){
-    console.log("Size variable in GCMap is" + value);
-    this.selectedSizeAttribute = value;
-    this.loadGraduatedCircularMap(value);
+  sizeOptionSelected(columnName : ColumnNames){
+    // console.log("Size variable in GCMap is" + columnName.column_name);
+    this.selectedSizeAttribute = columnName.column_name;
+    // this.loadGraduatedCircularMap_CSV(columnName.column_name);
+    this.geoJSONData =  this._dataProviderService.getGeoJSON();
+    this.loadGraduatedCircularMap_JSON(columnName);
 
   }
 
-  colorOptionSelected(attributeValue){
+  colorOptionSelected(columnName : ColumnNames){
 
-    this.selectedColorAttribute = attributeValue;
-    console.log("Color variable in GCMap is" + attributeValue);
+    this.selectedColorAttribute = columnName.column_name;
+    // console.log("Color variable in GCMap is" + attributeValue);
+
     //updata colors for each circle
     //Step:1 Calculate statitics i.e. class intervals for this attribute
-    console.log( this._dataProviderService.getCSVJSON());
-    var type = this._basicCalculationsService.getType_CSV(this._dataProviderService.getCSVJSON(),attributeValue);
-    if(type =="number"){//Generate gc maps only for numerical data
+    if(columnName.type =="ratio"){//Generate gc maps only for numerical data
       this.colorBoundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray_CSV(this._dataProviderService.getCSVJSON(),
-                                                      attributeValue,
+                                calculateBoundaryArray(this.geoJSONData,
+                                                      columnName.column_name,
                                                      5);  
     console.log("Color boundary array : " + this.colorBoundaryArray);
     //Step-2 : Remove existing mapoverlay and redraw the circles with 
@@ -79,36 +81,97 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
     this.map.removeLayer(this.mapOverlay);
 
     var circleStyle = this.drawCircle;
-    console.log("circleStyle" + circleStyle);
-    var customLayer = L.geoJson(null, {
+    this.mapOverlay = L.geoJson(this.geoJSONData, {
       pointToLayer : circleStyle
     });
-
-    this.mapOverlay = omnivore.csv.parse( this._dataProviderService.getCSV(),{
-        // latfield: 'latitude',
-        // lonfield: 'longitude',
-        // delimiter: ','
-    },customLayer );
 
     //zoom to layer
     this.map.fitBounds(this.mapOverlay.getBounds());
 
     // // var csvLayer = omnivore.csv.parse(this.mapData);
     this.map.addLayer(this.mapOverlay);
-
-
-
     }
+    
     
   }
 
-  public loadGraduatedCircularMap(attributeName : string){
-    console.log( this._dataProviderService.getCSVJSON());
-    var type = this._basicCalculationsService.getType_CSV(this._dataProviderService.getCSVJSON(),attributeName);
-    if(type =="number"){//Generate gc maps only for numerical data
+  ////Deprecated - since csv is not focus for now
+  // updateCircleColors_CSV(){
+  //   var type = this._basicCalculationsService.getType_CSV(this._dataProviderService.getCSVJSON(),attributeValue);
+  //   if(type =="number"){//Generate gc maps only for numerical data
+  //     this.colorBoundaryArray = this._basicCalculationsService.
+  //                               calculateBoundaryArray_CSV(this._dataProviderService.getCSVJSON(),
+  //                                                     attributeValue,
+  //                                                    5);  
+  //   console.log("Color boundary array : " + this.colorBoundaryArray);
+  //   //Step-2 : Remove existing mapoverlay and redraw the circles with 
+  //   //new color scheme
+  //   this.map.removeLayer(this.mapOverlay);
+
+  //   var circleStyle = this.drawCircle;
+  //   console.log("circleStyle" + circleStyle);
+  //   var customLayer = L.geoJson(null, {
+  //     pointToLayer : circleStyle
+  //   });
+
+  //   this.mapOverlay = omnivore.csv.parse( this._dataProviderService.getCSV(),{
+  //       // latfield: 'latitude',
+  //       // lonfield: 'longitude',
+  //       // delimiter: ','
+  //   },customLayer );
+
+  //   //zoom to layer
+  //   this.map.fitBounds(this.mapOverlay.getBounds());
+
+  //   // // var csvLayer = omnivore.csv.parse(this.mapData);
+  //   this.map.addLayer(this.mapOverlay);
+
+
+
+  //   }
+  // }
+
+  //deprecated - can be used for CSV data sets for future
+  // public loadGraduatedCircularMap_CSV(attributeName : string){
+  //   console.log( this._dataProviderService.getCSVJSON());
+  //   var type = this._basicCalculationsService.getType_CSV(this._dataProviderService.getCSVJSON(),attributeName);
+  //   if(type =="number"){//Generate gc maps only for numerical data
+  //     this.boundaryArray = this._basicCalculationsService.
+  //                               calculateBoundaryArray_CSV(this._dataProviderService.getCSVJSON(),
+  //                                                     attributeName,
+  //                                                    5);  
+  //     console.log(this.boundaryArray);
+      
+
+  //     if(this.mapOverlay != null)
+  //       this.map.removeLayer(this.mapOverlay);
+      
+  
+  //     var circleStyle = this.drawCircle;
+  //     console.log("circleStyle" + circleStyle);
+  //     var customLayer = L.geoJson(null, {
+  //       pointToLayer : circleStyle
+  //     });
+
+  //     this.mapOverlay = omnivore.csv.parse( this._dataProviderService.getCSV(),{
+  //         // latfield: 'latitude',
+  //         // lonfield: 'longitude',
+  //         // delimiter: ','
+  //     },customLayer );
+
+  //     //zoom to layer
+  //     this.map.fitBounds(this.mapOverlay.getBounds());
+
+  //     // // var csvLayer = omnivore.csv.parse(this.mapData);
+  //     this.map.addLayer(this.mapOverlay);
+  //   }
+  //  }
+
+    public loadGraduatedCircularMap_JSON(attributeName : ColumnNames){
+    if(attributeName.type =="ratio"){//Generate gc maps only for numerical data
       this.boundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray_CSV(this._dataProviderService.getCSVJSON(),
-                                                      attributeName,
+                                calculateBoundaryArray(this._dataProviderService.getGeoJSON(),
+                                                      attributeName.column_name,
                                                      5);  
       console.log(this.boundaryArray);
       
@@ -119,20 +182,12 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   
       var circleStyle = this.drawCircle;
       console.log("circleStyle" + circleStyle);
-      var customLayer = L.geoJson(null, {
+      this.mapOverlay = L.geoJson(this.geoJSONData, {
         pointToLayer : circleStyle
       });
-
-      this.mapOverlay = omnivore.csv.parse( this._dataProviderService.getCSV(),{
-          // latfield: 'latitude',
-          // lonfield: 'longitude',
-          // delimiter: ','
-      },customLayer );
-
       //zoom to layer
       this.map.fitBounds(this.mapOverlay.getBounds());
 
-      // // var csvLayer = omnivore.csv.parse(this.mapData);
       this.map.addLayer(this.mapOverlay);
     }
    }
