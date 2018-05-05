@@ -19,7 +19,7 @@ export class AttributesListComponent implements OnInit {
   listOfAttributes : ColumnNames [];
 
   @Output()
-  valueSelected = new EventEmitter<string>();
+  valueSelected = new EventEmitter<ColumnNames>();
 
   constructor(private _dataProviderService : DataproviderService) { }
 
@@ -30,7 +30,7 @@ export class AttributesListComponent implements OnInit {
     console.log(this.listOfAttributes);
   }
 
-  private optionSelected(value : string){
+  private optionSelected(value : ColumnNames){
     // console.log("value selected in component");
     this.valueSelected.emit(value);
 

@@ -6,6 +6,7 @@ import{BasicCalculationsService} from '../services/basic-calculations.service';
 import{ColorProviderService} from '../services/color-provider.service';
 
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
+import {ColumnNames} from '../interfaces/column-names-interface';
 
 declare var L: any;
 // declare var randomColor : any;
@@ -26,25 +27,23 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
 
   //details : http://randomcolor.llllll.li/
-  private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(100) ;
-  // = randomColor({
-  //       count: 100,
-  //       luminosity: 'dark',
-  // });
+  // private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(100) ;
+
 
   ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(5);
-  // randomColor({
-  //       count: 100,
-  //       // luminosity: 'dark',
-  //       hue: 'red',
-  //       // format: 'hsl'
-  // });
 
-  private nominalColorIndex : number = 0;
+
+  // private nominalColorIndex : number = 0;
 
   //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
   private boundaryArray : number[];
+
+  //json object containing unique attribute value as key and object of their frequency
+  //and color as values. Is init using calculation service for given selected
+  //attribute of type nominal
+  //e.g. { attributevalue1: {freq:3,color:"rgb(10,10,10)"}}
+  private nominalValuesFreqAndColor : any;
   
   constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService,
@@ -59,7 +58,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   }
 
   //do whatever here
-  attributeSelected(value){
+  attributeSelected(value : ColumnNames){
     console.log("ChoroplethMap value selected is : "+ value);
     //identify kind of overlay data to expect 
     var dataType = this._dataProviderService.uploadedData_Type;
@@ -70,21 +69,31 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     
   }
   
-  public drawGeoJSONDataOnMap(attributeName : string){
+  public drawGeoJSONDataOnMap(attributeSelected : ColumnNames){
     //init index for map colors
-    this.nominalColorIndex = 0;
-    this.selectedAttribute = attributeName;
+    // this.nominalColorIndex = 0;
+    this.selectedAttribute = attributeSelected.column_name;
     //get type of values for this attribute 
-    var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
-    if(type =="number"){//init array
+    // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
+    if(attributeSelected.type == "ratio"){//init array
       this.boundaryArray = this._basicCalculationsService.
                                 calculateBoundaryArray(this.geoJSONData,
-                                                      attributeName,
+                                                      attributeSelected.column_name,
                                                       5);        
+    }else if(attributeSelected.type == "nominal"){ //remove legend if exist
+      //get json object with unique attribute value as key and their frequency
+      //as value
+      this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
+                                                      attributeSelected.column_name);
+      
+      
+      
+      //remove existing legend
+      this.boundaryArray = null;
     }
 
       
-    console.log("map service update map" + attributeName );
+    // console.log("map service update map" + attributeName );
     //  console.log("mapOverlay"+ mapOverlay);
       
     if(this.mapOverlay != null)
@@ -118,17 +127,13 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     };
   }
 
-   private getColor = (d : any) : string => {
+   private getColor = (value : any) : string => {
     //  d represent string value , could be used here if req'
     // console.log(typeof d);
-    if( typeof d == "string"){
-      //TODO : get unique values here
-      // //reinit color list based on list size
-      // var size = this.nominalColorsList.length;
-      // this.nominalColorsList =  this._colorProviderService.getNominalDataColors(size) ;
-      var color = this.nominalColorsList[this.nominalColorIndex];
-      this.nominalColorIndex++;
-      return color;
+    if( typeof value == "string"){
+      // var color = this.nominalColorsList[this.nominalColorIndex];
+      // this.nominalColorIndex++;
+      return this.nominalValuesFreqAndColor[value]["color"];
     }else{  
       //update colorList size by initializing it based on boundary array size
       var size = this.boundaryArray.length;
@@ -137,9 +142,9 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
       //assign same color for each class
       //starting from 1 because 0 index contain min value
       for(var i=1; i < this.boundaryArray.length ; i++){
-        console.log("Value is "+ d);
+        console.log("Value is "+ value);
         console.log("Class boundary is "+ this.boundaryArray[i]);
-        if(d <= this.boundaryArray[i]){ //check if value is within current class
+        if(value <= this.boundaryArray[i]){ //check if value is within current class
           var color = this.ratioColorsList[i];
           console.log("color returned " + color);
           return color;

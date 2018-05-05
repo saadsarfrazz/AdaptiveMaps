@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-
+import{ColorProviderService} from './color-provider.service';
 @Injectable()
 export class BasicCalculationsService {
 
-  constructor() { }
+  constructor(private _colorProviderService : ColorProviderService) { }
 
   /**
    * Calculates the boundaryArray of values.
@@ -28,6 +28,60 @@ export class BasicCalculationsService {
     console.log("Result array is " + result);
     return result;
 
+  }
+
+  /**
+   * Identifies the frequency of each attribute and return it in 
+   * the form of json object
+   * Return a json object such that 
+   * {
+   *  attribute1: {freq:value, color: "colorcode"}},
+   *  attribute2: {freq:value, color: "colorcode"}},
+   * ...
+   * }
+   */
+  public getNominalArray(dataJSON: any, propertyName : string) : any{
+    
+    var results = {};
+    var uniqueValuesArray = [];
+    //for each value 
+    for(let feature of dataJSON.features){
+      let value = feature["properties"][propertyName];
+      if( !this.valueAlreadyExist(value,uniqueValuesArray) ){
+        uniqueValuesArray.push(value);      
+        results[value]={freq:1};
+      }else{
+        results[value]["freq"]++;
+      }
+    }
+    console.log( results );
+
+    //reinit color list based on list size
+    // 1.Get size of values found in nominal data
+    var size = uniqueValuesArray.length;
+    console.log("Total Nominal Values found : " + size);
+    var nominalColorsList =  this._colorProviderService.getNominalDataColors(size) ;
+
+    //insert color values in results object
+    var colorIndex = 0;
+    for(let val of uniqueValuesArray){
+      results[val]["color"] = nominalColorsList[colorIndex];
+      colorIndex++;
+    }
+
+    return results;
+
+  }
+
+  //helper method to find out if value 
+  //exist in given array
+  private valueAlreadyExist(value,array) : boolean{
+    for(let val of array ){
+      if(val == value)
+        return true
+    }
+
+    return false;
   }
 
   /**
@@ -67,14 +121,14 @@ export class BasicCalculationsService {
    * e.g. {"x":4} returns number
    * other valid return values are : number,string
    */
-  public getType(object: any, property : string): string {
-    var value = object.features[0]["properties"][property];
-    console.log(value);
-    if(!isNaN(value)){ // "3" or 3 will be true, "e" will be false
-      return "number"; 
-    }
-    return typeof value;
-  }
+  // public getType(object: any, property : string): string {
+  //   var value = object.features[0]["properties"][property];
+  //   console.log(value);
+  //   if(!isNaN(value)){ // "3" or 3 will be true, "e" will be false
+  //     return "number"; 
+  //   }
+  //   return typeof value;
+  // }
 
   public calculateBoundaryArray_CSV(csv_json: any, property : string, numberOfClasses : number) : number[]{
     var propertyIndex = this.getPropertyIndex(csv_json,property);
