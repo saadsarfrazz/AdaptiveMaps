@@ -6,14 +6,30 @@
     <div class="col-2">
         <app-attributes-list [visualizationType]="mapType" (valueSelected)="attributeSelected($event)"></app-attributes-list>
         <div>
-            <div *ngFor="let boundary of boundaryArray; let i = index" class="legend">                
-                <span *ngIf="boundaryArray[i+1]">
-                    <!--Display color -->
-                    <i [style.background]="ratioColorsList[i]"></i>
-                    <!-- Display Values -->
-                    {{ boundaryArray[i] }} - {{boundaryArray[i+1] }}
-                </span> <br>
+            <!--Display legend for ratio data
+            TODO: this can be updated by using similar implementation 
+            as that of nominal data to have one piece code -->
+            <div class="legend" *ngIf="boundaryArray">
+                <div *ngFor="let boundary of boundaryArray; let i = index">
+                    <span *ngIf="boundaryArray[i+1]">
+                        <!--Display color -->
+                        <i [style.background]="ratioColorsList[i]"></i>
+                        <!-- Display Values -->
+                        {{ boundaryArray[i] }} - {{boundaryArray[i+1] }}
+                    </span> <br>
+                </div>                                
             </div>
+            <div class="legend" *ngIf="nominalKeysForLegend">    
+                <div *ngFor="let key of nominalKeysForLegend">
+                    <span>
+                        <!--Display color -->
+                        <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
+                        <!-- Display Values -->
+                        {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
+                    </span> 
+                </div>                            
+            </div>
+
         </div>
     <div>
 <div>

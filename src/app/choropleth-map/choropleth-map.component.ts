@@ -39,6 +39,9 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
   private boundaryArray : number[];
 
+  //nominal keys
+  nominalKeysForLegend : string[];
+
   //json object containing unique attribute value as key and object of their frequency
   //and color as values. Is init using calculation service for given selected
   //attribute of type nominal
@@ -80,13 +83,14 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
                                 calculateBoundaryArray(this.geoJSONData,
                                                       attributeSelected.column_name,
                                                       5);        
+    this.nominalKeysForLegend = null;
     }else if(attributeSelected.type == "nominal"){ //remove legend if exist
       //get json object with unique attribute value as key and their frequency
       //as value
       this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
                                                       attributeSelected.column_name);
       
-      
+      this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
       
       //remove existing legend
       this.boundaryArray = null;

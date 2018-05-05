@@ -33,11 +33,10 @@ export class BasicCalculationsService {
   /**
    * Identifies the frequency of each attribute and return it in 
    * the form of json object
-   * Return a json object such that 
-   * {
-   *  attribute1: {freq:value, color: "colorcode"}},
-   *  attribute2: {freq:value, color: "colorcode"}},
-   * ...
+   * json object containing unique attribute value as key and object of their frequency
+   * and color as values. Is init using calculation service for given selected
+   * attribute of type nominal
+   * e.g. { attributevalue1: {freq:3,color:"rgb(10,10,10)"}}
    * }
    */
   public getNominalArray(dataJSON: any, propertyName : string) : any{
@@ -47,12 +46,14 @@ export class BasicCalculationsService {
     //for each value 
     for(let feature of dataJSON.features){
       let value = feature["properties"][propertyName];
-      if( !this.valueAlreadyExist(value,uniqueValuesArray) ){
-        uniqueValuesArray.push(value);      
-        results[value]={freq:1};
-      }else{
-        results[value]["freq"]++;
-      }
+      if(value){
+        if( !this.valueAlreadyExist(value,uniqueValuesArray) ){
+          uniqueValuesArray.push(value);      
+          results[value]={freq:1};
+        }else{
+          results[value]["freq"]++;
+        }
+      }      
     }
     console.log( results );
 
