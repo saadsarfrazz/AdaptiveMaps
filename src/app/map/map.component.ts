@@ -15,6 +15,7 @@ export class MapComponent implements OnInit {
   //display map-component only when user click one of the valid mapping options
   private displayChoroplethMap : boolean = false;
   private displayGCMap : boolean = false;
+  private displayDotMap : boolean = true;
   // featuresTOMap : any;
   //user selects this on front page after uploading data
   public _selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM;
@@ -36,20 +37,31 @@ export class MapComponent implements OnInit {
     //Draw choropleth map
     switch(selectedValue){
       case SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP:
-        this.displayChoroplethMap = true;
-        this.displayGCMap = false;
+        this.deactivateAll();
+        this.displayChoroplethMap = true;        
         //do something here
         // this.drawChoroplethMap();
         return;
       case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2:
-        this.displayGCMap = true;
-        this.displayChoroplethMap = false;
+        this.deactivateAll();
+        this.displayGCMap = true;        
+        // this.drawGraduatedCircularMap();
+        return;
+      case SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP:
+        this.deactivateAll();
+        this.displayDotMap = true;
         // this.drawGraduatedCircularMap();
         return;
       default :
         return;
     }
 
+  }
+
+  private deactivateAll(){
+    this.displayGCMap = false;
+    this.displayChoroplethMap = false;
+    this.displayDotMap = false;
   }
 
 }

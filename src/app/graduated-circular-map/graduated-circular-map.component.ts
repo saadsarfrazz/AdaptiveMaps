@@ -51,7 +51,6 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   ngOnInit() {
     console.log("Graduated Circular init");
     this.plotBaicMap();
-    console.log("Color array is");
   }
 
   sizeOptionSelected(columnName : ColumnNames){

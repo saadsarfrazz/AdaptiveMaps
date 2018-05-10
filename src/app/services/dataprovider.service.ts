@@ -70,6 +70,8 @@ export class DataproviderService {
 
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2){
       this.activateAttributes(clone_columnNamesWithScales,["ratio","ratio"])
+    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){
+      this.activateAttributes(clone_columnNamesWithScales,["nominal","interval"])
     }
       return clone_columnNamesWithScales;
   }
@@ -111,12 +113,30 @@ export class DataproviderService {
     }
   }
 
+  /**
+   * returns null if no value type detected
+   */
   private getColumnType(colName) : string {
-    // get the value
-    var value = this.geoJSONData.features[0]["properties"][colName];
+    // get the value for given column
+    var value = this.getValueForColumn(colName);
+    console.log(colName+" : "+value)
     var valueType = this.getValueType(value);
 
     return valueType;
+  }
+
+  private getValueForColumn(colName) : any{
+    var value;
+    for(let feature of this.geoJSONData.features){
+      value = feature["properties"][colName];
+      if(value!="" && value!=null && value!="none" 
+                            && value!="undefined"
+                            && value != "N/A" ){
+        return value;
+      }
+    }
+    console.log("Should not be here unless no value exist for column : " + colName);
+    return;
   }
 
   //Deprecated

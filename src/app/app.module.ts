@@ -18,6 +18,7 @@ import { GraduatedCircularMapComponent } from './graduated-circular-map/graduate
 import { AttributesListComponent } from './attributes-list/attributes-list.component';
 import { BasicMapComponent } from './basicmap/basicmap.component';
 import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.component';
+import { DotMapComponent } from './dot-map/dot-map.component';
 
 
 
@@ -31,7 +32,8 @@ import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.
     GraduatedCircularMapComponent,
     AttributesListComponent,
     BasicMapComponent,
-    SelectColumnTypesComponent
+    SelectColumnTypesComponent,
+    DotMapComponent
   ],
   imports: [
     BrowserModule,
