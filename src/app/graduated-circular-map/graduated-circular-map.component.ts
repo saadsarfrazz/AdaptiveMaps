@@ -181,7 +181,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
       
   
       var circleStyle = this.drawCircle;
-      console.log("circleStyle" + circleStyle);
+      // console.log("circleStyle" + circleStyle);
       this.mapOverlay = L.geoJson(this.geoJSONData, {
         pointToLayer : circleStyle
       });
@@ -225,34 +225,39 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
     value = +value;
     for(var i=0; i < this.boundaryArray.length ; i++){       
         if(value <= this.boundaryArray[i]){ //check if value is within current class
-           console.log("Value is : "+ value);
-           console.log("Class Assigned is : "+ this.boundaryArray[i]);
-           console.log("Cicle Size: "+ this.circleSizesArray[i]);
+          //  console.log("Value is : "+ value);
+          //  console.log("Class Assigned is : "+ this.boundaryArray[i]);
+          //  console.log("Cicle Size: "+ this.circleSizesArray[i]);
            return this.circleSizesArray[i];
         }
       }  
       console.log("Should not be here: " + "Radius value not found"); 
     return -1;
   }
-
+  /**
+   * Assigns color to given value based on colorBoundaryArray.
+   * if value is null then returns color black
+   * 
+   */
   private getCircleColor = (value: number) : string => {
-    //will be invoked when no color attribute is selected 
-    //by user yet
-    if(isNaN(value)){
-      return "#3388ff";
+    console.log("Value is "+ value);
+    var color;
+    if(value == null){ //assign black
+      color =  "#FFFF00";
+    }else{
+      for(var i=1; i < this.colorBoundaryArray.length ; i++){
+        // console.log("Class boundary is "+ this.colorBoundaryArray[i]);
+        if(value <= this.colorBoundaryArray[i]){ //check if value is within current class
+          color = this.ratioColorsList[i-1];
+          console.log("color returned " + color);
+          break;
+        }     
+      }
     }
-    //assign same color for each class
-    for(var i=0; i < this.colorBoundaryArray.length ; i++){
-      console.log("Value is "+ value);
-      console.log("Class boundary is "+ this.colorBoundaryArray[i]);
-      if(value <= this.colorBoundaryArray[i]){ //check if value is within current class
-        var color = this.ratioColorsList[i];
-        console.log("color returned " + color);
-        return color;
-      }     
-    }
-    console.log("Should not be here : No Color Found");
-    return "";
+    
+    if(color == null)
+      console.log("Should not be here : No Color Found");
+    return color;
   }
   
 

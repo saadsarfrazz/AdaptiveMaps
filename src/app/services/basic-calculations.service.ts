@@ -90,10 +90,25 @@ export class BasicCalculationsService {
    * value of that property. Property must be number and valid name.
    */
   private getMin(object: any, property : string): number{
-
+    var validFunction = this.isValidNumber;
     var features = object.features;
     var min = features.reduce(function(prev, curr) {
-        return prev["properties"][property] < curr.properties[property] ? prev : curr;
+        let min;
+        // console.log("Prev : "+prev["properties"][property]);
+        // console.log("Current : "+curr["properties"][property]);
+        //both values should be valied
+        if( validFunction(prev["properties"][property]) && validFunction(curr["properties"][property]) ) {
+          // console.log("Both : ");
+          min = prev["properties"][property] < curr.properties[property] ? prev : curr;
+        } else if( validFunction(prev["properties"][property]) ){ //if current is null
+          // console.log("Prev : ");
+          min= prev;
+        }else{ //prev was null, case where initial values are undefined
+          // console.log("Curr : ");
+          min = curr;
+        }
+        // console.log("Returning min : "+min["properties"][property]);
+        return min;
   });
 
     console.log("Min is: "+ min["properties"][property]);
@@ -199,6 +214,26 @@ export class BasicCalculationsService {
       return "number"; 
     }
     return typeof value;
+  }
+
+  /**
+   * true: if not undefined or null or "" 
+   * false: if undefined,null,"", "somestring"
+   */
+  private isValidNumber(value){
+    var valid = false;
+    if(value!=null){//undefined and null values
+      // console.log("NOT NULL");      
+      if( value!=="" && typeof value=="number" ){//string value      
+         valid = true;
+      }
+    }else{
+      // console.log("ISNULL");
+      valid =  false;
+    }
+    // console.log(value+ " is a number ? " + valid);
+
+    return valid;
   }
 
 }

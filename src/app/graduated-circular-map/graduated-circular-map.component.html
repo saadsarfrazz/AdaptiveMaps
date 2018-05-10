@@ -21,14 +21,13 @@
         <div>
             <h4 id=’legendTitle’>{{selectedColorAttribute}}</h4>
             <div>
-                <div *ngFor="let boundary of colorBoundaryArray; let i = index">  
-                                  
-                    <span *ngIf="boundary">
+                <div *ngFor="let boundary of colorBoundaryArray; let i = index">              
+                    <span>
                         <!--Display color -->
                         <i [style.background]="ratioColorsList[i]"></i>
                         <!-- Display Values -->
-                        <span *ngIf="i==0">     0 - {{colorBoundaryArray[i] }} </span>
-                        <span *ngIf="i>0">     {{ +colorBoundaryArray[i-1] + 1  }} - {{colorBoundaryArray[i] }} </span>
+                        <span *ngIf="i==0">    {{colorBoundaryArray[i] }} - {{colorBoundaryArray[i+1] }} </span>
+                        <span *ngIf="i>0 && ratioColorsList[i]">     {{ +colorBoundaryArray[i] + 1  }} - {{colorBoundaryArray[i+1] }} </span>
                     </span> <br>
                 </div>
             </div>
