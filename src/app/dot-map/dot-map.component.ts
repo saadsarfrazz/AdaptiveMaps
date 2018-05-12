@@ -130,32 +130,32 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
    * if value is null then returns color black
    * 
    */
-  private getCircleColor = (value: number) : string => {
+  private getCircleColor = (value: any) : string => {
     
-    if(this.selectedColorAttribute.type == "interval"){
-      var color;
-      if(value == null){ //assign black
-        // color =  "#FFFF00";
-        color = "";
-      }else{
-        for(var i=1; i < this.colorBoundaryArray.length ; i++){
-          // console.log("Class boundary is "+ this.colorBoundaryArray[i]);
-          if(value <= this.colorBoundaryArray[i]){ //check if value is within current class
-            color = this.intervalColorsArray[i-1];
-            // console.log("color returned " + color);
-            break;
-          }     
-        }
-      }
-      
+    var color;
+    if(value == null || value == "" || value == undefined){ //assign black
+      // color =  "#FFFF00";
+      color = "";
+    }else if(this.selectedColorAttribute.type == "interval"){
+     
+      for(var i=1; i < this.colorBoundaryArray.length ; i++){
+        // console.log("Class boundary is "+ this.colorBoundaryArray[i]);
+        if(value <= this.colorBoundaryArray[i]){ //check if value is within current class
+          color = this.intervalColorsArray[i-1];
+          // console.log("color returned " + color);
+          break;
+        }     
+      }    
       if(color == null)
         console.log("Should not be here : No Color Found");
-      return color;
+
     }else if(this.selectedColorAttribute.type == "nominal"){
-      var color =this.nominalValuesFreqAndColor[value]["color"]; 
+      // console.log("Getting color for value : " + value);
+      color =this.nominalValuesFreqAndColor[value]["color"];
+      // console.log("Color Obtained is : " + color); 
       // console.log("Color is : " + color);
-      return color;
     }
+    return color;
   }
 
 }
