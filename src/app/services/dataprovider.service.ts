@@ -103,6 +103,8 @@ export class DataproviderService {
 
     //prepare information about columns
     //including their names and initial datatype detected
+    //reset columnNames
+    this.columnNamesWithScales = [];
     for (let col of columnNames){
       this.columnNamesWithScales.push(
         {

@@ -29,14 +29,16 @@
 <table class="table table-hover">
   <thead>
     <th>ColumName</th>
+    <th>Nominal</th>
     <th>Interval Scale</th>
     <th>Ratio Scale</th>
   </thead>
   <tbody>
     <tr *ngFor="let col of columnTypes; let i=index;">
       <td>{{col.column_name}}</td>
-      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="interval"></td>
-      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="ratio"></td>
+      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="nominal"   [attr.disabled]="col.type != 'nominal' ? true : null"></td>
+      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="interval" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
+      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="ratio" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
     </tr>
     <tr>
       <td></td>
