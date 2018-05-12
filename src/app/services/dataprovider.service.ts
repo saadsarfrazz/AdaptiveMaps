@@ -214,7 +214,9 @@ export class DataproviderService {
           this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP);
         }
 
-        //TODO: heat maps here
+        // heat map can be created for any point map
+        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.HEAT_MAP);
+
 
       }             
     }

@@ -15,7 +15,8 @@ export class MapComponent implements OnInit {
   //display map-component only when user click one of the valid mapping options
   private displayChoroplethMap : boolean = false;
   private displayGCMap : boolean = false;
-  private displayDotMap : boolean = true;
+  private displayDotMap : boolean = false;
+  private displayHeatMap : boolean = false
   // featuresTOMap : any;
   //user selects this on front page after uploading data
   public _selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM;
@@ -52,6 +53,11 @@ export class MapComponent implements OnInit {
         this.displayDotMap = true;
         // this.drawGraduatedCircularMap();
         return;
+      case SUPPORTED_VISUALIZATIONS_ENUM.HEAT_MAP:
+        this.deactivateAll();
+        this.displayHeatMap = true;
+        // this.drawGraduatedCircularMap();
+        return;
       default :
         return;
     }
@@ -62,6 +68,7 @@ export class MapComponent implements OnInit {
     this.displayGCMap = false;
     this.displayChoroplethMap = false;
     this.displayDotMap = false;
+    this.displayHeatMap = false; 
   }
 
 }

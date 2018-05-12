@@ -19,6 +19,7 @@ import { AttributesListComponent } from './attributes-list/attributes-list.compo
 import { BasicMapComponent } from './basicmap/basicmap.component';
 import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.component';
 import { DotMapComponent } from './dot-map/dot-map.component';
+import { HeatMapComponent } from './heat-map/heat-map.component';
 
 
 
@@ -33,7 +34,8 @@ import { DotMapComponent } from './dot-map/dot-map.component';
     AttributesListComponent,
     BasicMapComponent,
     SelectColumnTypesComponent,
-    DotMapComponent
+    DotMapComponent,
+    HeatMapComponent
   ],
   imports: [
     BrowserModule,
