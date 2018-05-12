@@ -7,7 +7,7 @@
         
         <div><!-- Legend starts here -->
             <h4 id=’legendTitle’ *ngIf="selectedColorAttribute">{{selectedColorAttribute.column_name}}</h4>
-            <div *ngIf="colorBoundaryArray">
+            <div class="legend" *ngIf="colorBoundaryArray">
                 <div *ngFor="let boundary of colorBoundaryArray; let i = index">              
                     <span>
                         <!--Display color -->
@@ -25,7 +25,7 @@
                         <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
                         <!-- Display Values -->
                         {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
-                    </span> <br>
+                    </span> 
                 </div>                            
             </div>
         </div> <!-- Legend ends here -->
