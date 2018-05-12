@@ -33,7 +33,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    mapOverlay : any = null;
 
    //A hard coded sized fro 5 classes of GC maps
-   private circleSizesArray : number[] = [10,20,30,40,50];
+   private circleSizesArray : number[] = [10,20,30,40,50,60,70];
 
    selectedSizeAttribute : string = "";
    selectedColorAttribute : string = "";
