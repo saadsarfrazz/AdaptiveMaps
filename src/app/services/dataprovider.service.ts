@@ -68,7 +68,7 @@ export class DataproviderService {
     if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
 
-    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2){
+    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["ratio","ratio"])
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["nominal","interval"])
@@ -194,14 +194,10 @@ export class DataproviderService {
       if(type=="Polygon" && (freq_JSON.nominal>0 || freq_JSON.ratio>0) ){
         this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP);
       }else if(type=="Point"){
-        //GCM-1
-        if(freq_JSON.ratio > 0 ){
-          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_1);
-        }
-        
-        //GCM-2
+
+        //GCM
         if(freq_JSON.nominal>0 || freq_JSON.ratio>0){
-          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2);
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP);
         }
 
         //DOT-map

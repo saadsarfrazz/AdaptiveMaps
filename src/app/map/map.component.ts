@@ -43,7 +43,7 @@ export class MapComponent implements OnInit {
         //do something here
         // this.drawChoroplethMap();
         return;
-      case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2:
+      case SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP:
         this.deactivateAll();
         this.displayGCMap = true;        
         // this.drawGraduatedCircularMap();

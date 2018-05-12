@@ -40,7 +40,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
 
    ratioColorsList : string[] = this._colorProviderService.getRatioDataColors(5);
 
-   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2;
+   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP;
 
   constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService,

@@ -7,13 +7,9 @@ export const SUPPORTED_VISUALIZATIONS: ISupportedVisualizationModel[] = [
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Ratio Scale"
 },{
-  "name" : SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_1,
+  "name" : SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP,
   "pathToLogo" : "../../assets/images/img1.png",
   "description" : "Nominal Scale"
-},{
-  "name" : SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP_2,
-  "pathToLogo" : "../../assets/images/img1.png",
-  "description" : "Nice day, cool temps"
 },{
   "name" : SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP,
   "pathToLogo" : "../../assets/images/img1.png",
