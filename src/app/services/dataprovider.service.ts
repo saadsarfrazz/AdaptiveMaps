@@ -69,7 +69,7 @@ export class DataproviderService {
       this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
 
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP){
-      this.activateAttributes(clone_columnNamesWithScales,["ratio","ratio"])
+      this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["nominal","interval"])
     }

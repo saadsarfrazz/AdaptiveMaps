@@ -19,7 +19,7 @@
             </div>
         </div>
         <div>
-            <h4 id=’legendTitle’>{{selectedColorAttribute}}</h4>
+            <h4 id=’legendTitle’>{{selectedColorAttribute?.column_name}}</h4>
             <div>
                 <div *ngFor="let boundary of colorBoundaryArray; let i = index">              
                     <span>
@@ -30,6 +30,16 @@
                         <span *ngIf="i>0 && ratioColorsList[i]">     {{ +colorBoundaryArray[i] + 1  }} - {{colorBoundaryArray[i+1] }} </span>
                     </span> <br>
                 </div>
+            </div>
+            <div class="legend" *ngIf="nominalKeysForLegend">    
+                <div *ngFor="let key of nominalKeysForLegend">
+                    <span>
+                        <!--Display color -->
+                        <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
+                        <!-- Display Values -->
+                        {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
+                    </span> 
+                </div>                            
             </div>
         </div>
     <div>
