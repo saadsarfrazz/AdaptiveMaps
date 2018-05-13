@@ -21,6 +21,9 @@ import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.
 import { DotMapComponent } from './dot-map/dot-map.component';
 import { HeatMapComponent } from './heat-map/heat-map.component';
 
+import {DndModule} from 'ng2-dnd';
+import { MapDimensionsComponent } from './map-dimensions/map-dimensions.component';
+
 
 
 @NgModule({
@@ -35,11 +38,13 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
     BasicMapComponent,
     SelectColumnTypesComponent,
     DotMapComponent,
-    HeatMapComponent
+    HeatMapComponent,
+    MapDimensionsComponent
   ],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    DndModule.forRoot()
   ],
   providers: [
     VisualizationProviderService,
