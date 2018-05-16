@@ -8,10 +8,12 @@
                 <tr>
                     <th> Color </th>
                     <td> 
-                        <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" (valueSelected)="attributeSelectedNominal($event)"></app-visual-variable>
+                        <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" [acceptsDataType]="0"
+                        (valueSelected)="attributeSelectedNominal($event)"></app-visual-variable>
                     </td>
                     <td>
-                        <app-visual-variable #colorRatioVariable [title]="'Color - Ratio'" (valueSelected)="attributeSelectedRatio($event)"></app-visual-variable>
+                        <app-visual-variable #colorRatioVariable [title]="'Color - Ratio'" [acceptsDataType]="2"
+                        (valueSelected)="attributeSelectedRatio($event)"></app-visual-variable>
                     </td>
                 </tr>                                
             </tbody>

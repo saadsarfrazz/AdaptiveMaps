@@ -22,7 +22,7 @@
 <div>
 <ul class="list-unstyled dimensions-list">
     <!-- ngRepeat: dimension in metadata track by $index -->
-    <li class="dimension" *ngFor="let column of listOfAttributes"  dnd-draggable [dragEnabled]="true" [dragData]="column" style="">
+    <li class="dimension" *ngFor="let column of listOfAttributes"  dnd-draggable [dragEnabled]="column.isValid" [dragData]="column" style="">
         <span class="dimension-key">{{column.column_name}}</span>
         <span class="dimension-type">{{column.type}}</span>
     </li>

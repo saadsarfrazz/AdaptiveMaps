@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
@@ -7,6 +7,9 @@ import{ColorProviderService} from '../services/color-provider.service';
 
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
 import {ColumnNames} from '../interfaces/column-names-interface';
+
+import {VisualVariableComponent} from '../visual-variable/visual-variable.component';
+
 
 
 declare var L: any;
@@ -17,6 +20,12 @@ declare var L: any;
   styleUrls: ['./dot-map.component.css']
 })
 export class DotMapComponent extends BasicMapComponent implements OnInit {
+
+  @ViewChild('colorNominalVariable')
+  colorNominalVariable : VisualVariableComponent;
+
+  @ViewChild('colorIntervalVariable')
+  colorIntervalVariable : VisualVariableComponent;
 
   constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService,
@@ -50,6 +59,18 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
   private nominalValuesFreqAndColor : any;
   //nominal keys
   nominalKeysForLegend : string[];
+
+  colorOptionSelected_Nominal(columnName : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorIntervalVariable.attributeSelected = null;
+    this.colorOptionSelected(columnName);
+  }
+
+  colorOptionSelected_Ratio(columnName : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorNominalVariable.attributeSelected = null;
+    this.colorOptionSelected(columnName);
+  }
 
   colorOptionSelected(columnName : ColumnNames){    
     this.selectedColorAttribute = columnName;

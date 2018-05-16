@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
@@ -7,6 +7,8 @@ import{ColorProviderService} from '../services/color-provider.service';
 
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
 import {ColumnNames} from '../interfaces/column-names-interface';
+
+import {VisualVariableComponent} from '../visual-variable/visual-variable.component';
 
 declare var L: any;
 
@@ -20,6 +22,12 @@ declare var omnivore : any;
   styleUrls: ['./graduated-circular-map.component.css']
 })
 export class GraduatedCircularMapComponent extends BasicMapComponent implements OnInit {
+
+  @ViewChild('colorNominalVariable')
+  colorNominalVariable : VisualVariableComponent;
+
+  @ViewChild('colorRatioVariable')
+  colorRatioVariable : VisualVariableComponent;
 
   //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
@@ -68,6 +76,18 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
     this.geoJSONData =  this._dataProviderService.getGeoJSON();
     this.loadGraduatedCircularMap_JSON(columnName);
 
+  }
+
+  colorOptionSelected_Nominal(columnName : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorRatioVariable.attributeSelected = null;
+    this.colorOptionSelected(columnName);
+  }
+
+  colorOptionSelected_Ratio(columnName : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorNominalVariable.attributeSelected = null;
+    this.colorOptionSelected(columnName);
   }
 
   colorOptionSelected(columnName : ColumnNames){

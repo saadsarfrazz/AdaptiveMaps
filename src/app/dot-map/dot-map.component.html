@@ -1,10 +1,33 @@
 <div class="row">
+    <div class="col-3">
+        <app-map-dimensions [visualizationType]="mapType" ></app-map-dimensions>
+    </div>
+    <div  class="col-9">
+        <table class="table table-condensed">
+            <tbody>
+                <tr>
+                    <th> Color </th>
+                    <td> 
+                        <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" [acceptsDataType]="0"
+                        (valueSelected)="colorOptionSelected_Nominal($event)"></app-visual-variable>
+                    </td>
+                    <td>
+                        <app-visual-variable #colorIntervalVariable [title]="'Color - Interval'" [acceptsDataType]="1"
+                        (valueSelected)="colorOptionSelected_Ratio($event)"></app-visual-variable>
+                    </td>
+                </tr>                                    
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
     <div class="col-10">
         <div id="map"></div>
     </div>
     <div class="col-2">
-        Color Variable<app-attributes-list [visualizationType]="mapType"(valueSelected)="colorOptionSelected($event)"></app-attributes-list>              
-        
+ <!--        Color Variable<app-attributes-list [visualizationType]="mapType"(valueSelected)="colorOptionSelected($event)"></app-attributes-list>              
+      -->  
         <div><!-- Legend starts here -->
             <h4 id=’legendTitle’ *ngIf="selectedColorAttribute">{{selectedColorAttribute.column_name}}</h4>
             <div class="legend" *ngIf="colorBoundaryArray">
