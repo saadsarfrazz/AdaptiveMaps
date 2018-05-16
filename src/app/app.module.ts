@@ -23,6 +23,7 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
 
 import {DndModule} from 'ng2-dnd';
 import { MapDimensionsComponent } from './map-dimensions/map-dimensions.component';
+import { VisualVariableComponent } from './visual-variable/visual-variable.component';
 
 
 
@@ -39,7 +40,8 @@ import { MapDimensionsComponent } from './map-dimensions/map-dimensions.componen
     SelectColumnTypesComponent,
     DotMapComponent,
     HeatMapComponent,
-    MapDimensionsComponent
+    MapDimensionsComponent,
+    VisualVariableComponent
   ],
   imports: [
     BrowserModule,

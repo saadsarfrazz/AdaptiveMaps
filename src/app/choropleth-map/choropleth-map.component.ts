@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
@@ -7,6 +7,8 @@ import{ColorProviderService} from '../services/color-provider.service';
 
 import {SUPPORTED_VISUALIZATIONS_ENUM} from "../shared/supported-maps-enum";
 import {ColumnNames} from '../interfaces/column-names-interface';
+
+import {VisualVariableComponent} from '../visual-variable/visual-variable.component';
 
 declare var L: any;
 // declare var randomColor : any;
@@ -17,6 +19,12 @@ declare var L: any;
   styleUrls: ['./choropleth-map.component.css']
 })
 export class ChoroplethMapComponent extends BasicMapComponent implements OnInit {
+
+  @ViewChild('colorNominalVariable')
+  colorNominalVariable : VisualVariableComponent;
+
+  @ViewChild('colorRatioVariable')
+  colorRatioVariable : VisualVariableComponent;
 
   mapOverlay : any = null;
   selectedAttribute : string = "";
@@ -60,7 +68,25 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   }
 
   //do whatever here
-  attributeSelected(value : ColumnNames){
+  attributeSelectedNominal(value : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorRatioVariable.attributeSelected = null;
+
+    console.log("ChoroplethMap value selected is : "+ value);
+    //identify kind of overlay data to expect 
+    var dataType = this._dataProviderService.uploadedData_Type;
+    if(dataType== 'geojson'){
+      this.drawGeoJSONDataOnMap(value);
+    }
+    //TODO : support csv here
+    
+  }
+
+  //do whatever here
+  attributeSelectedRatio(value : ColumnNames){
+    //reset other visual variable option if was selected
+    this.colorNominalVariable.attributeSelected = null;
+
     console.log("ChoroplethMap value selected is : "+ value);
     //identify kind of overlay data to expect 
     var dataType = this._dataProviderService.uploadedData_Type;

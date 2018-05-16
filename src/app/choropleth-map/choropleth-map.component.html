@@ -1,10 +1,20 @@
-
+<div class="row">
+    <div class="col-3">
+        <app-map-dimensions [visualizationType]="mapType" ></app-map-dimensions>
+    </div>
+    <div class="col-3">
+        <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" (valueSelected)="attributeSelectedNominal($event)"></app-visual-variable>
+    </div>
+    <div class="col-3">
+        <app-visual-variable #colorRatioVariable [title]="'Color - Ratio'" (valueSelected)="attributeSelectedRatio($event)"></app-visual-variable>
+    </div>
+</div>
 <div class="row">
     <div class="col-10">
         <div id="map"></div>
     </div>
     <div class="col-2">
-        <app-attributes-list [visualizationType]="mapType" (valueSelected)="attributeSelected($event)"></app-attributes-list>
+<!--         <app-attributes-list [visualizationType]="mapType" (valueSelected)="attributeSelected($event)"></app-attributes-list> -->
         <div>
             <!--Display legend for ratio data
             TODO: this can be updated by using similar implementation 
