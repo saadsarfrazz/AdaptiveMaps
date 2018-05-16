@@ -6,7 +6,7 @@
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-
+<!-- 
 <div class="panel panel-success">
     <div class="panel-heading">Data Dimensions</div>
     <div class="panel-body">
@@ -17,3 +17,15 @@
         </div>
     </div>
 </div>
+-->
+
+<div>
+<ul class="list-unstyled dimensions-list">
+    <!-- ngRepeat: dimension in metadata track by $index -->
+    <li class="dimension" *ngFor="let column of listOfAttributes"  dnd-draggable [dragEnabled]="true" [dragData]="column" style="">
+        <span class="dimension-key">{{column.column_name}}</span>
+        <span class="dimension-type">{{column.type}}</span>
+    </li>
+</ul>
+</div>
+						

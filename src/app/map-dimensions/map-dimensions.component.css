@@ -1,0 +1,21 @@
+.dimension  {
+    cursor: move;
+    color: #ffffff;
+    background-color: #0dc4a3;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+
+    padding: 8px 10px;
+    position: relative;
+    margin-bottom: 3px;
+    line-height: 18px;
+}
+
+.dimension-key {
+    margin-right: 3px;
+}
+
+.dimension-type {
+    color: rgba(255,255,255,.7);
+    font-size: 12px;
+    text-transform: lowercase;
+}
