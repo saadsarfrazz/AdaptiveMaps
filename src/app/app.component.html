@@ -6,8 +6,10 @@
                          *ngIf="displayColumnSelection" ></app-sel-column-types>
   <!--Display list of supported map visualizations -->
   <div class="row" *ngIf="displayVisualizationsList">
-    <app-visualization-template *ngFor="let vis of visualizationList" [visModel]="vis"
-        (click)="visualizationSelected(vis)"></app-visualization-template>
+    <div *ngFor="let vis of visualizationList" class="col-lg-3 col-md-4 col-sm-4 col-xs-6" >
+        <app-visualization-template  [visModel]="vis"
+            (click)="visualizationSelected(vis)"></app-visualization-template>
+    </div>
   </div>
   <app-map *ngIf="displayMap" [selectedVisualization]="selectedVisualization" ></app-map>
   <div>

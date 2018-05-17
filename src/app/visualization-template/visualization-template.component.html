@@ -1,6 +1,20 @@
+<!-- 
 <div class="col-lg-3 col-md-4 col-sm-4 col-xs-6 clickable">
     <img src="{{visModel.pathToLogo}}" alt="N/A" height="150" width="200"> 
     <div>{{getVisualizationName(visModel.name)}}</div>
     <div *ngIf="visModel?.enabled">&#9989;</div>
 </div>
+-->
 
+<div  class="layout clickable">
+    <div class="layout-thumb" [ngStyle]="{'background-image':'url(' + visModel.pathToLogo + ')'}" ></div>
+    <p class="layout-inner">
+        <span class="layout-title ng-binding">{{getVisualizationName(visModel.name)}}</span>
+        <span class="text-muted layout-category ng-binding">{{ visModel.description }}</span>
+    </p>
+    <div *ngIf="visModel?.enabled">&#9989;</div>
+    <!--
+    <div class="layout-check">
+        <i class="fa fa-check"></i>
+    </div>  -->
+</div>

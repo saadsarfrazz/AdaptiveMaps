@@ -1,3 +1,29 @@
 .clickable{
     cursor: pointer;
 }
+
+.layout-thumb {
+    height: 100px;
+    background-position: 50% 50%;
+    background-size: 120%;
+    background-color: #F5F5F5;
+    opacity: .85;
+}
+
+.layout-inner {
+    opacity: 0.85;
+    padding: 8px;
+    margin: 0px;
+}
+
+.layout-title {
+    color: #000;
+}
+
+.layout-category {
+    font-size: 13px;
+    font-weight: 400;
+    color: #999;
+    margin: 0px;
+    display: block;
+}
