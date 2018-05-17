@@ -27,7 +27,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   colorRatioVariable : VisualVariableComponent;
 
   mapOverlay : any = null;
-  selectedAttribute : string = "";
+  selectedAttribute : ColumnNames;
 
   
   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP;
@@ -100,7 +100,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   public drawGeoJSONDataOnMap(attributeSelected : ColumnNames){
     //init index for map colors
     // this.nominalColorIndex = 0;
-    this.selectedAttribute = attributeSelected.column_name;
+    this.selectedAttribute = attributeSelected;
     //get type of values for this attribute 
     // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
     if(attributeSelected.type == "ratio"){//init array
@@ -133,9 +133,10 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     // this.selectedObject = attributeName;
     // var customstyle = this.customStyle;
     this.mapOverlay = L.geoJson(this.geoJSONData, {
-                  style : this.customStyle
+                          style : this.customStyle
                         });
-        
+
+    this.mapOverlay.bindPopup(this.customPopup);        
     //zoom to layer
     this.map.fitBounds(this.mapOverlay.getBounds());
 
@@ -147,7 +148,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     // var self = this;
     var selectedAttribute = this.selectedAttribute;
     return {
-        fillColor: this.getColor(feature.properties[selectedAttribute]),
+        fillColor: this.getColor(feature.properties[selectedAttribute.column_name]),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -155,6 +156,14 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
         fillOpacity: 0.7
     };
   }
+
+  private customPopup = (layer) => {
+     var value = layer.feature.properties[this.selectedAttribute.column_name];
+     var popup = "<strong>"+this.selectedAttribute.column_name+"</strong>" + " : "+ value;
+     return popup;
+  }
+
+  
 
    private getColor = (value : any) : string => {
     //  d represent string value , could be used here if req'
