@@ -4,21 +4,23 @@
         <app-map-dimensions [visualizationType]="mapType" ></app-map-dimensions>
     </div>
     <div  class="col-9">
-        <table class="table table-condensed">
-            <tbody>
-                <tr>
-                    <th> Color </th>
-                    <td> 
-                        <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" [acceptsDataType]="0"
-                        (valueSelected)="attributeSelectedNominal($event)"></app-visual-variable>
-                    </td>
-                    <td>
-                        <app-visual-variable #colorRatioVariable [title]="'Color - Ratio'" [acceptsDataType]="2"
-                        (valueSelected)="attributeSelectedRatio($event)"></app-visual-variable>
-                    </td>
-                </tr>                                
-            </tbody>
-        </table>
+        <div class="sticky">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <th> Color </th>
+                        <td> 
+                            <app-visual-variable #colorNominalVariable [title]="'Color - Nominal'" [acceptsDataType]="0"
+                            (valueSelected)="attributeSelectedNominal($event)"></app-visual-variable>
+                        </td>
+                        <td>
+                            <app-visual-variable #colorRatioVariable [title]="'Color - Ratio'" [acceptsDataType]="2"
+                            (valueSelected)="attributeSelectedRatio($event)"></app-visual-variable>
+                        </td>
+                    </tr>                                
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <div class="row">
