@@ -28,10 +28,14 @@ export class AppComponent implements OnInit{
   }
 
   visualizationSelected(vis : ISupportedVisualizationModel){
-    this.displayMap = true;
-    console.log("selected : "+vis.name);
-    //update map view
-    this.selectedVisualization = vis.name;
+    if(vis.enabled == true){
+      this.displayMap = true;
+      console.log("selected : "+vis.name);
+      //update map view
+      this.selectedVisualization = vis.name;
+    }else{
+      alert(SUPPORTED_VISUALIZATIONS_ENUM[vis.name] + " can not be created for given data input");
+    }
   }
 
   /**
