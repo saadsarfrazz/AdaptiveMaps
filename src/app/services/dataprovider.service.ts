@@ -106,12 +106,14 @@ export class DataproviderService {
     //reset columnNames
     this.columnNamesWithScales = [];
     for (let col of columnNames){
-      this.columnNamesWithScales.push(
-        {
-          column_name : col,
-          type : this.getColumnType(col)
-        }
-      );      
+      var valueObj = {
+        column_name : col,
+        type : this.getColumnType(col)
+      };
+      if(valueObj.type != null)
+        this.columnNamesWithScales.push(valueObj);
+      else
+        console.log("Column not Included in final list: " + col);      
     }
   }
 
@@ -131,14 +133,22 @@ export class DataproviderService {
     var value;
     for(let feature of this.geoJSONData.features){
       value = feature["properties"][colName];
-      if(value!="" && value!=null && value!="none" 
-                            && value!="undefined"
-                            && value != "N/A" ){
+      if(this.isAValidValue(value)){
         return value;
       }
     }
     console.log("Should not be here unless no value exist for column : " + colName);
-    return;
+    return null;
+  }
+
+  private isAValidValue(value) : boolean{
+    if(value!="" && value!=null && value!="none" 
+                            && value!="undefined"
+                            && value != "N/A" ){
+      return true;
+    }else{
+      return false;
+    }
   }
 
   //Deprecated
