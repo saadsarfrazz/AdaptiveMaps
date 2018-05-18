@@ -126,7 +126,7 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
     //               "<br>" + this.selectedColorAttribute + " : "+feature.properties[this.selectedColorAttribute.column_name];
     //   circle.bindPopup( popup_msg);
     // }else{
-      circle.bindPopup( this.selectedColorAttribute+ " : "+feature.properties[this.selectedColorAttribute.column_name]);
+      circle.bindPopup( this.selectedColorAttribute.column_name+ " : "+feature.properties[this.selectedColorAttribute.column_name]);
     // }
     
     return circle;
