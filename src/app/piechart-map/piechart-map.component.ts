@@ -41,6 +41,10 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
    //stored in this array. 
    private listOfSelectedAttributes : ColumnNames[] = [];
 
+   //to keep track of all pie chart and remove them 
+   //when redrawn 
+   private listOfPieCharts : any = [];
+
    private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(9) ;
 
   
@@ -59,7 +63,7 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     this.plotBaicMap();
   }
 
-  staticexample : ColumnNames = {column_name : "Shape_Area"};
+  // staticexample : ColumnNames = {column_name : "Shape_Area"};
 
   attributeSelectedSize(attributeSelected : ColumnNames){
     //init index for map colors
@@ -67,8 +71,8 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     this.selectedAttribute = attributeSelected;
 
     //testing here
-    this.listOfSelectedAttributes.push(attributeSelected);
-    this.listOfSelectedAttributes.push(this.staticexample);
+    // this.listOfSelectedAttributes.push(attributeSelected);
+    // this.listOfSelectedAttributes.push(this.staticexample);
 
     //get type of values for this attribute 
     // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
@@ -103,6 +107,46 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     }
   }
 
+  attributeSelectedPieChart(selectedColumns : ColumnNames[]){
+    console.log("Selected Column Names are");
+    console.log(selectedColumns);
+
+    //reset existing selcted columns
+    this.listOfSelectedAttributes = [];
+    for(let col of selectedColumns){
+      //TODO: check for repeating columns
+      this.listOfSelectedAttributes.push(col);
+    }
+
+    for(let marker of this.listOfPieCharts){
+      this.map.removeLayer(marker);
+    }
+
+    this.map.removeLayer(this.mapOverlay);
+
+    var addCircles = this.addCirclesFunction;
+
+    //add layer again 
+    //draw circle in middle of each polygon
+    this.mapOverlay = L.geoJson(this.geoJSONData, {
+                        onEachFeature: addCircles,
+                        style: {
+                                fillColor:"#d4ef4a",
+                                weight: 2,
+                                opacity: 1,
+                                color: 'white',
+                                dashArray: '3',
+                                fillOpacity: 0.7
+                            }
+                      });
+    //zoom to layer
+    this.map.fitBounds(this.mapOverlay.getBounds());
+
+    this.map.addLayer(this.mapOverlay);
+    this.mapOverlay.bringToBack();
+      
+  }
+
   addCirclesFunction = (feature, layer) => {
     var attributeValue = feature["properties"][this.selectedAttribute.column_name];
     var radiusValue = this.getCircleSize(attributeValue);
@@ -110,72 +154,47 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     var dataObject = this.prepareChartOptions(feature);
 
     var finalOptions= {};
-    finalOptions["radius"] = radiusValue;
-    finalOptions["data"] = dataObject["data"];
-    finalOptions["chartOptions"] = dataObject["chartOptions"];
-    finalOptions["weight"] = 1;
-    finalOptions["fillOpacity"] = 0.9;
-
-
-        // var options = {
-        //     radius : radiusValue
-        //     ,data: {
-        //         'dataPoint1': 100,
-        //         'dataPoint2': 25,
-        //         'dataPoint3': 25,
-        //         'dataPoint4': 25
-        //       },
-        //       chartOptions: {
-        //         'dataPoint1': {
-        //           fillColor: '#b2410a',
-        //           minValue: 0,
-        //           maxValue: 20,
-        //           maxHeight: 20,
-        //           displayText: function (value) {
-        //             return value.toFixed(2);
-        //           }
-        //         },
-        //         'dataPoint2': {
-        //           fillColor: '#04a307',
-        //           minValue: 0,
-        //           maxValue: 20,
-        //           maxHeight: 20,
-        //           displayText: function (value) {
-        //             return value.toFixed(2);
-        //           }
-        //         },
-        //         'dataPoint3': {
-        //           fillColor: '#0316a2',
-        //           minValue: 0,
-        //           maxValue: 20,
-        //           maxHeight: 20,
-        //           displayText: function (value) {
-        //             return value.toFixed(2);
-        //           }
-        //         },
-        //         'dataPoint4': {
-        //           fillColor: '#a10220',
-        //           minValue: 0,
-        //           maxValue: 20,
-        //           maxHeight: 20,
-        //           displayText: function (value) {
-        //             return value.toFixed(2);
-        //           }
-        //         }
-        //       },
-        //       weight: 1,
-        //       fillOpacity : 0.9
-        //       // color: '#000000',
-        //     };
-        // console.log(options);
-        var centrioidObj = turf.centroid(feature);
-        var coordinates = centrioidObj.geometry.coordinates;
-        var marker = new L.PieChartMarker(new L.LatLng(coordinates[1], coordinates[0]), finalOptions );
-        this.map.addLayer(marker);
+    if(dataObject!=null){
+      finalOptions["radius"] = radiusValue;
+      finalOptions["data"] = dataObject["data"];
+      finalOptions["chartOptions"] = dataObject["chartOptions"];
+      finalOptions["weight"] = 1;
+      finalOptions["fillOpacity"] = 0.9;
+    }else{
+      finalOptions =    {
+            radius : radiusValue
+            ,data: {
+              'dataPoint1': 100
+            },
+            chartOptions: {
+              'dataPoint1': {
+                fillColor: '#b2410a',
+                minValue: 0,
+                maxValue: 20,
+                maxHeight: 20,
+                displayText: function (value) {
+                  return value.toFixed(2);
+                }
+              }
+            },
+            weight: 1,
+            fillOpacity : 0.9
+            // color: '#000000',
+          };
       }
+    
+      var centrioidObj = turf.centroid(feature);
+      var coordinates = centrioidObj.geometry.coordinates;
+      var marker = new L.PieChartMarker(new L.LatLng(coordinates[1], coordinates[0]), finalOptions );
+      
+      this.listOfPieCharts.push(marker);
+      this.map.addLayer(marker);
+    }
 
       /**
-       * Return a result object such that 
+       * Returns null when this.listOfSelectedAttributes == 0
+       * or 
+       * a result object such that 
        * {
        *  data: {
                 'dataPoint1': 100,
@@ -201,38 +220,45 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
        * are to be displayed for given feature. The data points
        * are inserted based on number of columns selected to be 
        * displayed as pie chart maps
+       * 
        */
       private prepareChartOptions = (feature : any) : any => {
-        var dataObject = {};
-        var chartOptions = {};
 
-        var colorIndex = 0;
-        for (let attribute of this.listOfSelectedAttributes){
-          var colName = attribute.column_name;
-          var attrValue = feature["properties"][attribute.column_name];
+        if(this.listOfSelectedAttributes.length != 0){
+          var dataObject = {};
+          var chartOptions = {};
 
-          //data object
-          dataObject[colName] = attrValue;
+          var colorIndex = 0;
+          for (let attribute of this.listOfSelectedAttributes){
+            var colName = attribute.column_name;
+            var attrValue = feature["properties"][attribute.column_name];
 
-          //chart options
-          chartOptions[colName] = {
-                fillColor: this.nominalColorsList[colorIndex],
-                minValue: 0,
-                maxValue: 20,
-                maxHeight: 20,
-                displayText: function (attrValue) {
-                  return attrValue.toFixed(2);
-                } 
+            //data object
+            dataObject[colName] = attrValue;
+
+            //chart options
+            chartOptions[colName] = {
+                  fillColor: this.nominalColorsList[colorIndex],
+                  minValue: 0,
+                  maxValue: 20,
+                  maxHeight: 20,
+                  displayText: function (attrValue) {
+                    return attrValue.toFixed(2);
+                  } 
+            }
+            colorIndex++;
           }
-          colorIndex++;
-        }
 
-        var result ={};
-        result["data"] = dataObject;
-        result["chartOptions"] = chartOptions;
-        console.log("Final result");
-        console.log(result);
-        return result;
+          var result ={};
+          result["data"] = dataObject;
+          result["chartOptions"] = chartOptions;
+          console.log("Final result");
+          console.log(result);
+          return result;
+        }else{
+          return null;
+        }
+        
       }
 
     /**
