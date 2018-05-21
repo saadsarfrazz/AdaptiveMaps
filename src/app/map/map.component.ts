@@ -17,6 +17,7 @@ export class MapComponent implements OnInit {
   private displayGCMap : boolean = false;
   private displayDotMap : boolean = false;
   private displayHeatMap : boolean = false
+  private displayPieChartMap : boolean = false
   // featuresTOMap : any;
   //user selects this on front page after uploading data
   public _selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM;
@@ -58,6 +59,11 @@ export class MapComponent implements OnInit {
         this.displayHeatMap = true;
         // this.drawGraduatedCircularMap();
         return;
+      case SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP:
+      this.deactivateAll();
+      this.displayPieChartMap = true;
+      // this.drawGraduatedCircularMap();
+      return;
       default :
         return;
     }
@@ -69,6 +75,7 @@ export class MapComponent implements OnInit {
     this.displayChoroplethMap = false;
     this.displayDotMap = false;
     this.displayHeatMap = false; 
+    this.displayPieChartMap = false;
   }
 
 }

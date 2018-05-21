@@ -24,6 +24,7 @@ import { HeatMapComponent } from './heat-map/heat-map.component';
 import {DndModule} from 'ng2-dnd';
 import { MapDimensionsComponent } from './map-dimensions/map-dimensions.component';
 import { VisualVariableComponent } from './visual-variable/visual-variable.component';
+import { PiechartMapComponent } from './piechart-map/piechart-map.component';
 
 
 
@@ -41,7 +42,8 @@ import { VisualVariableComponent } from './visual-variable/visual-variable.compo
     DotMapComponent,
     HeatMapComponent,
     MapDimensionsComponent,
-    VisualVariableComponent
+    VisualVariableComponent,
+    PiechartMapComponent
   ],
   imports: [
     BrowserModule,
