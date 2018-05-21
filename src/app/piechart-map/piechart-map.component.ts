@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {BasicMapComponent} from '../basicmap/basicmap.component';
 
 import {DataproviderService} from '../services/dataprovider.service';
@@ -10,12 +10,42 @@ import {ColumnNames} from '../interfaces/column-names-interface';
 
 import {VisualVariableComponent} from '../visual-variable/visual-variable.component';
 
+declare var L: any;
+declare var turf: any;
+
 @Component({
   selector: 'app-piechart-map',
   templateUrl: './piechart-map.component.html',
   styleUrls: ['./piechart-map.component.css']
 })
 export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
+
+  // @ViewChild('colorNominalVariable')
+  // colorNominalVariable : VisualVariableComponent;
+
+  // @ViewChild('colorRatioVariable')
+  // colorRatioVariable : VisualVariableComponent;
+
+
+  //stores the boundary values for different classes of ratioData
+  //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
+  private boundaryArray : number[];
+
+  mapOverlay : any = null;
+  selectedAttribute : ColumnNames;
+
+  //A hard coded sized fro 5 classes of GC maps
+   private circleSizesArray : number[] = [10,20,30,40,50,60,70];
+
+   //the selected column names for drawing pie chart are
+   //stored in this array. 
+   private listOfSelectedAttributes : ColumnNames[] = [];
+
+   private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(9) ;
+
+  
+  mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP;
+
 
    constructor(private _dataProviderService : DataproviderService,
               private _basicCalculationsService : BasicCalculationsService,
@@ -28,5 +58,199 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     console.log("PieChartMap init");
     this.plotBaicMap();
   }
+
+  staticexample : ColumnNames = {column_name : "Shape_Area"};
+
+  attributeSelectedSize(attributeSelected : ColumnNames){
+    //init index for map colors
+    // this.nominalColorIndex = 0;
+    this.selectedAttribute = attributeSelected;
+
+    //testing here
+    this.listOfSelectedAttributes.push(attributeSelected);
+    this.listOfSelectedAttributes.push(this.staticexample);
+
+    //get type of values for this attribute 
+    // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
+    if(attributeSelected.type == "ratio"){//init array
+      this.boundaryArray = this._basicCalculationsService.
+                                calculateBoundaryArray(this.geoJSONData,
+                                                      attributeSelected.column_name,
+                                                      5);        
+                                                    
+
+      var addCircles = this.addCirclesFunction;
+      //draw circle in middle of each polygon
+      this.mapOverlay = L.geoJson(this.geoJSONData, {
+                          onEachFeature: addCircles,
+                          style: {
+                                  fillColor:"#d4ef4a",
+                                  weight: 2,
+                                  opacity: 1,
+                                  color: 'white',
+                                  dashArray: '3',
+                                  fillOpacity: 0.7
+                              }
+                        });
+      //zoom to layer
+      this.map.fitBounds(this.mapOverlay.getBounds());
+
+      this.map.addLayer(this.mapOverlay);
+      this.mapOverlay.bringToBack();
+
+
+
+    }
+  }
+
+  addCirclesFunction = (feature, layer) => {
+    var attributeValue = feature["properties"][this.selectedAttribute.column_name];
+    var radiusValue = this.getCircleSize(attributeValue);
+
+    var dataObject = this.prepareChartOptions(feature);
+
+    var finalOptions= {};
+    finalOptions["radius"] = radiusValue;
+    finalOptions["data"] = dataObject["data"];
+    finalOptions["chartOptions"] = dataObject["chartOptions"];
+    finalOptions["weight"] = 1;
+    finalOptions["fillOpacity"] = 0.9;
+
+
+        // var options = {
+        //     radius : radiusValue
+        //     ,data: {
+        //         'dataPoint1': 100,
+        //         'dataPoint2': 25,
+        //         'dataPoint3': 25,
+        //         'dataPoint4': 25
+        //       },
+        //       chartOptions: {
+        //         'dataPoint1': {
+        //           fillColor: '#b2410a',
+        //           minValue: 0,
+        //           maxValue: 20,
+        //           maxHeight: 20,
+        //           displayText: function (value) {
+        //             return value.toFixed(2);
+        //           }
+        //         },
+        //         'dataPoint2': {
+        //           fillColor: '#04a307',
+        //           minValue: 0,
+        //           maxValue: 20,
+        //           maxHeight: 20,
+        //           displayText: function (value) {
+        //             return value.toFixed(2);
+        //           }
+        //         },
+        //         'dataPoint3': {
+        //           fillColor: '#0316a2',
+        //           minValue: 0,
+        //           maxValue: 20,
+        //           maxHeight: 20,
+        //           displayText: function (value) {
+        //             return value.toFixed(2);
+        //           }
+        //         },
+        //         'dataPoint4': {
+        //           fillColor: '#a10220',
+        //           minValue: 0,
+        //           maxValue: 20,
+        //           maxHeight: 20,
+        //           displayText: function (value) {
+        //             return value.toFixed(2);
+        //           }
+        //         }
+        //       },
+        //       weight: 1,
+        //       fillOpacity : 0.9
+        //       // color: '#000000',
+        //     };
+        // console.log(options);
+        var centrioidObj = turf.centroid(feature);
+        var coordinates = centrioidObj.geometry.coordinates;
+        var marker = new L.PieChartMarker(new L.LatLng(coordinates[1], coordinates[0]), finalOptions );
+        this.map.addLayer(marker);
+      }
+
+      /**
+       * Return a result object such that 
+       * {
+       *  data: {
+                'dataPoint1': 100,
+                'dataPoint2': Y,
+                'dataPoint3': Z,
+                ....
+                },
+          chartOptions: {
+                 'dataPoint1': {
+                  fillColor: '#b2410a',
+                  minValue: 0,
+                  maxValue: 20,
+                  maxHeight: 20,
+                  displayText: function (value) {
+                    return value.toFixed(2);
+                  }
+                },
+                  'dataPoint2': {
+                  .....
+       * }
+       * 
+       * object of all the valid data points values that
+       * are to be displayed for given feature. The data points
+       * are inserted based on number of columns selected to be 
+       * displayed as pie chart maps
+       */
+      private prepareChartOptions = (feature : any) : any => {
+        var dataObject = {};
+        var chartOptions = {};
+
+        var colorIndex = 0;
+        for (let attribute of this.listOfSelectedAttributes){
+          var colName = attribute.column_name;
+          var attrValue = feature["properties"][attribute.column_name];
+
+          //data object
+          dataObject[colName] = attrValue;
+
+          //chart options
+          chartOptions[colName] = {
+                fillColor: this.nominalColorsList[colorIndex],
+                minValue: 0,
+                maxValue: 20,
+                maxHeight: 20,
+                displayText: function (attrValue) {
+                  return attrValue.toFixed(2);
+                } 
+          }
+          colorIndex++;
+        }
+
+        var result ={};
+        result["data"] = dataObject;
+        result["chartOptions"] = chartOptions;
+        console.log("Final result");
+        console.log(result);
+        return result;
+      }
+
+    /**
+     * Gets class value to which given value belongs
+     * returns null if invalid value
+     */
+    private getCircleSize = (value : any) : number => {
+  
+        var size = null;
+        for(var i=1; i < this.boundaryArray.length ; i++){
+          if(value <= this.boundaryArray[i]){ //check if value is within current class
+            size  = this.circleSizesArray[i];
+            break;
+          }
+        }      
+        // console.log("Size for value "+value +" is : " + size);
+        return size;
+      }
+    // }
 
 }

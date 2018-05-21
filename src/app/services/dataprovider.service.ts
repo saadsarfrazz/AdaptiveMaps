@@ -72,6 +72,8 @@ export class DataproviderService {
       this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["nominal","interval"])
+    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP){
+      this.activateAttributes(clone_columnNamesWithScales,["ratio"])
     }
       return clone_columnNamesWithScales;
   }
@@ -201,8 +203,15 @@ export class DataproviderService {
       console.log(freq_JSON);
       //2.a if data type is polygon and has nominal/ratio data
       //Push: CHOROPLETH_MAP
-      if(type=="Polygon" && (freq_JSON.nominal>0 || freq_JSON.ratio>0) ){
-        this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP);
+      if(type=="Polygon"){
+        if(freq_JSON.nominal>0 || freq_JSON.ratio>0){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP);
+        }
+
+        if(freq_JSON.ratio>0){
+          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP);
+        }
+        
       }else if(type=="Point"){
 
         //GCM
@@ -215,10 +224,10 @@ export class DataproviderService {
           this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP);
         }
 
-        //Pie Chart map
-        if(freq_JSON.ratio > 1){
-          this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP);
-        }
+        // //Pie Chart map
+        // if(freq_JSON.ratio > 1){
+        //   this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP);
+        // }
 
         // heat map can be created for any point map
         this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.HEAT_MAP);

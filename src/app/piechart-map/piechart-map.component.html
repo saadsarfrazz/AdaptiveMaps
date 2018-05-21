@@ -1,3 +1,25 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet-dvf/0.3.1/css/dvf.min.css" />
+<h3>Map Dimensions</h3>
+<div class="row section">
+    <div class="col-3">
+        <app-map-dimensions [visualizationType]="mapType" ></app-map-dimensions>
+    </div>
+    <div  class="col-9">
+        <div class="sticky">
+            <table class="table table-condensed">
+                <tbody>
+                    <tr>
+                        <th> Circular Size </th>
+                        <td> 
+                            <app-visual-variable #sizeVariable [title]="'Size'" [acceptsDataType]="2"
+                            (valueSelected)="attributeSelectedSize($event)"></app-visual-variable>
+                        </td>
+                    </tr>                                
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <div class="row">
     <div class="col-10">
         <div id="map"></div>
