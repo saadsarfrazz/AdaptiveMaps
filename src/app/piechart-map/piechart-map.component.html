@@ -32,5 +32,29 @@
         <div id="map"></div>
     </div>
     <div class="col-2">
-    <div>
-<div>
+        <!-- Display circles -->
+        <div class="legend">
+            <h4 id=’legendTitle’>{{selectedAttribute?.column_name}}</h4>
+            <div class="symbolsContainer">                
+                <div *ngFor="let boundary of boundaryArray; let i = index" class="legendCircle" 
+                    [style.width.px]="circleSizesArray[i] * 2" [style.height.px]="circleSizesArray[i] * 2" 
+                    [style.margin-left.px]="-circleSizesArray[i] - circleSizesArray[i-1] - 2 " >              
+                    <span *ngIf="boundaryArray[i] > -1" class="legendValue">
+                        <!-- Display Values -->
+                        {{ boundaryArray[i] }}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="legend" *ngIf="listOfSelectedAttributes">
+            <div *ngFor="let attribute of listOfSelectedAttributes; let i = index">
+                <span>
+                    <!--Display color -->
+                    <i [style.background]="nominalColorsList[i]"></i>
+                    <!-- Display Values -->
+                    {{ attribute.column_name }} 
+                </span> <br>
+            </div>                                
+        </div>
+    </div>
+</div>

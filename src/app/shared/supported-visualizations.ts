@@ -12,7 +12,7 @@ export const SUPPORTED_VISUALIZATIONS: ISupportedVisualizationModel[] = [
   "description" : "Data Scale: Ratio & Nominal/Ratio"
 },{
   "name" : SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP,
-  "pathToLogo" : "../../assets/images/img1.png",
+  "pathToLogo" : "../../assets/images/pie_chart.png",
   "description" : "Data Scale: Ratio & Ratio"
 },{
   "name" : SUPPORTED_VISUALIZATIONS_ENUM.HEAT_MAP,
