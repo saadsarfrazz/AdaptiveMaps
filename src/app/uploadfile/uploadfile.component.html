@@ -1,26 +1,32 @@
 <div class="uploadfile-background">
-    <div class="container row upload-file">
-        <div class="col-2">
-            <nav class="nav flex-column">
-                <a class="nav-link active"  href="#" (click)="viewUploadFile=true;viewExampleData=false" >Upload</a>
-                <a class="nav-link"  href="#" (click)="viewExampleData=true;viewUploadFile=false">Example Data</a>
-            </nav>    
-        </div>
-        <div class="col-10">
-            <div *ngIf="viewUploadFile">
-                <input class="btn btn-outline-secondary" type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".geojson">
+    <div class="container upload-file">
+        <div class="row">
+            <div class="col-3">
+                <h5>Load data here...</h5>
             </div>
-            <div *ngIf="viewExampleData" class="row">
-                <div *ngFor="let data of listOfExampleDataNames" class="col-2 clickable upload-file__example-data-logo" (click)="loadExampleData(data)">
-                    <div>{{data}}</div>
-                    <div class="upload-file__example-data-logo_description">Map Type</div>
+        </div>
+         <div class="row">
+            <div class="col-2">
+                <nav class="nav nav-pills flex-column">
+                    <a  data-toggle="tab" class="nav-link active show"  href="#upload-content">Upload</a>
+                    <a  data-toggle="tab" class="nav-link"  href="#example-data-content">Example Data</a>
+                </nav>    
+            </div>
+            <div class="col-8">
+                <div class="tab-content">
+                    <div id="upload-content" class="tab-pane fade in active show">
+                        <input class="btn btn-outline-secondary" type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".geojson">
+                    </div>
+                    <div id="example-data-content" class="tab-pane fade">
+                        <div class="row">
+                            <div *ngFor="let data of listOfExampleDataNames" class="col-2 clickable upload-file__example-data-logo" (click)="loadExampleData(data)">
+                                <div>{{data}}</div>
+                                <div class="upload-file__example-data-logo_description">Map Type</div>
+                            </div>
+                        </div>                        
+                    </div>                    
                 </div>
-            </div>
-        </div>
-
+            </div> <!-- col-8 ends -->
+        </div><!-- row ends -->
     </div>
 </div>
-
-
-
-
