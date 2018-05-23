@@ -273,10 +273,8 @@ export class DataproviderService {
 
   /**
    * valid return value types are 
-   *  1. nominal
-   *  2. ordinal
-   *  3. interval
-   *  4. ratio
+   *  1. nominal : if non-numeric
+   *  2. interval : if numeric
    * null, if value was valid i.e. null or empty or undefined
    */
   private getValueType(value) : any {
@@ -284,7 +282,7 @@ export class DataproviderService {
       if(isNaN(value)){
         return "nominal";
       }else{
-        return "ratio";
+        return "interval";
       }
     }
     return null;
