@@ -1,58 +1,60 @@
-<div class="row">
-  <div class="col-2">
-    <h5>Nominal Data</h5>
+<div class="container select-types-padding-top">
+  <div class="row">
+    <div class="col-2">
+      <h5>Nominal Data</h5>
+    </div>
+    <div class="col-10">
+      Nominal data is non numerical data, e.g. the name of a district, the type of rooms etc. 
+    </div>
   </div>
-  <div class="col-10">
-    Nominal data is non numerical data, e.g. the name of a district, the type of rooms etc. 
+  <div class="row">
+    <div class="col-2">
+      <h5>Ratio Data</h5>
+    </div>
+    <div class="col-10">
+      Ratio data are numerical, and "zero" means "non-existence", e.g., 0 population means "no people", 0 dollar means "no money". 
+    </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-2">
-    <h5>Ratio Data</h5>
+  <div class="row">
+    <div class="col-2">
+      <h5>Interval Data</h5>
+    </div>
+    <div class="col-10">
+      Interval data are numerical, and "zero" does not mean "non-existence", e.g. in case of the IQ test of a person, the 0 does not mean "no intelligence at all", similarly 0 degree celsius temperature does not mean "non-existence of temperature". 
+    </div>
   </div>
-  <div class="col-10">
-    Ratio data are numerical, and "zero" means "non-existence", e.g., 0 population means "no people", 0 dollar means "no money". 
-  </div>
-</div>
-<div class="row">
-  <div class="col-2">
-    <h5>Interval Data</h5>
-  </div>
-  <div class="col-10">
-    Interval data are numerical, and "zero" does not mean "non-existence", e.g. in case of the IQ test of a person, the 0 does not mean "no intelligence at all", similarly 0 degree celsius temperature does not mean "non-existence of temperature". 
-  </div>
-</div>
 
-<div class="row">
-  <div class="col-2">
-    Further Details
+  <div class="row">
+    <div class="col-2">
+      Further Details
+    </div>
+    <div class="col-10">
+      <a target="_blank" href="https://www.researchgate.net/post/Difference_between_interval_and_ratio_variable_How_to_explain">Details...</a>
+    </div>
   </div>
-  <div class="col-10">
-    <a target="_blank" href="https://www.researchgate.net/post/Difference_between_interval_and_ratio_variable_How_to_explain">Details...</a>
-  </div>
+
+  <br>
+  <br>
+
+  <table class="table table-hover">
+    <thead>
+      <th>ColumName</th>
+      <th>Nominal</th>
+      <th>Interval Scale</th>
+      <th>Ratio Scale</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let col of columnTypes; let i=index;">
+        <td>{{col.column_name}}</td>
+        <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="nominal"   [attr.disabled]="col.type != 'nominal' ? true : null"></td>
+        <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="interval" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
+        <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="ratio" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><button (click)="updateValues()" class="btn-primary">Submit</button></td>
+      </tr>    
+    </tbody>
+  </table>
 </div>
-
-<br>
-<br>
-
-<table class="table table-hover">
-  <thead>
-    <th>ColumName</th>
-    <th>Nominal</th>
-    <th>Interval Scale</th>
-    <th>Ratio Scale</th>
-  </thead>
-  <tbody>
-    <tr *ngFor="let col of columnTypes; let i=index;">
-      <td>{{col.column_name}}</td>
-      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="nominal"   [attr.disabled]="col.type != 'nominal' ? true : null"></td>
-      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="interval" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
-      <td><input type="radio" name="{{col.column_name}}" [(ngModel)]="col.type" value="ratio" [attr.disabled]="col.type == 'nominal' ? true : null"></td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td><button (click)="updateValues()" class="btn-primary">Submit</button></td>
-    </tr>    
-  </tbody>
-</table>

@@ -1,4 +1,12 @@
-.section {
+.vis-sel-section {
     padding: 40px 0px;
 }
 
+.body{
+    background-color:floralwhite;
+}
+
+.map-dim-section{
+    background-color: beige;
+    padding-bottom: 50px;
+}

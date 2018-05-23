@@ -3,12 +3,12 @@
 }
 
 .upload-file{
-    background-color: lightgray;
+    background-color: cornsilk;
 }
 
 
 .upload-file__example-data-logo{
-    background-color: chartreuse;
+    background-color: turquoise;
     margin: 5pt;
 }
 
@@ -18,4 +18,8 @@
     color: #999;
     margin: 0px;
     display: block;
+}
+
+.uploadfile-background{
+    background-color: beige;
 }

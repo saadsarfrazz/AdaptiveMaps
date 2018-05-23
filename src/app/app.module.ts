@@ -26,6 +26,7 @@ import { MapDimensionsComponent } from './map-dimensions/map-dimensions.componen
 import { VisualVariableComponent } from './visual-variable/visual-variable.component';
 import { PiechartMapComponent } from './piechart-map/piechart-map.component';
 import { VisualVariableMultidropComponent } from './visual-variable-multidrop/visual-variable-multidrop.component';
+import { HeaderNavBarComponent } from './header-nav-bar/header-nav-bar.component';
 
 
 
@@ -45,7 +46,8 @@ import { VisualVariableMultidropComponent } from './visual-variable-multidrop/vi
     MapDimensionsComponent,
     VisualVariableComponent,
     PiechartMapComponent,
-    VisualVariableMultidropComponent
+    VisualVariableMultidropComponent,
+    HeaderNavBarComponent
   ],
   imports: [
     BrowserModule,

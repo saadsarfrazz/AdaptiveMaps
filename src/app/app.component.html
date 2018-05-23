@@ -1,27 +1,34 @@
-<div class="container">
-  <!--Display fileupload/existing data selection -->
+<div class="body">
+  <app-header-nav-bar></app-header-nav-bar>
   <div>
-    <app-uploadfile (dataSelected)="dataUploadedListener($event)" ></app-uploadfile>
-  </div>
-  <!--Display columns to categorize them w.r.t. data scales -->
-  <div>
-    <app-sel-column-types (columnTypesSelected)="columnTypesSelected($event)"
-                          *ngIf="displayColumnSelection" ></app-sel-column-types>
-  </div>
-  <!--Display list of supported map visualizations -->
-  <div class="section" *ngIf="displayVisualizationsList">
-      <h3>Select Visualization</h3>
-      <div class="row">
-        <div *ngFor="let vis of visualizationList" class="col-lg-3 col-md-4 col-sm-4 col-xs-6" >
-            <app-visualization-template  [visModel]="vis"
-                (click)="visualizationSelected(vis)"></app-visualization-template>
+    <!--Display fileupload/existing data selection -->
+    <div>
+      <app-uploadfile (dataSelected)="dataUploadedListener($event)" ></app-uploadfile>
+    </div>
+    <!--Display columns to categorize them w.r.t. data scales -->
+    <div>
+      <app-sel-column-types (columnTypesSelected)="columnTypesSelected($event)"
+                            *ngIf="displayColumnSelection" ></app-sel-column-types>
+    </div>
+    <!--Display list of supported map visualizations -->
+    <div class="vis-sel-section" *ngIf="displayVisualizationsList">
+      <div class="container">
+        <h3>Select Visualization</h3>
+        <div class="row">
+          <div *ngFor="let vis of visualizationList" class="col-lg-3 col-md-4 col-sm-4 col-xs-6" >
+              <app-visualization-template  [visModel]="vis"
+                  (click)="visualizationSelected(vis)"></app-visualization-template>
+          </div>
         </div>
       </div>      
-  </div>
-  <div class="section">
-    <app-map *ngIf="displayMap" [selectedVisualization]="selectedVisualization" ></app-map>
-  </div>
-  <div>
-    Some Footer Here
+    </div>
+    <div class="map-dim-section">
+      <div class="container">
+        <app-map *ngIf="displayMap" [selectedVisualization]="selectedVisualization" ></app-map>
+      </div>
+    </div>
+<!--     <div>
+      Some Footer Here
+    </div> -->
   </div>
 </div>
