@@ -2,6 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
+//angular bootstrap directive
+//https://github.com/ng-bootstrap/ng-bootstrap#demo
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
+import {DndModule} from 'ng2-dnd';
+
 
 import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
@@ -21,7 +27,6 @@ import { SelectColumnTypesComponent } from './sel-column-types/sel-column-types.
 import { DotMapComponent } from './dot-map/dot-map.component';
 import { HeatMapComponent } from './heat-map/heat-map.component';
 
-import {DndModule} from 'ng2-dnd';
 import { MapDimensionsComponent } from './map-dimensions/map-dimensions.component';
 import { VisualVariableComponent } from './visual-variable/visual-variable.component';
 import { PiechartMapComponent } from './piechart-map/piechart-map.component';
@@ -52,7 +57,8 @@ import { HeaderNavBarComponent } from './header-nav-bar/header-nav-bar.component
   imports: [
     BrowserModule,
     FormsModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    NgbModule.forRoot()
   ],
   providers: [
     VisualizationProviderService,
