@@ -1,3 +1,12 @@
+<div class="dimensions-model" dnd-droppable (onDropSuccess)="transferDataSuccess($event)">
+    <p class="dimension-title">Drag {{title}} here</p>
+    <li *ngIf="attributeSelected" class="dimension" >
+        <span class="dimension-key">{{attributeSelected.column_name}}</span>
+        <span class="dimension-type">{{attributeSelected.type}}</span>
+<!--         <span class="remove pull-right">×</span> -->
+    </li>
+</div>
+<!--
 <div>
   <div dnd-droppable class="panel panel-info" (onDropSuccess)="transferDataSuccess($event)">
       <div class="panel-heading">{{title}}</div>
@@ -6,3 +15,5 @@
       </div>
   </div>
 </div>
+
+ -->

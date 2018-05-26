@@ -47,4 +47,12 @@ export class VisualVariableMultidropComponent implements OnInit {
     }
   }
 
+  removeThis(attribute : ColumnNames){
+    //remove this attribute
+    this.attributeSelectedList = this.attributeSelectedList.filter(function(e1){
+      return e1.column_name != attribute.column_name;
+    });
+    this.valueSelected.emit(this.attributeSelectedList);
+  }
+
 }

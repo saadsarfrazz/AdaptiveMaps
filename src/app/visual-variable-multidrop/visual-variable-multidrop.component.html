@@ -1,4 +1,13 @@
-<div>
+<div class="dimensions-model" dnd-droppable (onDropSuccess)="transferDataSuccess($event)">
+    <p class="dimension-title">Drag {{title}} here</p>
+    <div class="msg">Multiple data required</div>
+    <li *ngFor="let attribute of attributeSelectedList"  class="dimension" >
+        <span class="dimension-key">{{attribute.column_name}}</span>
+        <span class="dimension-type">{{attribute.type}}</span>
+        <span class="remove pull-right" (click)="removeThis(attribute)">×</span>
+    </li>
+</div>
+<!-- <div>
   <div dnd-droppable class="panel panel-info" (onDropSuccess)="transferDataSuccess($event)">
       <div class="panel-heading">{{title}}</div>
       <div class="panel-body" >
@@ -6,3 +15,4 @@
       </div>
   </div>
 </div>
+-->

@@ -35,14 +35,14 @@ export class VisualVariableComponent implements OnInit {
   //could be reset when mutual exclusive with 
   //some other visual variable
   @Input()
-  attributeSelected : string ;
+  attributeSelected : ColumnNames ;
   // transferData: Object = {id: 1, msg: 'Hello'};
   // receivedData: Array<any> = [];
 
   transferDataSuccess($event: any) {
     console.log($event.dragData);
     if($event.dragData.type ==VALID_DATA_SCALE_ENUM[this.acceptsDataType] ){
-      this.attributeSelected = $event.dragData.column_name;
+      this.attributeSelected = $event.dragData;
       this.valueSelected.emit($event.dragData);
     }
     

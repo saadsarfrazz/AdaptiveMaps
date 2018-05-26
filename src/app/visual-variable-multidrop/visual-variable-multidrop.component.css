@@ -1,0 +1,56 @@
+.dimensions-model {
+    position: relative;
+    border-radius: 2px;
+    background-color: white;
+    padding: 10px;
+    overflow: hidden;
+    margin-bottom: 5px;
+    transition: border .15s ease-in-out;
+}
+
+.dimension-title {
+    text-align: center;
+    padding-bottom: 5px;
+    margin: 10px 0px 5px 0px;
+    color: #000;
+    font-size: 16px;
+}
+
+.msg {
+    color: #888;
+    font-size: 13px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.remove {
+    position: absolute;
+    font-size: 16px;
+    font-weight: 200;
+    top: 8px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* Required for dropped data dimension */
+.dimension  {
+    cursor: move;
+    color: #ffffff;
+    background-color: #0dc4a3;
+    border-bottom: 1px solid rgba(0,0,0,.1);
+
+    padding: 8px 10px;
+    position: relative;
+    margin-bottom: 3px;
+    line-height: 18px;
+}
+
+.dimension-key {
+    margin-right: 3px;
+}
+
+.dimension-type {
+    color: rgba(255,255,255,.7);
+    font-size: 12px;
+    text-transform: lowercase;
+}
