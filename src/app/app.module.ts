@@ -7,6 +7,7 @@ import { FormsModule } from '@angular/forms';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import {DndModule} from 'ng2-dnd';
+import { ScrollToModule } from 'ng2-scroll-to-el';
 
 
 import { AppComponent } from './app.component';
@@ -58,7 +59,8 @@ import { HeaderNavBarComponent } from './header-nav-bar/header-nav-bar.component
     BrowserModule,
     FormsModule,
     DndModule.forRoot(),
-    NgbModule.forRoot()
+    NgbModule.forRoot(),
+    ScrollToModule.forRoot()
   ],
   providers: [
     VisualizationProviderService,

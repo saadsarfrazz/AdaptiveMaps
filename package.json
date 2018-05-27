@@ -33,6 +33,7 @@
     "leaflet-omnivore": "^0.3.4",
     "leaflet.heat": "^0.2.0",
     "ng2-dnd": "^5.0.2",
+    "ng2-scroll-to-el": "^1.2.1",
     "papaparse": "^4.3.7",
     "rxjs": "^5.5.6",
     "turf": "^3.0.14",

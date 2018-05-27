@@ -1,4 +1,5 @@
 import { Component , OnInit, ViewChild } from '@angular/core';
+import { ScrollToService } from 'ng2-scroll-to-el';
 import {VisualizationProviderService} from './services/visualization-provider.service';
 import {ISupportedVisualizationModel} from './shared/vis-model';
 
@@ -20,7 +21,8 @@ export class AppComponent implements OnInit{
   //this value is updated when user clicks on one of the supported visualization
   selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM; //empty by default
 
-  constructor(private _visualizationProviderService: VisualizationProviderService){
+  constructor(private _visualizationProviderService: VisualizationProviderService,
+              private _scrollService : ScrollToService){
   }
 
   ngOnInit(){
@@ -61,6 +63,11 @@ export class AppComponent implements OnInit{
   columnTypesSelected(value:boolean){
     this.displayVisualizationsList = true;
     this.displayColumnSelection = false;
+  }
+
+  scrollToDimensions(element, vis : ISupportedVisualizationModel){
+    if(vis.enabled == true)
+      this._scrollService.scrollTo(element);
   }
 }
  
