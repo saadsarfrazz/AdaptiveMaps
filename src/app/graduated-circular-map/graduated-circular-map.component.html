@@ -37,29 +37,17 @@
         Color Variable<app-attributes-list [visualizationType]="mapType"(valueSelected)="colorOptionSelected($event)"></app-attributes-list>   -->      
         <app-legend-circles *ngIf="selectedSizeAttribute" [legendTitle]="selectedSizeAttribute" [boundaryArray]="boundaryArray"  >
         </app-legend-circles>
-        <div>
-            <h4 id=’legendTitle’>{{selectedColorAttribute?.column_name}}</h4>
-            <div>
-                <div *ngFor="let boundary of colorBoundaryArray; let i = index">              
-                    <span>
-                        <!--Display color -->
-                        <i [style.background]="ratioColorsList[i]"></i>
-                        <!-- Display Values -->
-                        <span *ngIf="i==0">    {{colorBoundaryArray[i] }} - {{colorBoundaryArray[i+1] }} </span>
-                        <span *ngIf="i>0 && ratioColorsList[i]">     {{ +colorBoundaryArray[i] + 1  }} - {{colorBoundaryArray[i+1] }} </span>
-                    </span> <br>
-                </div>
-            </div>
-            <div class="legend" *ngIf="nominalKeysForLegend">    
-                <div *ngFor="let key of nominalKeysForLegend">
-                    <span>
-                        <!--Display color -->
-                        <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
-                        <!-- Display Values -->
-                        {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
-                    </span> 
-                </div>                            
-            </div>
-        </div>
+        <br/>
+        <br/>
+        <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray"
+                    [legendTitle]="selectedColorAttribute.column_name"
+                    [colorBoundaryArray]="colorBoundaryArray"
+                    [ratioColorsList]="ratioColorsList">
+        </app-legend-numeric-colorwithboundary>
+        <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend" [legendTitle]="selectedColorAttribute.column_name"
+                                        [nominalKeysForLegend]="nominalKeysForLegend"
+                                        [nominalValuesFreqAndColor]="nominalValuesFreqAndColor">
+
+        </app-legend-nominal-colorwithfreq>
     </div>
 </div>

@@ -27,7 +27,13 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   colorRatioVariable : VisualVariableComponent;
 
   mapOverlay : any = null;
-  selectedAttribute : ColumnNames;
+  selectedNominalAttribute : ColumnNames;
+  selectedRatioAttribute : ColumnNames;
+
+  //to store a value of column
+  //name irrespected of its data type 
+  //to be used in layer style and popup
+  selectedColumnName : string;
 
   
   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.CHOROPLETH_MAP;
@@ -44,7 +50,7 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
 
   //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
-  private boundaryArray : number[];
+  private colorBoundaryArray : number[];
 
   //nominal keys
   nominalKeysForLegend : string[];
@@ -68,67 +74,53 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   }
 
   //do whatever here
-  attributeSelectedNominal(value : ColumnNames){
+  attributeSelectedNominal(attributeSelected : ColumnNames){
     //reset other visual variable option if was selected
     this.colorRatioVariable.attributeSelected = null;
 
-    console.log("ChoroplethMap value selected is : "+ value);
+    this.selectedNominalAttribute = attributeSelected;
+    this.selectedRatioAttribute = null;
+    this.selectedColumnName = attributeSelected.column_name;
     //identify kind of overlay data to expect 
-    var dataType = this._dataProviderService.uploadedData_Type;
-    if(dataType== 'geojson'){
-      this.drawGeoJSONDataOnMap(value);
-    }
-    //TODO : support csv here
+    // var dataType = this._dataProviderService.uploadedData_Type;
+    //get json object with unique attribute value as key and their frequency
+    //as value
+    this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
+                                                    attributeSelected.column_name);
+    
+    this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
+    
+    //remove existing legend
+    this.colorBoundaryArray = null;
+
+    this.drawGeoJSONDataOnMap(attributeSelected);
     
   }
 
   //do whatever here
-  attributeSelectedRatio(value : ColumnNames){
+  attributeSelectedRatio(attributeSelected : ColumnNames){
     //reset other visual variable option if was selected
     this.colorNominalVariable.attributeSelected = null;
 
-    console.log("ChoroplethMap value selected is : "+ value);
+    this.selectedRatioAttribute = attributeSelected;
+    this.selectedColumnName = attributeSelected.column_name;
+    this.selectedNominalAttribute = null;
     //identify kind of overlay data to expect 
-    var dataType = this._dataProviderService.uploadedData_Type;
-    if(dataType== 'geojson'){
-      this.drawGeoJSONDataOnMap(value);
-    }
-    //TODO : support csv here
-    
-  }
-  
-  public drawGeoJSONDataOnMap(attributeSelected : ColumnNames){
-    //init index for map colors
-    // this.nominalColorIndex = 0;
-    this.selectedAttribute = attributeSelected;
-    //get type of values for this attribute 
-    // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
-    if(attributeSelected.type == "ratio"){//init array
-      this.boundaryArray = this._basicCalculationsService.
+    // var dataType = this._dataProviderService.uploadedData_Type;
+    this.colorBoundaryArray = this._basicCalculationsService.
                                 calculateBoundaryArray(this.geoJSONData,
                                                       attributeSelected.column_name,
                                                       5);        
-    this.nominalKeysForLegend = null;
-    }else if(attributeSelected.type == "nominal"){ //remove legend if exist
-      //get json object with unique attribute value as key and their frequency
-      //as value
-      this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
-                                                      attributeSelected.column_name);
-      
-      this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
-      
-      //remove existing legend
-      this.boundaryArray = null;
-    }
-
-      
-    // console.log("map service update map" + attributeName );
-    //  console.log("mapOverlay"+ mapOverlay);
+    
+    
+    this.drawGeoJSONDataOnMap(attributeSelected);
+  }
+  
+  public drawGeoJSONDataOnMap(attributeSelected : ColumnNames){
       
     if(this.mapOverlay != null)
       this.map.removeLayer(this.mapOverlay);
 
-    // console.log(this.customStyle);
 
     // this.selectedObject = attributeName;
     // var customstyle = this.customStyle;
@@ -146,9 +138,9 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
    private customStyle = (feature : any) : any => {
 
     // var self = this;
-    var selectedAttribute = this.selectedAttribute;
+    var selectedAttribute = this.selectedColumnName;
     return {
-        fillColor: this.getColor(feature.properties[selectedAttribute.column_name]),
+        fillColor: this.getColor(feature.properties[selectedAttribute]),
         weight: 2,
         opacity: 1,
         color: 'white',
@@ -158,8 +150,8 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
   }
 
   private customPopup = (layer) => {
-     var value = layer.feature.properties[this.selectedAttribute.column_name];
-     var popup = "<strong>"+this.selectedAttribute.column_name+"</strong>" + " : "+ value;
+     var value = layer.feature.properties[this.selectedColumnName];
+     var popup = "<strong>"+this.selectedColumnName+"</strong>" + " : "+ value;
      return popup;
   }
 
@@ -174,16 +166,16 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
       return this.nominalValuesFreqAndColor[value]["color"];
     }else{  
       //update colorList size by initializing it based on boundary array size
-      var size = this.boundaryArray.length;
+      var size = this.colorBoundaryArray.length;
       this.ratioColorsList  = this._colorProviderService.getRatioDataColors(size);
 
       //assign same color for each class
       //starting from 1 because 0 index contain min value
-      for(var i=1; i < this.boundaryArray.length ; i++){
+      for(var i=1; i < this.colorBoundaryArray.length ; i++){
         console.log("Value is "+ value);
-        console.log("Class boundary is "+ this.boundaryArray[i]);
-        if(value <= this.boundaryArray[i]){ //check if value is within current class
-          var color = this.ratioColorsList[i];
+        console.log("Class boundary is "+ this.colorBoundaryArray[i]);
+        if(value <= this.colorBoundaryArray[i]){ //check if value is within current class
+          var color = this.ratioColorsList[i-1];
           console.log("color returned " + color);
           return color;
         }

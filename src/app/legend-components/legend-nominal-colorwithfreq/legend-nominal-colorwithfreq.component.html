@@ -1,3 +1,11 @@
-<p>
-  legend-nominal-colorwithfreq works!
-</p>
+<div class="legend">    
+  <h6 id=’legendTitle’>{{legendTitle}}</h6>
+  <div *ngFor="let key of nominalKeysForLegend">
+      <div class="value-color">
+          <!--Display color -->
+          <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
+          <!-- Display Values -->
+          {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
+      </div> 
+  </div>                            
+</div>

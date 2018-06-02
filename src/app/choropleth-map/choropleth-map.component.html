@@ -30,21 +30,16 @@
     <div class="col-2">
 <!--         <app-attributes-list [visualizationType]="mapType" (valueSelected)="attributeSelected($event)"></app-attributes-list> -->
         <div>
-            <!--Display legend for ratio data
-            TODO: this can be updated by using similar implementation 
-            as that of nominal data to have one piece code -->
-            <app-legend-circles *ngIf="selectedAttribute" [legendTitle]="selectedAttribute.column_name" [boundaryArray]="boundaryArray"  >
-            </app-legend-circles>
-            <div class="legend" *ngIf="nominalKeysForLegend">    
-                <div *ngFor="let key of nominalKeysForLegend">
-                    <span>
-                        <!--Display color -->
-                        <i [style.background]="nominalValuesFreqAndColor[key]['color']"></i>
-                        <!-- Display Values -->
-                        {{ key }} - {{ nominalValuesFreqAndColor[key]["freq"] }}
-                    </span> 
-                </div>                            
-            </div>
+            <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray"
+                        [legendTitle]="selectedRatioAttribute.column_name"
+                        [colorBoundaryArray]="colorBoundaryArray"
+                        [ratioColorsList]="ratioColorsList">
+            </app-legend-numeric-colorwithboundary>                      
+             <app-legend-nominal-colorwithfreq  *ngIf="selectedNominalAttribute" [legendTitle]="selectedNominalAttribute.column_name"
+                                         [nominalKeysForLegend]="nominalKeysForLegend"
+                                         [nominalValuesFreqAndColor]="nominalValuesFreqAndColor">
+            </app-legend-nominal-colorwithfreq> 
+            
 
         </div>
     <div>

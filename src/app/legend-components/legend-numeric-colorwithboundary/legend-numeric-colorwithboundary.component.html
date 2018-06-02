@@ -1,3 +1,12 @@
-<p>
-  legend-numeric-colorwithboundary works!
-</p>
+<div class="legend">
+  <h6 id=’legendTitle’>{{legendTitle}}</h6>
+  <div *ngFor="let boundary of colorBoundaryArray; let i = index">              
+      <div class="value-color" *ngIf="colorBoundaryArray[i+1]">
+          <!--Display color -->
+          <i [style.background]="ratioColorsList[i]"></i>
+          <!-- Display Values -->
+          <span *ngIf="i==0">    {{colorBoundaryArray[i] }} - {{colorBoundaryArray[i+1] }} </span>
+          <span *ngIf="i>0">     > {{ +colorBoundaryArray[i]  }} - {{colorBoundaryArray[i+1] }} </span>
+      </div>
+  </div>
+</div>

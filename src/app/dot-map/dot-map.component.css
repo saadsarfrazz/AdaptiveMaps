@@ -1,20 +1,5 @@
 #map{ height: 400px; }
 
-.legend {
-    line-height: 18px;
-    color: #555;
-    overflow: scroll;
-    width: 100%;
-    height: 300px;
-}
-.legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.7;
-}
-
 .sticky {
     position: -webkit-sticky;
     position: sticky;
