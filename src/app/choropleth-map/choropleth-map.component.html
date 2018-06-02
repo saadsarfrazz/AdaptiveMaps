@@ -33,16 +33,8 @@
             <!--Display legend for ratio data
             TODO: this can be updated by using similar implementation 
             as that of nominal data to have one piece code -->
-            <div class="legend" *ngIf="boundaryArray">
-                <div *ngFor="let boundary of boundaryArray; let i = index">
-                    <span *ngIf="boundaryArray[i+1]">
-                        <!--Display color -->
-                        <i [style.background]="ratioColorsList[i]"></i>
-                        <!-- Display Values -->
-                        {{ boundaryArray[i] }} - {{boundaryArray[i+1] }}
-                    </span> <br>
-                </div>                                
-            </div>
+            <app-legend-circles *ngIf="selectedAttribute" [legendTitle]="selectedAttribute.column_name" [boundaryArray]="boundaryArray"  >
+            </app-legend-circles>
             <div class="legend" *ngIf="nominalKeysForLegend">    
                 <div *ngFor="let key of nominalKeysForLegend">
                     <span>

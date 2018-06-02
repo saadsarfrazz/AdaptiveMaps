@@ -35,19 +35,8 @@
     <div class="col-2">
 <!--         Size Variable <app-attributes-list [visualizationType]="mapType" (valueSelected)="sizeOptionSelected($event)"></app-attributes-list>
         Color Variable<app-attributes-list [visualizationType]="mapType"(valueSelected)="colorOptionSelected($event)"></app-attributes-list>   -->      
-        <div class="legend">
-            <h4 id=’legendTitle’>{{selectedSizeAttribute}}</h4>
-            <div class="symbolsContainer">                
-                <div *ngFor="let boundary of boundaryArray; let i = index" class="legendCircle" 
-                    [style.width.px]="circleSizesArray[i] * 2" [style.height.px]="circleSizesArray[i] * 2" 
-                    [style.margin-left.px]="-circleSizesArray[i] - circleSizesArray[i-1] - 2 " >              
-                    <span *ngIf="boundaryArray[i] > -1" class="legendValue">
-                        <!-- Display Values -->
-                        {{ boundaryArray[i] }}
-                    </span>
-                </div>
-            </div>
-        </div>
+        <app-legend-circles *ngIf="selectedSizeAttribute" [legendTitle]="selectedSizeAttribute" [boundaryArray]="boundaryArray"  >
+        </app-legend-circles>
         <div>
             <h4 id=’legendTitle’>{{selectedColorAttribute?.column_name}}</h4>
             <div>

@@ -33,6 +33,10 @@ import { VisualVariableComponent } from './visual-variable/visual-variable.compo
 import { PiechartMapComponent } from './piechart-map/piechart-map.component';
 import { VisualVariableMultidropComponent } from './visual-variable-multidrop/visual-variable-multidrop.component';
 import { HeaderNavBarComponent } from './header-nav-bar/header-nav-bar.component';
+//legend
+import { LegendCirclesComponent } from './legend-components/legend-circles/legend-circles.component';
+import { LegendNominalColorwithfreqComponent } from './legend-components/legend-nominal-colorwithfreq/legend-nominal-colorwithfreq.component';
+import { LegendNumericColorwithboundaryComponent } from './legend-components/legend-numeric-colorwithboundary/legend-numeric-colorwithboundary.component';
 
 
 
@@ -53,7 +57,10 @@ import { HeaderNavBarComponent } from './header-nav-bar/header-nav-bar.component
     VisualVariableComponent,
     PiechartMapComponent,
     VisualVariableMultidropComponent,
-    HeaderNavBarComponent
+    HeaderNavBarComponent,
+    LegendCirclesComponent,
+    LegendNominalColorwithfreqComponent,
+    LegendNumericColorwithboundaryComponent
   ],
   imports: [
     BrowserModule,
