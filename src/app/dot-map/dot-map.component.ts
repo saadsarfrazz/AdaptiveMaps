@@ -79,7 +79,7 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
 
     //updata colors for each circle
     //Step:1 Calculate statitics i.e. class intervals for this attribute
-    if(columnName.type =="interval"){//Generate gc maps only for numerical data
+    if(columnName.type =="interval" || columnName.type =="ratio"){//Generate gc maps only for numerical data
       this.colorBoundaryArray = this._basicCalculationsService.
                                 calculateBoundaryArray(this.geoJSONData,
                                                       columnName.column_name,
@@ -157,7 +157,8 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
     if(value == null || value == "" || value == undefined){ //assign black
       // color =  "#FFFF00";
       color = "";
-    }else if(this.selectedColorAttribute.type == "interval"){
+    }else if(this.selectedColorAttribute.type == "interval" ||
+        this.selectedColorAttribute.type == "ratio"){
      
       for(var i=1; i < this.colorBoundaryArray.length ; i++){
         // console.log("Class boundary is "+ this.colorBoundaryArray[i]);

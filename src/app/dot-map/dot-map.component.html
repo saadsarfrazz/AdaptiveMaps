@@ -36,6 +36,7 @@
                         [ratioColorsList]="intervalColorsArray">
             </app-legend-numeric-colorwithboundary>
             <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend" [title]="selectedColorAttribute"
+                                         [legendTitle]="selectedColorAttribute.column_name"
                                          [nominalKeysForLegend]="nominalKeysForLegend"
                                          [nominalValuesFreqAndColor]="nominalValuesFreqAndColor">
 

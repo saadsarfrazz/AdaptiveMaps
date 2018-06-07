@@ -70,8 +70,9 @@ export class DataproviderService {
 
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.GRADUATED_CIRCULAR_MAP){
       this.activateAttributes(clone_columnNamesWithScales,["nominal","ratio"])
-    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){
-      this.activateAttributes(clone_columnNamesWithScales,["nominal","interval"])
+    }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP){ 
+      //because ratio data is also essentially interval data, so this can also be visualized
+      this.activateAttributes(clone_columnNamesWithScales,["nominal","interval","ratio"])
     }else if(visualizationName == SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP){
       this.activateAttributes(clone_columnNamesWithScales,["ratio"])
     }

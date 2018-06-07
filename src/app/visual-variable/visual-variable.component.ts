@@ -41,7 +41,13 @@ export class VisualVariableComponent implements OnInit {
 
   transferDataSuccess($event: any) {
     console.log($event.dragData);
-    if($event.dragData.type ==VALID_DATA_SCALE_ENUM[this.acceptsDataType] ){
+    //if datatype matched
+    //or if the accepted data type is interval and dropped data type is ratio
+    //then it should also be displayed
+    //because ratio data are also interval data essentially
+    if($event.dragData.type ==VALID_DATA_SCALE_ENUM[this.acceptsDataType]
+        ||($event.dragData.type == VALID_DATA_SCALE_ENUM[VALID_DATA_SCALE_ENUM.ratio] 
+                    && this.acceptsDataType == VALID_DATA_SCALE_ENUM.interval   ) ){
       this.attributeSelected = $event.dragData;
       this.valueSelected.emit($event.dragData);
     }
