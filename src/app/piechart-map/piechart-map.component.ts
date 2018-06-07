@@ -47,6 +47,10 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
 
    private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(9) ;
 
+   //a hardcoded circular sizes when none of the size attribute is 
+   //specified
+   private staticCircularSize : number = 20;
+
   
   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP;
 
@@ -131,7 +135,8 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
       this.map.removeLayer(marker);
     }
 
-    this.map.removeLayer(this.mapOverlay);
+    if(this.mapOverlay)
+      this.map.removeLayer(this.mapOverlay);
 
     var addCircles = this.addCirclesFunction;
 
@@ -157,8 +162,14 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
   }
 
   addCirclesFunction = (feature, layer) => {
-    var attributeValue = feature["properties"][this.selectedAttribute.column_name];
-    var radiusValue = this.getCircleSize(attributeValue);
+    var radiusValue;
+    if(this.selectedAttribute){ //if attribute is selected for sizes
+       var attributeValue = feature["properties"][this.selectedAttribute.column_name];
+       radiusValue = this.getCircleSize(attributeValue);
+    }else{
+      radiusValue = this.staticCircularSize;
+    }
+   
 
     var dataObject = this.prepareChartOptions(feature);
 
