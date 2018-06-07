@@ -84,6 +84,15 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
                                                     
 
       var addCircles = this.addCirclesFunction;
+      
+      if(this.mapOverlay){
+        this.map.removeLayer(this.mapOverlay);
+        for(let marker of this.listOfPieCharts){
+          this.map.removeLayer(marker);
+        }
+      }
+        
+
       //draw circle in middle of each polygon
       this.mapOverlay = L.geoJson(this.geoJSONData, {
                           onEachFeature: addCircles,
