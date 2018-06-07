@@ -160,11 +160,12 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
    private getColor = (value : any) : string => {
     //  d represent string value , could be used here if req'
     // console.log(typeof d);
-    if( typeof value == "string"){
+    if( this.selectedNominalAttribute ){
       // var color = this.nominalColorsList[this.nominalColorIndex];
       // this.nominalColorIndex++;
       return this.nominalValuesFreqAndColor[value]["color"];
     }else{  
+      value=+value; 
       //update colorList size by initializing it based on boundary array size
       var size = this.colorBoundaryArray.length;
       this.ratioColorsList  = this._colorProviderService.getRatioDataColors(size);

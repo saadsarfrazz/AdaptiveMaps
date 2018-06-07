@@ -20,7 +20,10 @@ export class BasicCalculationsService {
     var result= [];
     result.push(min);
     var value = min+avg;
+    console.log("Min: " + min);
+    console.log("Max: " + max);
     for(var i=0; i<numberOfClasses-1;i++){
+      console.log("value: " + value);
       result.push(value.toFixed(0));//ignore decimals
       value+= avg;
     }
@@ -94,12 +97,15 @@ export class BasicCalculationsService {
     var features = object.features;
     var min = features.reduce(function(prev, curr) {
         let min;
+        //convert to number if string
+        let previousNumber =  +prev["properties"][property]
+        let currentNumber =  +curr["properties"][property]
         // console.log("Prev : "+prev["properties"][property]);
         // console.log("Current : "+curr["properties"][property]);
         //both values should be valied
-        if( validFunction(prev["properties"][property]) && validFunction(curr["properties"][property]) ) {
+        if( validFunction(previousNumber) && validFunction(currentNumber) ) {
           // console.log("Both : ");
-          min = prev["properties"][property] < curr.properties[property] ? prev : curr;
+          min = previousNumber < currentNumber ? prev : curr;
         } else if( validFunction(prev["properties"][property]) ){ //if current is null
           // console.log("Prev : ");
           min= prev;
@@ -113,7 +119,7 @@ export class BasicCalculationsService {
 
     console.log("Min is: "+ min["properties"][property]);
 
-    return min["properties"][property];
+    return +min["properties"][property];
   }
 
   /**
@@ -121,15 +127,33 @@ export class BasicCalculationsService {
    * value of that property. Property must be number and valid name.
    */
   private getMax(object: any, property : string): number{
-
+    var validFunction = this.isValidNumber;
     var features = object.features;
     var max = features.reduce(function(prev, curr) {
-        return prev["properties"][property] > curr.properties[property] ? prev : curr;
+        let max;
+        //convert to number if string
+        let previousNumber =  +prev["properties"][property]
+        let currentNumber =  +curr["properties"][property]
+        // console.log("Prev : "+prev["properties"][property]);
+        // console.log("Current : "+curr["properties"][property]);
+        //both values should be valied
+        if( validFunction(previousNumber) && validFunction(currentNumber) ) {
+          // console.log("Both : ");
+          max = previousNumber > currentNumber ? prev : curr;
+        } else if( validFunction(prev["properties"][property]) ){ //if current is null
+          // console.log("Prev : ");
+          max= prev;
+        }else{ //prev was null, case where initial values are undefined
+          // console.log("Curr : ");
+          max = curr;
+        }
+        // console.log("Returning min : "+min["properties"][property]);
+        return max;
   });
 
     console.log("Max is: "+ max["properties"][property]);
 
-    return max["properties"][property];
+    return +max["properties"][property];
   }
 
   /**
