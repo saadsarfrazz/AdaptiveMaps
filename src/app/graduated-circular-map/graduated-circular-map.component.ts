@@ -51,6 +51,10 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
    //A hard coded sized fro 5 classes of GC maps
    private circleSizesArray : number[] = [10,20,30,40,50,60,70];
 
+   //a hardcoded circular sizes when none of the size attribute is 
+   //selected by user
+   private staticCircularSize : number = 20;
+
    selectedSizeAttribute : string = "";
    selectedColorAttribute : ColumnNames;
 
@@ -67,13 +71,14 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   ngOnInit() {
     console.log("Graduated Circular init");
     this.plotBaicMap();
+    this.geoJSONData =  this._dataProviderService.getGeoJSON();
   }
 
   sizeOptionSelected(columnName : ColumnNames){
     // console.log("Size variable in GCMap is" + columnName.column_name);
     this.selectedSizeAttribute = columnName.column_name;
     // this.loadGraduatedCircularMap_CSV(columnName.column_name);
-    this.geoJSONData =  this._dataProviderService.getGeoJSON();
+    
     this.loadGraduatedCircularMap_JSON(columnName);
 
   }
@@ -118,7 +123,8 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
 
       //Step-2 : Remove existing mapoverlay and redraw the circles with 
       //new color scheme
-      this.map.removeLayer(this.mapOverlay);
+      if(this.mapOverlay != null)
+        this.map.removeLayer(this.mapOverlay);
 
       var circleStyle = this.drawCircle;
       this.mapOverlay = L.geoJson(this.geoJSONData, {
@@ -161,12 +167,17 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   private drawCircle = ( feature : any , latlng : any) : any => {
     var circle = L.circleMarker(latlng, this.circleStyle(feature));
     // circle.setStyle({fillColor: "#3388ff"});
-    //only size is selected
+    //both size and color is selected
     if(this.selectedColorAttribute && this.selectedColorAttribute.column_name!=""){
-      var popup_msg = this.selectedSizeAttribute+ " : "+feature.properties[this.selectedSizeAttribute] +
+      var popup_msg;
+      if(this.selectedSizeAttribute){//both color and size is selected
+        popup_msg = this.selectedSizeAttribute+ " : "+feature.properties[this.selectedSizeAttribute] +
                   "<br>" + this.selectedColorAttribute.column_name + " : "+feature.properties[this.selectedColorAttribute.column_name];
+      }else{
+        popup_msg = this.selectedColorAttribute.column_name + " : "+feature.properties[this.selectedColorAttribute.column_name];
+      }
       circle.bindPopup( popup_msg);
-    }else{
+    }else if( this.selectedSizeAttribute ){ //only size is selected
       circle.bindPopup( this.selectedSizeAttribute+ " : "+feature.properties[this.selectedSizeAttribute]);
     }
     
@@ -174,11 +185,19 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   }
 
   private circleStyle(feature : any) : any{
+    var circleRadius;
+    //when no size option is specified
+    if(this.selectedSizeAttribute){
+      circleRadius = this.getCircleRadius(feature.properties[this.selectedSizeAttribute]);
+    }else{
+      circleRadius = this.staticCircularSize;
+    }
+     
     // console.log("Get radius for feature ");
     // console.log(feature);
     //logic to get different circle sizes here
     return {
-        radius: this.getCircleRadius(feature.properties[this.selectedSizeAttribute]),
+        radius: circleRadius,
         fillColor: this.getCircleColor(feature),
         color: "#000",
         weight: 1,
