@@ -30,12 +30,12 @@
  <!--        Color Variable<app-attributes-list [visualizationType]="mapType"(valueSelected)="colorOptionSelected($event)"></app-attributes-list>              
       -->  
         <div><!-- Legend starts here -->
-            <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray"
+            <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray && selectedColorAttribute"
                         [legendTitle]="selectedColorAttribute.column_name"
                         [colorBoundaryArray]="colorBoundaryArray"
                         [ratioColorsList]="intervalColorsArray">
             </app-legend-numeric-colorwithboundary>
-            <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend" [title]="selectedColorAttribute"
+            <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend && selectedColorAttribute" [title]="selectedColorAttribute"
                                          [legendTitle]="selectedColorAttribute.column_name"
                                          [nominalKeysForLegend]="nominalKeysForLegend"
                                          [nominalValuesFreqAndColor]="nominalValuesFreqAndColor">

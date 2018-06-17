@@ -72,49 +72,59 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
     this.colorOptionSelected(columnName);
   }
 
-  colorOptionSelected(columnName : ColumnNames){    
-    this.selectedColorAttribute = columnName;
-    console.log(columnName);
-    // console.log("Color variable in GCMap is" + attributeValue);
+  colorOptionSelected(columnName : ColumnNames){  
+    if(columnName){  
+      this.selectedColorAttribute = columnName;
+      console.log(columnName);
+      // console.log("Color variable in GCMap is" + attributeValue);
 
-    //updata colors for each circle
-    //Step:1 Calculate statitics i.e. class intervals for this attribute
-    if(columnName.type =="interval" || columnName.type =="ratio"){//Generate gc maps only for numerical data
-      this.colorBoundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray(this.geoJSONData,
-                                                      columnName.column_name,
-                                                     12);  
-      console.log("Color boundary array : " + this.colorBoundaryArray);
-      //remove existing 
-      this.nominalKeysForLegend = null;
-    }else if(columnName.type =="nominal"){
-      //get json object with unique attribute value as key and their frequency
-      //as value
-      this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
-                                                      columnName.column_name);
-      
-      this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
-      
-      //remove existing legend
-      this.colorBoundaryArray = null;
+      //updata colors for each circle
+      //Step:1 Calculate statitics i.e. class intervals for this attribute
+      if(columnName.type =="interval" || columnName.type =="ratio"){//Generate gc maps only for numerical data
+        this.colorBoundaryArray = this._basicCalculationsService.
+                                  calculateBoundaryArray(this.geoJSONData,
+                                                        columnName.column_name,
+                                                      12);  
+        console.log("Color boundary array : " + this.colorBoundaryArray);
+        //remove existing 
+        this.nominalKeysForLegend = null;
+      }else if(columnName.type =="nominal"){
+        //get json object with unique attribute value as key and their frequency
+        //as value
+        this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
+                                                        columnName.column_name);
+        
+        this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
+        
+        //remove existing legend
+        this.colorBoundaryArray = null;
+      }
+
+      //Step-2 : Remove existing mapoverlay and redraw the circles with 
+      //new color scheme
+      if(this.mapOverlay!=null)
+        this.map.removeLayer(this.mapOverlay);
+
+      var circleStyle = this.drawCircle;
+      this.mapOverlay = L.geoJson(this.geoJSONData, {
+        pointToLayer : circleStyle
+      });
+
+      //zoom to layer
+      this.map.fitBounds(this.mapOverlay.getBounds());
+
+      // // var csvLayer = omnivore.csv.parse(this.mapData);
+      this.map.addLayer(this.mapOverlay);
+    }else{
+      this.selectedColorAttribute = null;
+      this.resetOverlay();
     }
+  }
 
-    //Step-2 : Remove existing mapoverlay and redraw the circles with 
-    //new color scheme
-    if(this.mapOverlay!=null)
+  resetOverlay(){
+    if(this.mapOverlay){
       this.map.removeLayer(this.mapOverlay);
-
-    var circleStyle = this.drawCircle;
-    this.mapOverlay = L.geoJson(this.geoJSONData, {
-      pointToLayer : circleStyle
-    });
-
-    //zoom to layer
-    this.map.fitBounds(this.mapOverlay.getBounds());
-
-    // // var csvLayer = omnivore.csv.parse(this.mapData);
-    this.map.addLayer(this.mapOverlay);
-
+    }
   }
 
   private drawCircle = ( feature : any , latlng : any) : any => {

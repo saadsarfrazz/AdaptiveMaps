@@ -53,6 +53,7 @@ export class AppComponent implements OnInit{
     if(value == true){
       
       //reset all visualization components
+      this.selectedVisualizationName = null;
       this.displayColumnSelection = false;
       this.displayMap = false;
       this.displayVisualizationsList = false;
