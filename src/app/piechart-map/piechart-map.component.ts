@@ -67,57 +67,68 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
     this.plotBaicMap();
   }
 
+  resetOverlay(){
+    if(this.mapOverlay){
+      this.map.removeLayer(this.mapOverlay);
+      for(let marker of this.listOfPieCharts){
+        this.map.removeLayer(marker);
+      }
+    }
+  }
+
   // staticexample : ColumnNames = {column_name : "Shape_Area"};
 
   attributeSelectedSize(attributeSelected : ColumnNames){
-    //init index for map colors
-    // this.nominalColorIndex = 0;
-    this.selectedAttribute = attributeSelected;
+    if(attributeSelected){
+      //init index for map colors
+      // this.nominalColorIndex = 0;
+      this.selectedAttribute = attributeSelected;
 
-    //testing here
-    // this.listOfSelectedAttributes.push(attributeSelected);
-    // this.listOfSelectedAttributes.push(this.staticexample);
+      //testing here
+      // this.listOfSelectedAttributes.push(attributeSelected);
+      // this.listOfSelectedAttributes.push(this.staticexample);
 
-    //get type of values for this attribute 
-    // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
-    if(attributeSelected.type == "ratio"){//init array
-      this.boundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray(this.geoJSONData,
-                                                      attributeSelected.column_name,
-                                                      5);        
-                                                    
+      //get type of values for this attribute 
+      // var type = this._basicCalculationsService.getType(this.geoJSONData,attributeName);
+      if(attributeSelected.type == "ratio"){//init array
+        this.boundaryArray = this._basicCalculationsService.
+                                  calculateBoundaryArray(this.geoJSONData,
+                                                        attributeSelected.column_name,
+                                                        5);        
+                                                      
 
-      var addCircles = this.addCirclesFunction;
-      
-      if(this.mapOverlay){
-        this.map.removeLayer(this.mapOverlay);
-        for(let marker of this.listOfPieCharts){
-          this.map.removeLayer(marker);
-        }
-      }
+        var addCircles = this.addCirclesFunction;
         
+        this.resetOverlay();
+          
 
-      //draw circle in middle of each polygon
-      this.mapOverlay = L.geoJson(this.geoJSONData, {
-                          onEachFeature: addCircles,
-                          style: {
-                                  fillColor:"#d4ef4a",
-                                  weight: 2,
-                                  opacity: 1,
-                                  color: 'white',
-                                  dashArray: '3',
-                                  fillOpacity: 0.7
-                              }
-                        });
-      //zoom to layer
-      this.map.fitBounds(this.mapOverlay.getBounds());
+        //draw circle in middle of each polygon
+        this.mapOverlay = L.geoJson(this.geoJSONData, {
+                            onEachFeature: addCircles,
+                            style: {
+                                    fillColor:"#d4ef4a",
+                                    weight: 2,
+                                    opacity: 1,
+                                    color: 'white',
+                                    dashArray: '3',
+                                    fillOpacity: 0.7
+                                }
+                          });
+        //zoom to layer
+        this.map.fitBounds(this.mapOverlay.getBounds());
 
-      this.map.addLayer(this.mapOverlay);
-      this.mapOverlay.bringToBack();
+        this.map.addLayer(this.mapOverlay);
+        this.mapOverlay.bringToBack();
+        }
+      }else{
+        console.log("remove");
+        this.selectedAttribute = attributeSelected;
+        this.resetOverlay();
 
-
-
-    }
+        //if pie chart attributes were selected
+        if(this.listOfSelectedAttributes.length > 0)
+          this.addOverlay(); 
+      }
   }
 
   attributeSelectedPieChart(selectedColumns : ColumnNames[]){
@@ -137,9 +148,15 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
 
     if(this.mapOverlay)
       this.map.removeLayer(this.mapOverlay);
+    
+    //at least on attribute to visualize or size attribute selected as first variable
+    if(selectedColumns.length > 0 || this.selectedAttribute){
+      this.addOverlay();
+    }  
+  }
 
+  addOverlay(){
     var addCircles = this.addCirclesFunction;
-
     //add layer again 
     //draw circle in middle of each polygon
     this.mapOverlay = L.geoJson(this.geoJSONData, {
@@ -158,7 +175,6 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
 
     this.map.addLayer(this.mapOverlay);
     this.mapOverlay.bringToBack();
-      
   }
 
   addCirclesFunction = (feature, layer) => {
