@@ -24,7 +24,7 @@ export class BasicCalculationsService {
     console.log("Max: " + max);
     for(var i=0; i<numberOfClasses-1;i++){
       console.log("value: " + value);
-      result.push(value.toFixed(0));//ignore decimals
+      result.push(+value.toFixed(0));//ignore decimals and convert to number from string
       value+= avg;
     }
     result.push(max);//ignore decimals
