@@ -3,6 +3,7 @@
     <li *ngIf="attributeSelected" class="dimension" >
         <span class="dimension-key">{{attributeSelected.column_name}}</span>
         <span class="dimension-type">{{attributeSelected.type}}</span>
+        <span class="remove pull-right" (click)="removeThis(attribute)">×</span>
 <!--         <span class="remove pull-right">×</span> -->
     </li>
 </div>

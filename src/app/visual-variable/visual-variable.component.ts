@@ -28,6 +28,11 @@ export class VisualVariableComponent implements OnInit {
   @Input()
   acceptsDataType : VALID_DATA_SCALE_ENUM;
 
+  /**
+   * Emits ColumnNames event when value is dropped.
+   * or
+   * Emits null when value is removed by clicking 'x'
+   */
   @Output()
   valueSelected = new EventEmitter<ColumnNames>();
 
@@ -54,6 +59,12 @@ export class VisualVariableComponent implements OnInit {
     
 
       // this.receivedData.push($event);
+  }
+
+  removeThis(attribute : ColumnNames){
+    //remove this attribute
+    this.attributeSelected = null;
+    this.valueSelected.emit(null);
   }
 
 
