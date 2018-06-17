@@ -73,47 +73,68 @@ export class ChoroplethMapComponent extends BasicMapComponent implements OnInit 
     this.plotBaicMap();
   }
 
+  resetOverlay(){
+    if(this.mapOverlay)
+      this.map.removeLayer(this.mapOverlay);
+  }
+
   //do whatever here
   attributeSelectedNominal(attributeSelected : ColumnNames){
-    //reset other visual variable option if was selected
-    this.colorRatioVariable.attributeSelected = null;
+    //check for null value
+    //occur when selected column is removed
+    if(attributeSelected){
+      //reset other visual variable option if was selected
+      this.colorRatioVariable.attributeSelected = null;
 
-    this.selectedNominalAttribute = attributeSelected;
-    this.selectedRatioAttribute = null;
-    this.selectedColumnName = attributeSelected.column_name;
-    //identify kind of overlay data to expect 
-    // var dataType = this._dataProviderService.uploadedData_Type;
-    //get json object with unique attribute value as key and their frequency
-    //as value
-    this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
-                                                    attributeSelected.column_name);
-    
-    this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
-    
-    //remove existing legend
-    this.colorBoundaryArray = null;
+      this.selectedNominalAttribute = attributeSelected;
+      this.selectedRatioAttribute = null;
+      this.selectedColumnName = attributeSelected.column_name;
+      //identify kind of overlay data to expect 
+      // var dataType = this._dataProviderService.uploadedData_Type;
+      //get json object with unique attribute value as key and their frequency
+      //as value
+      this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
+                                                      attributeSelected.column_name);
+      
+      this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
+      
+      //remove existing legend
+      this.colorBoundaryArray = null;
 
-    this.drawGeoJSONDataOnMap(attributeSelected);
+      this.drawGeoJSONDataOnMap(attributeSelected);
+    }else{
+      this.selectedNominalAttribute = attributeSelected;
+      this.resetOverlay();
+    }
+    
     
   }
 
   //do whatever here
   attributeSelectedRatio(attributeSelected : ColumnNames){
-    //reset other visual variable option if was selected
-    this.colorNominalVariable.attributeSelected = null;
 
-    this.selectedRatioAttribute = attributeSelected;
-    this.selectedColumnName = attributeSelected.column_name;
-    this.selectedNominalAttribute = null;
-    //identify kind of overlay data to expect 
-    // var dataType = this._dataProviderService.uploadedData_Type;
-    this.colorBoundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray(this.geoJSONData,
-                                                      attributeSelected.column_name,
-                                                      5);        
-    
-    
-    this.drawGeoJSONDataOnMap(attributeSelected);
+    //check for null value
+    //occur when selected column is removed
+    if(attributeSelected){
+      //reset other visual variable option if was selected
+      this.colorNominalVariable.attributeSelected = null;
+
+      this.selectedRatioAttribute = attributeSelected;
+      this.selectedColumnName = attributeSelected.column_name;
+      this.selectedNominalAttribute = null;
+      //identify kind of overlay data to expect 
+      // var dataType = this._dataProviderService.uploadedData_Type;
+      this.colorBoundaryArray = this._basicCalculationsService.
+                                  calculateBoundaryArray(this.geoJSONData,
+                                                        attributeSelected.column_name,
+                                                        5);        
+      
+      
+      this.drawGeoJSONDataOnMap(attributeSelected);
+    }else{
+      this.selectedRatioAttribute = attributeSelected;
+      this.resetOverlay();
+    }
   }
   
   public drawGeoJSONDataOnMap(attributeSelected : ColumnNames){

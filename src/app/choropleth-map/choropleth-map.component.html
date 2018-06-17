@@ -30,7 +30,7 @@
     <div class="col-2">
 <!--         <app-attributes-list [visualizationType]="mapType" (valueSelected)="attributeSelected($event)"></app-attributes-list> -->
         <div>
-            <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray"
+            <app-legend-numeric-colorwithboundary *ngIf="selectedRatioAttribute"
                         [legendTitle]="selectedRatioAttribute.column_name"
                         [colorBoundaryArray]="colorBoundaryArray"
                         [ratioColorsList]="ratioColorsList">
