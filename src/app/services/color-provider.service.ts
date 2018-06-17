@@ -12,7 +12,7 @@ export class ColorProviderService {
   public getRatioDataColors(size){
     //max possible seze is 9
     if(size<=9)
-      return d3.schemeBlues[size];
+      return d3.schemeReds[size];
     else{ //TODO: handle here
       alert("ColorProviderService.getRatioDataColors: could not create color array");
       return;
