@@ -39,12 +39,12 @@
         </app-legend-circles>
         <br/>
         <br/>
-        <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray"
-                    [legendTitle]="selectedColorAttribute.column_name"
+        <app-legend-numeric-colorwithboundary *ngIf="colorBoundaryArray && selectedColorAttribute"
+                    [legendTitle]="selectedColorAttribute?.column_name"
                     [colorBoundaryArray]="colorBoundaryArray"
                     [ratioColorsList]="ratioColorsList">
         </app-legend-numeric-colorwithboundary>
-        <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend" [legendTitle]="selectedColorAttribute.column_name"
+        <app-legend-nominal-colorwithfreq  *ngIf="nominalKeysForLegend && selectedColorAttribute" [legendTitle]="selectedColorAttribute?.column_name"
                                         [nominalKeysForLegend]="nominalKeysForLegend"
                                         [nominalValuesFreqAndColor]="nominalValuesFreqAndColor">
 

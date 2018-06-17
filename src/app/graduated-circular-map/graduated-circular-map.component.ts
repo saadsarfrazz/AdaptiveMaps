@@ -74,13 +74,26 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
     this.geoJSONData =  this._dataProviderService.getGeoJSON();
   }
 
-  sizeOptionSelected(columnName : ColumnNames){
-    // console.log("Size variable in GCMap is" + columnName.column_name);
-    this.selectedSizeAttribute = columnName.column_name;
-    // this.loadGraduatedCircularMap_CSV(columnName.column_name);
-    
-    this.loadGraduatedCircularMap_JSON(columnName);
+  resetOverlay(){
+    if(this.mapOverlay){
+      this.map.removeLayer(this.mapOverlay);
+    }
+  }
 
+  sizeOptionSelected(columnName : ColumnNames){
+    if(columnName){
+      // console.log("Size variable in GCMap is" + columnName.column_name);
+      this.selectedSizeAttribute = columnName.column_name;
+      // this.loadGraduatedCircularMap_CSV(columnName.column_name);
+      
+      this.loadGraduatedCircularMap_JSON(columnName);
+    }else{
+      this.selectedSizeAttribute = null;
+      this.resetOverlay();
+
+      if(this.selectedColorAttribute)
+        this.drawColorOverlay();
+    }
   }
 
   colorOptionSelected_Nominal(columnName : ColumnNames){
@@ -96,62 +109,70 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
   }
 
   colorOptionSelected(columnName : ColumnNames){
+    if(columnName){
+        
+      this.selectedColorAttribute = columnName;
+      // console.log("Color variable in GCMap is" + attributeValue);
 
-    this.selectedColorAttribute = columnName;
-    // console.log("Color variable in GCMap is" + attributeValue);
-
-    //updata colors for each circle
-    //Step:1 Calculate statitics i.e. class intervals for this attribute
-    if(columnName.type =="ratio"){//Generate gc maps only for numerical data
-      this.colorBoundaryArray = this._basicCalculationsService.
-                                calculateBoundaryArray(this.geoJSONData,
-                                                      columnName.column_name,
-                                                     5);  
-      console.log("Color boundary array : " + this.colorBoundaryArray);
-      //delete nominal values if exist
-      this.nominalKeysForLegend = null;      
-    }else if (columnName.type =="nominal"){
-      //get json object with unique attribute value as key and their frequency
-      //as value
-      this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
-                                                      columnName.column_name);      
-      this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
-      
-      //delete ratio values if exist
-      this.colorBoundaryArray = null;
-    }
-
+      //updata colors for each circle
+      //Step:1 Calculate statitics i.e. class intervals for this attribute
+      if(columnName.type =="ratio"){//Generate gc maps only for numerical data
+        this.colorBoundaryArray = this._basicCalculationsService.
+                                  calculateBoundaryArray(this.geoJSONData,
+                                                        columnName.column_name,
+                                                      5);  
+        console.log("Color boundary array : " + this.colorBoundaryArray);
+        //delete nominal values if exist
+        this.nominalKeysForLegend = null;      
+      }else if (columnName.type =="nominal"){
+        //get json object with unique attribute value as key and their frequency
+        //as value
+        this.nominalValuesFreqAndColor = this._basicCalculationsService.getNominalArray(this.geoJSONData,
+                                                        columnName.column_name);      
+        this.nominalKeysForLegend = Object.keys(this.nominalValuesFreqAndColor);
+        
+        //delete ratio values if exist
+        this.colorBoundaryArray = null;
+      }
       //Step-2 : Remove existing mapoverlay and redraw the circles with 
       //new color scheme
       if(this.mapOverlay != null)
         this.map.removeLayer(this.mapOverlay);
 
-      var circleStyle = this.drawCircle;
-      this.mapOverlay = L.geoJson(this.geoJSONData, {
-        pointToLayer : circleStyle
-      });
-
-      //zoom to layer
-      this.map.fitBounds(this.mapOverlay.getBounds());
-
-      // // var csvLayer = omnivore.csv.parse(this.mapData);
-      this.map.addLayer(this.mapOverlay);
-    
+      this.drawColorOverlay();
+        
+      }else{
+        this.selectedColorAttribute = null;
+        this.resetOverlay();
+      }
   }
 
-    public loadGraduatedCircularMap_JSON(attributeName : ColumnNames){
+  private drawColorOverlay(){
+    var circleStyle = this.drawCircle;
+    this.mapOverlay = L.geoJson(this.geoJSONData, {
+      pointToLayer : circleStyle
+    });
+
+    //zoom to layer
+    this.map.fitBounds(this.mapOverlay.getBounds());
+
+    // // var csvLayer = omnivore.csv.parse(this.mapData);
+    this.map.addLayer(this.mapOverlay);
+  }
+
+  public loadGraduatedCircularMap_JSON(attributeName : ColumnNames){
     if(attributeName.type =="ratio"){//Generate gc maps only for numerical data
       this.boundaryArray = this._basicCalculationsService.
                                 calculateBoundaryArray(this._dataProviderService.getGeoJSON(),
                                                       attributeName.column_name,
-                                                     5);  
+                                                      5);  
       console.log(this.boundaryArray);
       
 
       if(this.mapOverlay != null)
         this.map.removeLayer(this.mapOverlay);
       
-  
+
       var circleStyle = this.drawCircle;
       // console.log("circleStyle" + circleStyle);
       this.mapOverlay = L.geoJson(this.geoJSONData, {
@@ -162,7 +183,7 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
 
       this.map.addLayer(this.mapOverlay);
     }
-   }
+  }
 
   private drawCircle = ( feature : any , latlng : any) : any => {
     var circle = L.circleMarker(latlng, this.circleStyle(feature));
