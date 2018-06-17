@@ -10,3 +10,9 @@
     background-color: beige;
     padding-bottom: 50px;
 }
+
+.selected-vis-center{
+    color: white;
+    background-color: cadetblue;
+    text-align: center;
+}

@@ -24,6 +24,9 @@
         </div>
       </div>      
     </div>
+    <div *ngIf="selectedVisualizationName" class="selected-vis-center">
+      <h5>{{selectedVisualizationName}}</h5>
+    </div>
     <div #mapDimSection class="map-dim-section">
       <div class="container">
         <app-map *ngIf="displayMap" [selectedVisualization]="selectedVisualization" ></app-map>

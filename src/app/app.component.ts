@@ -21,6 +21,9 @@ export class AppComponent implements OnInit{
   //this value is updated when user clicks on one of the supported visualization
   selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM; //empty by default
 
+  //to visualize the name to user
+  selectedVisualizationName : string;
+
   constructor(private _visualizationProviderService: VisualizationProviderService,
               private _scrollService : ScrollToService){
   }
@@ -35,6 +38,8 @@ export class AppComponent implements OnInit{
       console.log("selected : "+vis.name);
       //update map view
       this.selectedVisualization = vis.name;
+      this.selectedVisualizationName = SUPPORTED_VISUALIZATIONS_ENUM[vis.name];
+
     }else{
       alert(SUPPORTED_VISUALIZATIONS_ENUM[vis.name] + " can not be created for given data input");
     }
