@@ -1,3 +1,7 @@
 .select-types-padding-top{
     padding-top: 10px;
 }
+
+.important-text{
+    color: red;
+}
