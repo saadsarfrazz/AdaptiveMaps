@@ -221,7 +221,7 @@ export class DataproviderService {
         }
 
         //DOT-map
-        if(freq_JSON.nominal>0 || freq_JSON.interval>0){
+        if(freq_JSON.nominal>0 || freq_JSON.interval>0 || freq_JSON.ratio>0){
           this.validVisualizations.detectedVisualizations.push(SUPPORTED_VISUALIZATIONS_ENUM.DOT_MAP);
         }
 
