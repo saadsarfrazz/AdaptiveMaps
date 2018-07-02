@@ -31,29 +31,29 @@ export class GraduatedCircularMapComponent extends BasicMapComponent implements 
 
   //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
-   private boundaryArray : number[];
+  boundaryArray : number[];
 
    //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
   //it will be used to assign different colors to circles
-  private colorBoundaryArray : number[];
+  colorBoundaryArray : number[];
 
   //json object containing unique attribute value as key and object of their frequency
   //and color as values. Is init using calculation service for given selected
   //attribute of type nominal
   //e.g. { attributevalue1: {freq:3,color:"rgb(10,10,10)"}}
-  private nominalValuesFreqAndColor : any;
+  nominalValuesFreqAndColor : any;
   //nominal keys
   nominalKeysForLegend : string[];
 
    mapOverlay : any = null;
 
    //A hard coded sized fro 5 classes of GC maps
-   private circleSizesArray : number[] = [10,20,30,40,50,60,70];
+   circleSizesArray : number[] = [10,20,30,40,50,60,70];
 
    //a hardcoded circular sizes when none of the size attribute is 
    //selected by user
-   private staticCircularSize : number = 20;
+   staticCircularSize : number = 20;
 
    selectedSizeAttribute : string = "";
    selectedColorAttribute : ColumnNames;

@@ -13,11 +13,11 @@ import {SUPPORTED_VISUALIZATIONS_ENUM} from '../shared/supported-maps-enum';
 export class MapComponent implements OnInit {
   // listOfAttributes : string[];
   //display map-component only when user click one of the valid mapping options
-  private displayChoroplethMap : boolean = false;
-  private displayGCMap : boolean = false;
-  private displayDotMap : boolean = false;
-  private displayHeatMap : boolean = false
-  private displayPieChartMap : boolean = false
+  displayChoroplethMap : boolean = false;
+  displayGCMap : boolean = false;
+  displayDotMap : boolean = false;
+  displayHeatMap : boolean = false
+  displayPieChartMap : boolean = false
   // featuresTOMap : any;
   //user selects this on front page after uploading data
   public _selectedVisualization : SUPPORTED_VISUALIZATIONS_ENUM;

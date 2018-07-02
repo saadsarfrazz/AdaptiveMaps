@@ -29,27 +29,27 @@ export class PiechartMapComponent extends BasicMapComponent  implements OnInit {
 
   //stores the boundary values for different classes of ratioData
   //e.g. 0-100 with 5 classes contain values [0,20,40,60,80,100]
-  private boundaryArray : number[];
+  boundaryArray : number[];
 
   mapOverlay : any = null;
   selectedAttribute : ColumnNames;
 
   //A hard coded sized fro 5 classes of GC maps
-   private circleSizesArray : number[] = [10,20,30,40,50,60,70];
+   circleSizesArray : number[] = [10,20,30,40,50,60,70];
 
    //the selected column names for drawing pie chart are
    //stored in this array. 
-   private listOfSelectedAttributes : ColumnNames[] = [];
+   listOfSelectedAttributes : ColumnNames[] = [];
 
    //to keep track of all pie chart and remove them 
    //when redrawn 
-   private listOfPieCharts : any = [];
+   listOfPieCharts : any = [];
 
-   private nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(9) ;
+   nominalColorsList : string[] = this._colorProviderService.getNominalDataColors(9) ;
 
    //a hardcoded circular sizes when none of the size attribute is 
    //specified
-   private staticCircularSize : number = 20;
+   staticCircularSize : number = 20;
 
   
   mapType : SUPPORTED_VISUALIZATIONS_ENUM = SUPPORTED_VISUALIZATIONS_ENUM.PIE_CHARTMAP;

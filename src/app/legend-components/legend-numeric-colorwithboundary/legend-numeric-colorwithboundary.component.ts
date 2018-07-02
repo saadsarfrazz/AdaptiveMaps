@@ -14,7 +14,7 @@ export class LegendNumericColorwithboundaryComponent implements OnInit {
   //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
   //it will be used to assign different colors to circles
   @Input()
-  private colorBoundaryArray : number[];
+  colorBoundaryArray : number[];
 
   @Input()
   ratioColorsList : string[];

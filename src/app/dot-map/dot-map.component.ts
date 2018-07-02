@@ -50,13 +50,13 @@ export class DotMapComponent extends BasicMapComponent implements OnInit {
   //stores the boundary values for different classes of intervalData
   //e.g. 0-100 with 5 classes contain values [20,40,60,80,100]
   //it will be used to assign different colors to points
-   private colorBoundaryArray : number[];
+  colorBoundaryArray : number[];
 
   //json object containing unique attribute value as key and object of their frequency
   //and color as values. Is init using calculation service for given selected
   //attribute of type nominal
   //e.g. { attributevalue1: {freq:3,color:"rgb(10,10,10)"}}
-  private nominalValuesFreqAndColor : any;
+  nominalValuesFreqAndColor : any;
   //nominal keys
   nominalKeysForLegend : string[];
 
