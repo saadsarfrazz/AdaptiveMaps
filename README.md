@@ -3,8 +3,12 @@ Video Tutorial: https://youtu.be/CWVpYJK071I
 
 # AdaptiveMaps
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3.
+An implementation of Master’s thesis research. Developed user Angular framework. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3. A scientific publication has been accepted in Cartography and Geographic Information Science (CaGIS) and currently is in final stages of publication, titled:  "Data Scale as Cartography: A Semi-Automatic Approach for Thematic Web Map Creation".
+
+## Application Architecture
+
 ![Architecture](architecture.png)
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
