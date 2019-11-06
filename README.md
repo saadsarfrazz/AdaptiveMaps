@@ -1,9 +1,9 @@
 Test here : https://saadsarfrazz.github.io/AdaptiveMaps/
 Video Tutorial: https://youtu.be/CWVpYJK071I
-
+Publication: https://doi.org/10.1080/15230406.2019.1677176
 # AdaptiveMaps
 
-An implementation of Master’s thesis research. Developed user Angular framework. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3. A scientific publication has been accepted in Cartography and Geographic Information Science (CaGIS) and currently is in final stages of publication, titled:  "Data Scale as Cartography: A Semi-Automatic Approach for Thematic Web Map Creation".
+An implementation of Master’s thesis research. Developed user Angular framework. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.7.3. A scientific publication in Cartography and Geographic Information Science (CaGIS) was published : https://doi.org/10.1080/15230406.2019.1677176
 
 ## Application Architecture
 
